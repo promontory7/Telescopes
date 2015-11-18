@@ -44,10 +44,10 @@ import com.xuhai.telescopes.domain.InviteMessage;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.parse.UserProfileManager;
 import com.xuhai.telescopes.receiver.CallReceiver;
-import com.xuhai.telescopes.ui.ChatActivity;
-import com.xuhai.telescopes.ui.MainActivity;
-import com.xuhai.telescopes.ui.VideoCallActivity;
-import com.xuhai.telescopes.ui.VoiceCallActivity;
+import com.xuhai.telescopes.activity.ChatActivity;
+import com.xuhai.telescopes.activity.MainActivity;
+import com.xuhai.telescopes.activity.VideoCallActivity;
+import com.xuhai.telescopes.activity.VoiceCallActivity;
 import com.xuhai.telescopes.utils.PreferenceManager;
 
 import java.util.ArrayList;

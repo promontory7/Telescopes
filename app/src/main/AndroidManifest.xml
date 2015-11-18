@@ -42,7 +42,7 @@
         android:icon="@drawable/em_logo_uidemo"
         android:label="@string/app_name" >
         <activity
-            android:name="com.xuhai.telescopes.ui.MainActivity"
+            android:name="com.xuhai.telescopes.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
@@ -51,7 +51,7 @@
 
         <!-- 开屏页 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.SplashActivity"
+            android:name="com.xuhai.telescopes.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
             <intent-filter>
@@ -63,7 +63,7 @@
 
         <!-- 登陆 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.LoginActivity"
+            android:name="com.xuhai.telescopes.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible">
@@ -71,14 +71,14 @@
 
         <!-- 注册 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.RegisterActivity"
+            android:name="com.xuhai.telescopes.activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible">
         </activity>
         <!-- 聊天页面 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ChatActivity"
+            android:name="com.xuhai.telescopes.activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
@@ -87,54 +87,54 @@
 
         <!-- 添加好友 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.AddContactActivity"
+            android:name="com.xuhai.telescopes.activity.AddContactActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 群组详情 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.GroupDetailsActivity"
+            android:name="com.xuhai.telescopes.activity.GroupDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 群组列表 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.GroupsActivity"
+            android:name="com.xuhai.telescopes.activity.GroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
 
         <activity
-            android:name="com.xuhai.telescopes.ui.ChatRoomActivity"
+            android:name="com.xuhai.telescopes.activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <!-- 聊天室详情 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ChatRoomDetailsActivity"
+            android:name="com.xuhai.telescopes.activity.ChatRoomDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
 
         <!-- 新建群组 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.NewGroupActivity"
+            android:name="com.xuhai.telescopes.activity.NewGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <!-- 退出群组提示框 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ExitGroupDialog"
+            android:name="com.xuhai.telescopes.activity.ExitGroupDialog"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleBottom" >
         </activity>
         <!-- 群组选人 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.GroupPickContactsActivity"
+            android:name="com.xuhai.telescopes.activity.GroupPickContactsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
@@ -148,20 +148,20 @@
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.NewFriendsMsgActivity"
+            android:name="com.xuhai.telescopes.activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 转发消息用户列表页面 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ForwardMessageActivity"
+            android:name="com.xuhai.telescopes.activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <!-- 自定义的contextmenu -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ContextMenuActivity"
+            android:name="com.xuhai.telescopes.activity.ContextMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" >
         </activity>
@@ -179,21 +179,21 @@
         </activity>
         <!-- 黑名单 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.BlacklistActivity"
+            android:name="com.xuhai.telescopes.activity.BlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
 
         <!-- 公开的群聊列表 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.PublicGroupsActivity"
+            android:name="com.xuhai.telescopes.activity.PublicGroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
 
         <activity
-            android:name="com.xuhai.telescopes.ui.PublicChatRoomsActivity"
+            android:name="com.xuhai.telescopes.activity.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
@@ -201,14 +201,14 @@
 
         <!-- 语音通话 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.VoiceCallActivity"
+            android:name="com.xuhai.telescopes.activity.VoiceCallActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@style/nornal_style" >
         </activity>
         <!-- 视频通话 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.VideoCallActivity"
+            android:name="com.xuhai.telescopes.activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
@@ -216,23 +216,23 @@
         </activity>
         <!-- 群聊简单信息 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.GroupSimpleDetailActivity"
+            android:name="com.xuhai.telescopes.activity.GroupSimpleDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 群组黑名单用户列表 -->
         <activity
-            android:name="com.xuhai.telescopes.ui.GroupBlacklistActivity"
+            android:name="com.xuhai.telescopes.activity.GroupBlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <activity
-            android:name="com.xuhai.telescopes.ui.PublicGroupsSeachActivity"
+            android:name="com.xuhai.telescopes.activity.PublicGroupsSeachActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <activity
-            android:name="com.xuhai.telescopes.ui.EditActivity"
+            android:name="com.xuhai.telescopes.activity.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateVisible" >
@@ -245,20 +245,20 @@
         </activity>
         <!-- choose video -->
         <activity
-            android:name="com.xuhai.telescopes.ui.ImageGridActivity"
+            android:name="com.xuhai.telescopes.activity.ImageGridActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="com.xuhai.telescopes.ui.RecorderVideoActivity"
+            android:name="com.xuhai.telescopes.activity.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <!-- upload error log -->
         <activity
-            android:name="com.xuhai.telescopes.ui.DiagnoseActivity"
+            android:name="com.xuhai.telescopes.activity.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" >
@@ -266,21 +266,21 @@
 
         <!-- iOS offline push nick -->
         <activity
-            android:name="com.xuhai.telescopes.ui.OfflinePushNickActivity"
+            android:name="com.xuhai.telescopes.activity.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <!-- robots list -->
         <activity
-            android:name="com.xuhai.telescopes.ui.RobotsActivity"
+            android:name="com.xuhai.telescopes.activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden"
             ></activity>
         <!-- user profile -->
         <activity
-            android:name="com.xuhai.telescopes.ui.UserProfileActivity"
+            android:name="com.xuhai.telescopes.activity.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             ></activity>

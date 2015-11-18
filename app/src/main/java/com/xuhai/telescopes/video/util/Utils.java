@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.StrictMode;
 
-import com.xuhai.telescopes.ui.ImageGridActivity;
+import com.xuhai.telescopes.activity.ImageGridActivity;
 
 import java.util.Comparator;
 import java.util.List;

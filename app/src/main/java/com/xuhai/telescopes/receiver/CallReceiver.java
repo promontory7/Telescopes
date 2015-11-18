@@ -20,8 +20,8 @@ import android.content.Intent;
 
 import com.easemob.util.EMLog;
 import com.xuhai.telescopes.DemoHelper;
-import com.xuhai.telescopes.ui.VideoCallActivity;
-import com.xuhai.telescopes.ui.VoiceCallActivity;
+import com.xuhai.telescopes.activity.VideoCallActivity;
+import com.xuhai.telescopes.activity.VoiceCallActivity;
 
 public class CallReceiver extends BroadcastReceiver {
 
