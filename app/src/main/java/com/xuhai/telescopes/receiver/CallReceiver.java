@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.easemob.util.EMLog;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.activity.VideoCallActivity;
 import com.xuhai.telescopes.activity.VoiceCallActivity;
 
@@ -27,7 +27,7 @@ public class CallReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if(!DemoHelper.getInstance().isLoggedIn())
+		if(!MyHelper.getInstance().isLoggedIn())
 		    return;
 		//拨打方username
 		String from = intent.getStringExtra("from");

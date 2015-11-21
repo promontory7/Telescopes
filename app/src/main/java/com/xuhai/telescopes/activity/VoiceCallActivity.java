@@ -36,7 +36,7 @@ import android.widget.Toast;
 import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EMServiceNotReadyException;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 
 import java.util.UUID;
 
@@ -74,7 +74,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         }
 		setContentView(com.xuhai.telescopes.R.layout.em_activity_voice_call);
 		
-		DemoHelper.getInstance().isVoiceCalling = true;
+		MyHelper.getInstance().isVoiceCalling = true;
 
 		comingBtnContainer = (LinearLayout) findViewById(com.xuhai.telescopes.R.id.ll_coming_call);
 		refuseBtn = (Button) findViewById(com.xuhai.telescopes.R.id.btn_refuse_call);
@@ -382,7 +382,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		DemoHelper.getInstance().isVoiceCalling = false;
+		MyHelper.getInstance().isVoiceCalling = false;
 	}
 
 	@Override

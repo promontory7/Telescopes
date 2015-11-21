@@ -17,6 +17,7 @@ package com.xuhai.telescopes.activity;
 import android.os.Bundle;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 import com.xuhai.easeui.ui.EaseBaseActivity;
 
 public class BaseActivity extends EaseBaseActivity {
@@ -24,6 +25,8 @@ public class BaseActivity extends EaseBaseActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+        PushAgent.getInstance(this).onAppStart();
+
     }
 
     @Override

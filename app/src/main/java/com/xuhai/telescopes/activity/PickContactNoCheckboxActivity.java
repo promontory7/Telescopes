@@ -24,7 +24,7 @@ import com.xuhai.easeui.adapter.EaseContactAdapter;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.easeui.widget.EaseSidebar;
 import com.xuhai.telescopes.Constant;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 
 	private void getContactList() {
 		contactList.clear();
-		Map<String, EaseUser> users = DemoHelper.getInstance().getContactList();
+		Map<String, EaseUser> users = MyHelper.getInstance().getContactList();
 		Iterator<Entry<String, EaseUser>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, EaseUser> entry = iterator.next();

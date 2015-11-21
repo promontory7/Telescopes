@@ -1,16 +1,4 @@
-/**
- * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package com.xuhai.telescopes.activity;
 
 import android.content.Context;
@@ -33,7 +21,7 @@ import com.xuhai.easeui.adapter.EaseContactAdapter;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.easeui.widget.EaseSidebar;
 import com.xuhai.telescopes.Constant;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +56,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 			exitingMembers = new ArrayList<String>();
 		// 获取好友列表
 		final List<EaseUser> alluserList = new ArrayList<EaseUser>();
-		for (EaseUser user : DemoHelper.getInstance().getContactList().values()) {
+		for (EaseUser user : MyHelper.getInstance().getContactList().values()) {
 			if (!user.getUsername().equals(Constant.NEW_FRIENDS_USERNAME) & !user.getUsername().equals(Constant.GROUP_USERNAME) & !user.getUsername().equals(Constant.CHAT_ROOM) & !user.getUsername().equals(Constant.CHAT_ROBOT))
 				alluserList.add(user);
 		}

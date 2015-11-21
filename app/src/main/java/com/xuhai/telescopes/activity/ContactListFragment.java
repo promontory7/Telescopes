@@ -30,8 +30,8 @@ import com.easemob.chat.EMContactManager;
 import com.easemob.util.EMLog;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.easeui.ui.EaseContactListFragment;
-import com.xuhai.telescopes.DemoHelper;
-import com.xuhai.telescopes.DemoHelper.DataSyncListener;
+import com.xuhai.telescopes.MyHelper;
+import com.xuhai.telescopes.MyHelper.DataSyncListener;
 import com.xuhai.telescopes.db.InviteMessgeDao;
 import com.xuhai.telescopes.db.UserDao;
 import com.xuhai.telescopes.widget.ContactItemView;
@@ -95,7 +95,7 @@ public class ContactListFragment extends EaseContactListFragment {
         });
         
         //设置联系人数据
-        setContactsMap(DemoHelper.getInstance().getContactList());
+        setContactsMap(MyHelper.getInstance().getContactList());
         super.setUpView();
         listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -119,15 +119,15 @@ public class ContactListFragment extends EaseContactListFragment {
         
         
         contactSyncListener = new ContactSyncListener();
-        DemoHelper.getInstance().addSyncContactListener(contactSyncListener);
+        MyHelper.getInstance().addSyncContactListener(contactSyncListener);
         
         blackListSyncListener = new BlackListSyncListener();
-        DemoHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
+        MyHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
         
         contactInfoSyncListener = new ContactInfoSyncListener();
-        DemoHelper.getInstance().getUserProfileManager().addSyncContactInfoListener(contactInfoSyncListener);
+        MyHelper.getInstance().getUserProfileManager().addSyncContactInfoListener(contactInfoSyncListener);
         
-        if (!DemoHelper.getInstance().isContactsSyncedWithServer()) {
+        if (!MyHelper.getInstance().isContactsSyncedWithServer()) {
             loadingView.setVisibility(View.VISIBLE);
         } else {
             loadingView.setVisibility(View.GONE);
@@ -138,16 +138,16 @@ public class ContactListFragment extends EaseContactListFragment {
     public void onDestroy() {
         super.onDestroy();
         if (contactSyncListener != null) {
-            DemoHelper.getInstance().removeSyncContactListener(contactSyncListener);
+            MyHelper.getInstance().removeSyncContactListener(contactSyncListener);
             contactSyncListener = null;
         }
         
         if(blackListSyncListener != null){
-            DemoHelper.getInstance().removeSyncBlackListListener(blackListSyncListener);
+            MyHelper.getInstance().removeSyncBlackListListener(blackListSyncListener);
         }
         
         if(contactInfoSyncListener != null){
-            DemoHelper.getInstance().getUserProfileManager().removeSyncContactInfoListener(contactInfoSyncListener);
+            MyHelper.getInstance().getUserProfileManager().removeSyncContactInfoListener(contactInfoSyncListener);
         }
     }
     
@@ -214,7 +214,7 @@ public class ContactListFragment extends EaseContactListFragment {
 	/**
 	 * 删除联系人
 	 * 
-	 * @param toDeleteUser
+	 * @param tobeDeleteUser
 	 */
 	public void deleteContact(final EaseUser tobeDeleteUser) {
 		String st1 = getResources().getString(com.xuhai.telescopes.R.string.deleting);
@@ -230,7 +230,7 @@ public class ContactListFragment extends EaseContactListFragment {
 					// 删除db和内存中此用户的数据
 					UserDao dao = new UserDao(getActivity());
 					dao.deleteContact(tobeDeleteUser.getUsername());
-					DemoHelper.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
+					MyHelper.getInstance().getContactList().remove(tobeDeleteUser.getUsername());
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
@@ -243,7 +243,7 @@ public class ContactListFragment extends EaseContactListFragment {
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							Toast.makeText(getActivity(), st2 + e.getMessage(), 1).show();
+							Toast.makeText(getActivity(), st2 + e.getMessage(), Toast.LENGTH_LONG).show();
 						}
 					});
 
@@ -269,7 +269,7 @@ public class ContactListFragment extends EaseContactListFragment {
                                 refresh();
                             }else{
                                 String s1 = getResources().getString(com.xuhai.telescopes.R.string.get_failed_please_check);
-                                Toast.makeText(getActivity(), s1, 1).show();
+                                Toast.makeText(getActivity(), s1, Toast.LENGTH_LONG).show();
                                 loadingView.setVisibility(View.GONE);
                             }
                         }

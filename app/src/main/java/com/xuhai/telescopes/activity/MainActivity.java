@@ -42,7 +42,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.xuhai.easeui.utils.EaseCommonUtils;
 import com.xuhai.telescopes.Constant;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.db.InviteMessgeDao;
 import com.xuhai.telescopes.db.UserDao;
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
 			// 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
-		    DemoHelper.getInstance().logout(true,null);
+		    MyHelper.getInstance().logout(true,null);
 			finish();
 			startActivity(new Intent(this, LoginActivity.class));
 			return;
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				.commit();
 		
 		// 注册群组和联系人监听
-        DemoHelper.getInstance().registerGroupAndContactListener();
+        MyHelper.getInstance().registerGroupAndContactListener();
 		registerBroadcastReceiver();
 		
 		
@@ -204,7 +204,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			EMMessage message = (EMMessage) event.getData();
 
 			// 提示新消息
-			DemoHelper.getInstance().getNotifier().onNewMsg(message);
+			MyHelper.getInstance().getNotifier().onNewMsg(message);
 
 			refreshUIWithMessage();
 			break;
@@ -369,7 +369,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	private void notifyNewIviteMessage(InviteMessage msg) {
 		saveInviteMsg(msg);
 		// 提示有新消息
-		DemoHelper.getInstance().getNotifier().viberateAndPlayTone(null);
+		MyHelper.getInstance().getNotifier().viberateAndPlayTone(null);
 
 		// 刷新bottom bar消息未读数
 		updateUnreadAddressLable();
@@ -402,7 +402,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		// unregister this event listener when this activity enters the
 		// background
-		DemoHelper sdkHelper = DemoHelper.getInstance();
+		MyHelper sdkHelper = MyHelper.getInstance();
 		sdkHelper.pushActivity(this);
 
 		// register the event listener when enter the foreground
@@ -413,7 +413,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	@Override
 	protected void onStop() {
 		EMChatManager.getInstance().unregisterEventListener(this);
-		DemoHelper sdkHelper = DemoHelper.getInstance();
+		MyHelper sdkHelper = MyHelper.getInstance();
 		sdkHelper.popActivity(this);
 
 		super.onStop();
@@ -449,7 +449,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	 */
 	private void showConflictDialog() {
 		isConflictDialogShow = true;
-		DemoHelper.getInstance().logout(false,null);
+		MyHelper.getInstance().logout(false,null);
 		String st = getResources().getString(R.string.Logoff_notification);
 		if (!MainActivity.this.isFinishing()) {
 			// clear up global variables
@@ -484,7 +484,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	 */
 	private void showAccountRemovedDialog() {
 		isAccountRemovedDialogShow = true;
-		DemoHelper.getInstance().logout(true,null);
+		MyHelper.getInstance().logout(true,null);
 		String st5 = getResources().getString(R.string.Remove_the_notification);
 		if (!MainActivity.this.isFinishing()) {
 			// clear up global variables
@@ -532,7 +532,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             
             @Override
             public void onReceive(Context context, Intent intent) {
-                DemoHelper.getInstance().logout(true,new EMCallBack() {
+                MyHelper.getInstance().logout(true,new EMCallBack() {
                     
                     @Override
                     public void onSuccess() {

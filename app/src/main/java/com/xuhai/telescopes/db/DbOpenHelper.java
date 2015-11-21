@@ -17,7 +17,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 
 public class DbOpenHelper extends SQLiteOpenHelper {
 
@@ -26,9 +26,35 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
 	private static final String USERNAME_TABLE_CREATE = "CREATE TABLE "
 			+ UserDao.TABLE_NAME + " ("
+			+ UserDao.COLUMN_NAME_USERID + " TEXT PRIMARY KEY ,"
 			+ UserDao.COLUMN_NAME_NICK + " TEXT, "
 			+ UserDao.COLUMN_NAME_AVATAR + " TEXT, "
-			+ UserDao.COLUMN_NAME_ID + " TEXT PRIMARY KEY);";
+			+ UserDao.COLUMN_NAME_USERNAME + " TEXT,"
+			+ UserDao.COLUMN_NAME_RENAME + " TEXT ,"
+			+ UserDao.COLUMN_NAME_IDCARD + " TEXT ,"
+			+ UserDao.COLUMN_NAME_EMAIL + " TEXT ,"
+			+ UserDao.COLUMN_NAME_SIGNATURE + " TEXT ,"
+			+ UserDao.COLUMN_NAME_EFFECT + " TEXT ,"
+			+ UserDao.COLUMN_NAME_LEVEL + " TEXT ,"
+			+ UserDao.COLUMN_NAME_PEARL + " TEXT ,"
+			+ UserDao.COLUMN_NAME_COUNTRY + " TEXT ,"
+			+ UserDao.COLUMN_NAME_PROVINCE + " TEXT ,"
+			+ UserDao.COLUMN_NAME_CITY + " TEXT ,"
+			+ UserDao.COLUMN_NAME_AREA + " TEXT ,"
+			+ UserDao.COLUMN_NAME_ADDR + " TEXT ,"
+			+ UserDao.COLUMN_NAME_SCHOOL + " TEXT ,"
+			+ UserDao.COLUMN_NAME_SCHOOL_STATE + " TEXT ,"
+			+ UserDao.COLUMN_NAME_AUTHENTICATION + " TEXT ,"
+			+ UserDao.COLUMN_NAME_BIRTHDAY + " TEXT ,"
+			+ UserDao.COLUMN_NAME_MOBILE + " TEXT ,"
+			+ UserDao.COLUMN_NAME_GENDER + " TEXT ,"
+			+ UserDao.COLUMN_NAME_TOKEN + " TEXT ,"
+			+ UserDao.COLUMN_NAME_LAST_LOGIN_IN_IP + " TEXT ,"
+			+ UserDao.COLUMN_NAME_REGISTER_TYPE + " TEXT ,"
+			+ UserDao.COLUMN_NAME_CREATE_AT + " TEXT ,"
+			+ UserDao.COLUMN_NAME_ROLE_ID + " TEXT ,"
+			+ UserDao.COLUMN_NAME_ROLE_NAME + " TEXT ,"
+			+ UserDao.COLUMN_NAME_ROLE_DESCRIPTION + " TEXT );";
 	
 	private static final String INIVTE_MESSAGE_TABLE_CREATE = "CREATE TABLE "
 			+ InviteMessgeDao.TABLE_NAME + " ("
@@ -51,7 +77,9 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 	private static final String CREATE_PREF_TABLE = "CREATE TABLE "
             + UserDao.PREF_TABLE_NAME + " ("
             + UserDao.COLUMN_NAME_DISABLED_GROUPS + " TEXT, "
-            + UserDao.COLUMN_NAME_DISABLED_IDS + " TEXT);";
+            + UserDao.COLUMN_NAME_DISABLED_IDS + " TEXT,"
+			+ UserDao.COLUMN_NAME_TEAM+ " TEXT, "
+			+ UserDao.COLUMN_NAME_TEAM_USERS + " TEXT);";
 	
 	private DbOpenHelper(Context context) {
 		super(context, getUserDatabaseName(), null, DATABASE_VERSION);
@@ -65,7 +93,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	private static String getUserDatabaseName() {
-        return  DemoHelper.getInstance().getCurrentUsernName() + "_demo.db";
+        return  MyHelper.getInstance().getCurrentUsernName() + "_demo.db";
     }
 	
 	@Override

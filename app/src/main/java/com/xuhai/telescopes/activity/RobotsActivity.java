@@ -35,7 +35,7 @@ import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
 import com.easemob.exceptions.EaseMobException;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.db.UserDao;
 import com.xuhai.telescopes.domain.RobotUser;
@@ -73,7 +73,7 @@ public class RobotsActivity extends BaseActivity {
 				getRobotNamesFromServer();
 			}
 		});
-		Map<String, RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
+		Map<String, RobotUser> robotMap = MyHelper.getInstance().getRobotList();
 		if (robotMap != null) {
 			robotList.addAll(robotMap.values());
 		} else {
@@ -128,7 +128,7 @@ public class RobotsActivity extends BaseActivity {
 						robotList.clear();
 						robotList.addAll(mMap.values());
 						// 存入内存
-						DemoHelper.getInstance().setRobotList(mMap);
+						MyHelper.getInstance().setRobotList(mMap);
 						// 存入db
 						UserDao dao = new UserDao(RobotsActivity.this);
 						dao.saveRobotUser(robotList);

@@ -15,7 +15,7 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.easeui.utils.EaseCommonUtils;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +150,7 @@ public class ParseManager {
 					String nick = pUser.getString(CONFIG_NICK);
 					ParseFile pFile = pUser.getParseFile(CONFIG_AVATAR);
 					if(callback!=null){
-					    EaseUser user = DemoHelper.getInstance().getContactList().get(username);
+					    EaseUser user = MyHelper.getInstance().getContactList().get(username);
 						if(user!=null){
 							user.setNick(nick);
 							if (pFile != null && pFile.getUrl() != null) {

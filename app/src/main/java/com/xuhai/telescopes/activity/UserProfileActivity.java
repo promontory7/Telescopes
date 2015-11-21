@@ -25,7 +25,7 @@ import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.easeui.utils.EaseUserUtils;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 
 import java.io.ByteArrayOutputStream;
@@ -117,12 +117,12 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 	}
 
 	public void asyncFetchUserInfo(String username){
-		DemoHelper.getInstance().getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
+		MyHelper.getInstance().getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
 
 			@Override
 			public void onSuccess(EaseUser user) {
 				if (user != null) {
-				    DemoHelper.getInstance().saveContact(user);
+				    MyHelper.getInstance().saveContact(user);
 				    if(isFinishing()){
 				        return;
 				    }
@@ -177,7 +177,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			public void run() {
-				boolean updatenick = DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
+				boolean updatenick = MyHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
 				if (UserProfileActivity.this.isFinishing()) {
 					return;
 				}
@@ -259,7 +259,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			public void run() {
-				final String avatarUrl = DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(data);
+				final String avatarUrl = MyHelper.getInstance().getUserProfileManager().uploadUserAvatar(data);
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {

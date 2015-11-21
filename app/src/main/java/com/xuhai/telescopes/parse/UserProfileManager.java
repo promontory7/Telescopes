@@ -6,7 +6,8 @@ import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.xuhai.easeui.domain.EaseUser;
-import com.xuhai.telescopes.DemoHelper.DataSyncListener;
+import com.xuhai.telescopes.MyHelper;
+import com.xuhai.telescopes.MyHelper.DataSyncListener;
 import com.xuhai.telescopes.utils.PreferenceManager;
 
 import java.util.ArrayList;
@@ -115,11 +116,12 @@ public class UserProfileManager {
 
 	public synchronized EaseUser getCurrentUserInfo() {
 		if (currentUser == null) {
-			String username = EMChatManager.getInstance().getCurrentUser();
+			String username = MyHelper.getInstance().getCurrentUsernName();
 			currentUser = new EaseUser(username);
 			String nick = getCurrentUserNick();
 			currentUser.setNick((nick != null) ? nick : username);
 			currentUser.setAvatar(getCurrentUserAvatar());
+			currentUser.setToken(getCurrentUserToken());
 		}
 		return currentUser;
 	}
@@ -161,6 +163,8 @@ public class UserProfileManager {
 	public void asyncGetUserInfo(final String username,final EMValueCallBack<EaseUser> callback){
 		ParseManager.getInstance().asyncGetUserInfo(username, callback);
 	}
+
+
 	private void setCurrentUserNick(String nickname) {
 		getCurrentUserInfo().setNick(nickname);
 		PreferenceManager.getInstance().setCurrentUserNick(nickname);
@@ -169,6 +173,10 @@ public class UserProfileManager {
 	private void setCurrentUserAvatar(String avatar) {
 		getCurrentUserInfo().setAvatar(avatar);
 		PreferenceManager.getInstance().setCurrentUserAvatar(avatar);
+	}
+	private void setCurrentUserToken(String token){
+		getCurrentUserInfo().setToken(token);
+		PreferenceManager.getInstance().setCurrentUserToken(token);
 	}
 
 	private String getCurrentUserNick() {
@@ -179,4 +187,7 @@ public class UserProfileManager {
 		return PreferenceManager.getInstance().getCurrentUserAvatar();
 	}
 
+	private String getCurrentUserToken(){
+		return PreferenceManager.getInstance().getCurrentUserToken();
+	}
 }

@@ -1,10 +1,10 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,107 +16,109 @@ package com.xuhai.telescopes.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.easemob.EMError;
-import com.easemob.chat.EMChatManager;
-import com.easemob.exceptions.EaseMobException;
-import com.xuhai.telescopes.DemoHelper;
+import com.umeng.message.UmengRegistrar;
+import com.xuhai.telescopes.MyApplication;
+import com.xuhai.telescopes.MyHelper;
+import com.xuhai.telescopes.httpclient.HttpUtil;
+import com.xuhai.telescopes.httpclient.httpResponseHandle.RegisterJsonHttpResponseHandle;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * 注册页
- * 
+ *
  */
 public class RegisterActivity extends BaseActivity {
-	private EditText userNameEditText;
-	private EditText passwordEditText;
-	private EditText confirmPwdEditText;
+    private EditText userNameEditText;
+    private EditText passwordEditText;
+    private EditText confirmPwdEditText;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(com.xuhai.telescopes.R.layout.em_activity_register);
-		userNameEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.username);
-		passwordEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.password);
-		confirmPwdEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.confirm_password);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(com.xuhai.telescopes.R.layout.em_activity_register);
+        userNameEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.username);
+        passwordEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.password);
+        confirmPwdEditText = (EditText) findViewById(com.xuhai.telescopes.R.id.confirm_password);
+    }
 
-	/**
-	 * 注册
-	 * 
-	 * @param view
-	 */
-	public void register(View view) {
-		final String username = userNameEditText.getText().toString().trim();
-		final String pwd = passwordEditText.getText().toString().trim();
-		String confirm_pwd = confirmPwdEditText.getText().toString().trim();
-		if (TextUtils.isEmpty(username)) {
-			Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
-			userNameEditText.requestFocus();
-			return;
-		} else if (TextUtils.isEmpty(pwd)) {
-			Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
-			passwordEditText.requestFocus();
-			return;
-		} else if (TextUtils.isEmpty(confirm_pwd)) {
-			Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
-			confirmPwdEditText.requestFocus();
-			return;
-		} else if (!pwd.equals(confirm_pwd)) {
-			Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Two_input_password), Toast.LENGTH_SHORT).show();
-			return;
-		}
+    /**
+     * 注册
+     *
+     * @param view
+     */
+    public void register(View view) {
+        final String username = userNameEditText.getText().toString().trim();
+        final String pwd = passwordEditText.getText().toString().trim();
+        String confirm_pwd = confirmPwdEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            userNameEditText.requestFocus();
+            return;
+        } else if (TextUtils.isEmpty(pwd)) {
+            Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            passwordEditText.requestFocus();
+            return;
+        } else if (TextUtils.isEmpty(confirm_pwd)) {
+            Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
+            confirmPwdEditText.requestFocus();
+            return;
+        } else if (!pwd.equals(confirm_pwd)) {
+            Toast.makeText(this, getResources().getString(com.xuhai.telescopes.R.string.Two_input_password), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-		if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
-			final ProgressDialog pd = new ProgressDialog(this);
-			pd.setMessage(getResources().getString(com.xuhai.telescopes.R.string.Is_the_registered));
-			pd.show();
+        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(pwd)) {
+            final ProgressDialog pd = new ProgressDialog(this);
+            pd.setMessage(getResources().getString(com.xuhai.telescopes.R.string.Is_the_registered));
+            pd.show();
 
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						// 调用sdk注册方法
-						EMChatManager.getInstance().createAccountOnServer(username, pwd);
-						runOnUiThread(new Runnable() {
-							public void run() {
-								if (!RegisterActivity.this.isFinishing())
-									pd.dismiss();
-								// 保存用户名
-								DemoHelper.getInstance().setCurrentUserName(username);
-								Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.Registered_successfully), 0).show();
-								finish();
-							}
-						});
-					} catch (final EaseMobException e) {
-						runOnUiThread(new Runnable() {
-							public void run() {
-								if (!RegisterActivity.this.isFinishing())
-									pd.dismiss();
-								int errorCode=e.getErrorCode();
-								if(errorCode== EMError.NONETWORK_ERROR){
-									Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.USER_ALREADY_EXISTS){
-									Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.UNAUTHORIZED){
-									Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
-								}else if(errorCode == EMError.ILLEGAL_USER_NAME){
-								    Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-								}else{
-									Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
-								}
-							}
-						});
-					}
-				}
-			}).start();
 
-		}
-	}
+            String device_token = UmengRegistrar.getRegistrationId(MyApplication.applicationContext);
+            Log.e("device_token", device_token);
+            HttpUtil.getInstance().register(username, pwd, 86, 1234, device_token, new RegisterJsonHttpResponseHandle() {
 
-	public void back(View view) {
-		finish();
-	}
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing())
+                                pd.dismiss();
+                            // 保存用户名
+                            MyHelper.getInstance().setCurrentUserName(username);
+                            Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.Registered_successfully), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, final JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (!RegisterActivity.this.isFinishing())
+                                pd.dismiss();
+
+                            Toast.makeText(getApplicationContext(), getResources().getString(com.xuhai.telescopes.R.string.Registration_failed) + errorResponse.toString(), Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    public void back(View view) {
+        finish();
+    }
 
 }

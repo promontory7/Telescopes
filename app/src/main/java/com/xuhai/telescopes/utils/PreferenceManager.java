@@ -25,6 +25,7 @@ public class PreferenceManager {
 	private static PreferenceManager mPreferencemManager;
 	private static SharedPreferences.Editor editor;
 
+
 	private String SHARED_KEY_SETTING_NOTIFICATION = "shared_key_setting_notification";
 	private String SHARED_KEY_SETTING_SOUND = "shared_key_setting_sound";
 	private String SHARED_KEY_SETTING_VIBRATE = "shared_key_setting_vibrate";
@@ -38,6 +39,7 @@ public class PreferenceManager {
 	private static String SHARED_KEY_CURRENTUSER_USERNAME = "SHARED_KEY_CURRENTUSER_USERNAME";
 	private static String SHARED_KEY_CURRENTUSER_NICK = "SHARED_KEY_CURRENTUSER_NICK";
 	private static String SHARED_KEY_CURRENTUSER_AVATAR = "SHARED_KEY_CURRENTUSER_AVATAR";
+	private static String SHARED_KEY_CURRENTUSER_TOKEN = "SHARED_KEY_CURRENTUSER_TOKEN";
 	
 	private PreferenceManager(Context cxt) {
 		mSharedPreferences = cxt.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -53,7 +55,6 @@ public class PreferenceManager {
 	/**
 	 * 单例模式，获取instance实例
 	 * 
-	 * @param cxt
 	 * @return
 	 */
 	public synchronized static PreferenceManager getInstance() {
@@ -146,6 +147,10 @@ public class PreferenceManager {
 		editor.putString(SHARED_KEY_CURRENTUSER_AVATAR, avatar);
 		editor.commit();
 	}
+	public void setCurrentUserToken(String token){
+		editor.putString(SHARED_KEY_CURRENTUSER_TOKEN, token);
+		editor.commit();
+	}
 
 	public String getCurrentUserNick() {
 		return mSharedPreferences.getString(SHARED_KEY_CURRENTUSER_NICK, null);
@@ -153,6 +158,10 @@ public class PreferenceManager {
 
 	public String getCurrentUserAvatar() {
 		return mSharedPreferences.getString(SHARED_KEY_CURRENTUSER_AVATAR, null);
+	}
+
+	public String getCurrentUserToken(){
+		return mSharedPreferences.getString(SHARED_KEY_CURRENTUSER_TOKEN, null);
 	}
 	
 	public void setCurrentUserName(String username){
@@ -168,6 +177,7 @@ public class PreferenceManager {
 	public void removeCurrentUserInfo() {
 		editor.remove(SHARED_KEY_CURRENTUSER_NICK);
 		editor.remove(SHARED_KEY_CURRENTUSER_AVATAR);
+		editor.remove(SHARED_KEY_CURRENTUSER_TOKEN);
 		editor.commit();
 	}
 }

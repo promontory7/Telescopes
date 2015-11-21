@@ -25,7 +25,7 @@ import com.xuhai.easeui.widget.chatrow.EaseChatRow;
 import com.xuhai.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.xuhai.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.xuhai.telescopes.Constant;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.domain.EmojiconExampleGroupData;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.widget.ChatRowVoiceCall;
@@ -67,7 +67,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     protected void setUpView() {
         setChatFragmentListener(this);
         if (chatType == Constant.CHATTYPE_SINGLE) {
-            Map<String,RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
+            Map<String,RobotUser> robotMap = MyHelper.getInstance().getRobotList();
             if(robotMap!=null && robotMap.containsKey(toChatUsername)){
                 isRobot = true;
             }

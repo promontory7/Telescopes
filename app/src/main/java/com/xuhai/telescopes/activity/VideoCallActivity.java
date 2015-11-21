@@ -39,7 +39,7 @@ import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMVideoCallHelper;
 import com.easemob.exceptions.EMServiceNotReadyException;
-import com.xuhai.telescopes.DemoHelper;
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.utils.CameraHelper;
 
 import java.util.UUID;
@@ -87,7 +87,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         }
         setContentView(com.xuhai.telescopes.R.layout.em_activity_video_call);
         
-        DemoHelper.getInstance().isVideoCalling = true;
+        MyHelper.getInstance().isVideoCalling = true;
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                         | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
@@ -480,7 +480,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
-        DemoHelper.getInstance().isVideoCalling = false;
+        MyHelper.getInstance().isVideoCalling = false;
         stopMonitor();
         try {
 			callHelper.setSurfaceView(null);
