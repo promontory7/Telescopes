@@ -10,7 +10,6 @@ import com.loopj.android.http.SyncHttpClient;
 import com.xuhai.telescopes.Constant;
 import com.xuhai.telescopes.MyApplication;
 import com.xuhai.telescopes.MyHelper;
-import com.xuhai.telescopes.httpclient.httpResponseHandle.LogoutJsonHttpResponseHandle;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
@@ -208,6 +207,28 @@ public class HttpUtil {
     }
 
 
+    public void acceptOrRejectFriendship(String friendship, String acceptOrRrject, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("accept", acceptOrRrject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String url = Constant.addFriends_url + "/" + friendship + "/confirmed";
+
+        Log.e("同意/拒绝好友申请",url);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, url,
+                httpEntity, "application/json", jsonHttpResponseHandler);
+    }
+
+
     /**
      * 删除好友
      *
@@ -221,6 +242,7 @@ public class HttpUtil {
 
 
     public void accessFriendApplicaton() {
+
 
     }
 

@@ -15,6 +15,7 @@ package com.xuhai.telescopes.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import com.xuhai.telescopes.domain.InviteMessage;
 
@@ -26,6 +27,7 @@ public class InviteMessgeDao {
 	static final String COLUMN_NAME_FROM = "username";
 	static final String COLUMN_NAME_GROUP_ID = "groupid";
 	static final String COLUMN_NAME_GROUP_Name = "groupname";
+	static final String COLUMN_NAME_FRIENDSHIP = "friendship";
 	
 	static final String COLUMN_NAME_TIME = "time";
 	static final String COLUMN_NAME_REASON = "reason";
@@ -44,6 +46,7 @@ public class InviteMessgeDao {
 	 * @return  返回这条messaged在db中的id
 	 */
 	public Integer saveMessage(InviteMessage message){
+		Log.e("saveMessage",message.toString());
 		return DemoDBManager.getInstance().saveMessage(message);
 	}
 	

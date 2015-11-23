@@ -507,6 +507,51 @@ public class MyHelper {
         }
     }
 
+
+    /**
+     * 收到好友邀请
+     * @param
+     * @param
+     */
+    public void onContactInvited(String username,String friendship,String reason){
+        List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+
+        for (InviteMessage inviteMessage : msgs) {
+            if (inviteMessage.getGroupId() == null && inviteMessage.getFrom().equals(username)) {
+                inviteMessgeDao.deleteMessage(username);
+            }
+        }
+        // 自己封装的javabean
+        InviteMessage msg = new InviteMessage();
+        msg.setFrom(username);
+        msg.setFriendship(friendship);
+        msg.setTime(System.currentTimeMillis());
+        msg.setReason(reason);
+        Log.d(TAG, username + "请求加你为好友,reason: " + reason);
+        Log.e("msg",msg.toString());
+        // 设置相应status
+        msg.setStatus(InviteMessage.InviteMesageStatus.BEINVITEED);
+        notifyNewIviteMessage(msg);
+        broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+    }
+
+    public void onContactAgree(String username){
+        List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+        for (InviteMessage inviteMessage : msgs) {
+            if (inviteMessage.getFrom().equals(username)) {
+                return;
+            }
+        }
+        // 自己封装的javabean
+        InviteMessage msg = new InviteMessage();
+        msg.setFrom(username);
+        msg.setTime(System.currentTimeMillis());
+        Log.d(TAG, username + "同意了你的好友请求");
+        msg.setStatus(InviteMessage.InviteMesageStatus.BEAGREED);
+        notifyNewIviteMessage(msg);
+        broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+    }
+
     /***
      * 好友变化listener
      */

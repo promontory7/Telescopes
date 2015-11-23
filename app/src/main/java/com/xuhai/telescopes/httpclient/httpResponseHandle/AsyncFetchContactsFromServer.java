@@ -47,16 +47,16 @@ public class AsyncFetchContactsFromServer extends BaseJsonHttpResponseHandle {
                     //获得这个分组的所有用户User
                     JSONArray users = allTeam.getJSONObject(i).getJSONArray("users");
                     Log.e("这个分组用户", users.toString());
-                    List<String> oneLineUsersNameList = null;//这个分组的所有用户名
+                    List<String> oneLineUsersNameList = new ArrayList<>();//这个分组的所有用户名
                     for (int j = 0; j < users.length(); j++) {
                         JSONObject userjson = users.getJSONObject(j);
                         Log.e("FromServer获得用户", userjson.toString());
 
-                        oneLineUsersNameList.add(userjson.getString("username"));
+                        oneLineUsersNameList.add(userjson.getString("name"));
                         EaseUser user = null;
                         user = setUserFromJson(userjson);
                         allUsers.put(user.getUsername(), user);
-                    }
+                        Log.e("allUser",allUsers.toString());                    }
                     teamUsers.put(teamName, oneLineUsersNameList);
                 }
 

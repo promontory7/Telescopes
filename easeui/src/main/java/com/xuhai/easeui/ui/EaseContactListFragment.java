@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -253,6 +254,7 @@ public class EaseContactListFragment extends EaseBaseFragment {
                         EaseUser user = entry.getValue();
                         EaseCommonUtils.setUserInitialLetter(user);
                         contactList.add(user);
+                        Log.e("contactList_add",user.toString());
                     }
                 }
             }

@@ -27,7 +27,7 @@ public class Constant extends EaseConstant {
 	public static final String ACTION_CONTACT_CHANAGED = "action_contact_changed";
 
 	//服务器地址
-	public static final String sever_host_url="http://192.168.0.107:3000/";
+	public static final String sever_host_url="http://112.74.115.90:8082/";
 
 	//登录地址
 	public static final String login_url=sever_host_url+"api/v1/sessions";

@@ -228,6 +228,7 @@ public class DemoDBManager {
         if (db.isOpen()) {
             ContentValues values = new ContentValues();
             values.put(InviteMessgeDao.COLUMN_NAME_FROM, message.getFrom());
+            values.put(InviteMessgeDao.COLUMN_NAME_FRIENDSHIP,message.getFriendship());
             values.put(InviteMessgeDao.COLUMN_NAME_GROUP_ID, message.getGroupId());
             values.put(InviteMessgeDao.COLUMN_NAME_GROUP_Name, message.getGroupName());
             values.put(InviteMessgeDao.COLUMN_NAME_REASON, message.getReason());
@@ -274,6 +275,7 @@ public class DemoDBManager {
                 String from = cursor.getString(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_FROM));
                 String groupid = cursor.getString(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_GROUP_ID));
                 String groupname = cursor.getString(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_GROUP_Name));
+                String friends = cursor.getString(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_FRIENDSHIP));
                 String reason = cursor.getString(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_REASON));
                 long time = cursor.getLong(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_TIME));
                 int status = cursor.getInt(cursor.getColumnIndex(InviteMessgeDao.COLUMN_NAME_STATUS));
@@ -281,6 +283,7 @@ public class DemoDBManager {
                 msg.setId(id);
                 msg.setFrom(from);
                 msg.setGroupId(groupid);
+                msg.setFriendship(friends);
                 msg.setGroupName(groupname);
                 msg.setReason(reason);
                 msg.setTime(time);

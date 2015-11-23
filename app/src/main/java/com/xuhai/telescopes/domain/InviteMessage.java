@@ -26,6 +26,8 @@ public class InviteMessage {
 	private String groupId;
 	//群名称
 	private String groupName;
+
+	private String friendship;
 	
 
 	private int id;
@@ -40,6 +42,14 @@ public class InviteMessage {
 
 	public long getTime() {
 		return time;
+	}
+
+	public void setFriendship(String friendship){
+		this.friendship = friendship;
+	}
+
+	public String getFriendship(){
+		return friendship;
 	}
 
 	public void setTime(long time) {
@@ -89,6 +99,10 @@ public class InviteMessage {
 		this.groupName = groupName;
 	}
 
+	@Override
+	public String toString() {
+		return "from="+from+"   friendship = "+friendship;
+	}
 
 
 	public enum InviteMesageStatus{

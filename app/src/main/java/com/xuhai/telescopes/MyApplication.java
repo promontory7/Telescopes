@@ -5,12 +5,13 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyApplication extends Application {
 
@@ -50,22 +51,37 @@ public class MyApplication extends Application {
                     @Override
                     public void run() {
                         // TODO Auto-generated method stub
+                        Log.e("msg.title", msg.title);
+                        Log.e("msg.custom", msg.custom);
+                        Log.e("msg.text", msg.text);
 
-                        // 对自定义消息的处理方式，点击或者忽略
-                        boolean isClickOrDismissed = true;
-                        if (isClickOrDismissed) {
-                            //自定义消息的点击统计
-                            UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
-                        } else {
-                            //自定义消息的忽略统计
-                            UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
+                        if (msg.title == "好友申请") {
+                            JSONObject jsonject = null;
+                            String user_id = null;
+                            String friendship = null;
+                            String reason = "加个好友吧";
+                            try {
+                                jsonject = new JSONObject(msg.custom.toString());
+                                user_id = jsonject.optString("user_id");
+                                friendship = jsonject.optString("friendship");
+                                Log.e("好友添加邀请", "user_id" + user_id + "    friendship" + friendship);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            MyHelper.getInstance().onContactInvited(user_id, friendship, reason);
+                        } else if (msg.title == "好友申请回馈") {
+                            JSONObject jsonject = null;
+                            String user_id = null;
+                            String reason = "加个好友吧";
+                            try {
+                                jsonject = new JSONObject(msg.custom.toString());
+                                user_id = jsonject.optString("user_id");
+                                Log.e("好友添加邀请", "user_id" + user_id);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            MyHelper.getInstance().onContactAgree(user_id);
                         }
-
-                        Log.e("推送title", msg.title);
-                        Log.e("推送custom", msg.custom.toString());
-                        Log.e("推送text", msg.text);
-                        Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-
                     }
                 });
             }

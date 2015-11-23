@@ -14,6 +14,7 @@
 package com.xuhai.telescopes.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -40,6 +41,7 @@ public class NewFriendsMsgActivity extends BaseActivity {
 		InviteMessgeDao dao = new InviteMessgeDao(this);
 		List<InviteMessage> msgs = dao.getMessagesList();
 		//设置adapter
+		Log.e("oncreate",msgs.toString());
 		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs);
 		listView.setAdapter(adapter);
 		dao.saveUnreadMessageCount(0);

@@ -82,7 +82,8 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         } else {
             holder.headerView.setVisibility(View.GONE);
         }
-        //设置头像
+        //设置用户呢称
+//        holder.nameView.setText(username);
         EaseUserUtils.setUserNick(username, holder.nameView);
         //设置头像
         EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);

@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 	private Button[] mTabs;
 	private ContactListFragment contactListFragment;
+	private CastNetFragment castNetFragment;
+	private SeaFragment seaFragment;
 	// private conversationListFragment conversationListFragment;
 //	private ChatAllHistoryFragment conversationListFragment;
 	private SettingsFragment settingFragment;
@@ -70,7 +72,17 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	public boolean isConflict = false;
 	// 账号被移除
 	private boolean isCurrentAccountRemoved = false;
-	
+
+	private android.app.AlertDialog.Builder conflictBuilder;
+	private android.app.AlertDialog.Builder accountRemovedBuilder;
+	private boolean isConflictDialogShow;
+	private boolean isAccountRemovedDialogShow;
+	private BroadcastReceiver internalDebugReceiver;
+	private ConversationListFragment conversationListFragment;
+	private BroadcastReceiver broadcastReceiver;
+	private LocalBroadcastManager broadcastManager;
+
+
 
 	/**
 	 * 检查当前用户是否被删除
@@ -116,6 +128,9 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		userDao = new UserDao(this);
 		conversationListFragment = new ConversationListFragment();
 		contactListFragment = new ContactListFragment();
+		castNetFragment = new CastNetFragment();
+		seaFragment = new SeaFragment();
+
 		settingFragment = new SettingsFragment();
 		fragments = new Fragment[] { conversationListFragment, contactListFragment, settingFragment };
 		// 添加显示第一个fragment
@@ -435,14 +450,6 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	private android.app.AlertDialog.Builder conflictBuilder;
-	private android.app.AlertDialog.Builder accountRemovedBuilder;
-	private boolean isConflictDialogShow;
-	private boolean isAccountRemovedDialogShow;
-    private BroadcastReceiver internalDebugReceiver;
-    private ConversationListFragment conversationListFragment;
-    private BroadcastReceiver broadcastReceiver;
-    private LocalBroadcastManager broadcastManager;
 
 	/**
 	 * 显示帐号在别处登录dialog
