@@ -2,6 +2,7 @@
 package com.xuhai.telescopes.db;
 
 import android.content.Context;
+import android.os.DropBoxManager;
 
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.domain.RobotUser;
@@ -46,6 +47,7 @@ public class UserDao {
     public static final String COLUMN_NAME_DISABLED_IDS = "disabled_ids";
     public static final String COLUMN_NAME_TEAM = "team";
     public static final String COLUMN_NAME_TEAM_USERS = "team_users";
+    public static final String COLUMN_NAME_BLACKLIST = "blacklist";
 
     public static final String ROBOT_TABLE_NAME = "robots";
     public static final String ROBOT_COLUMN_NAME_ID = "username";
@@ -122,6 +124,14 @@ public class UserDao {
 
     public List<String> getTeam(){
         return DemoDBManager.getInstance().getTeam();
+    }
+
+    public void setBlacklist(List<String> blacklist){
+        DemoDBManager.getInstance().setBlacklist(blacklist);
+    }
+
+    public List<String> getBlacklist(){
+        return DemoDBManager.getInstance().getBlacklist();
     }
 
     public void setDisabledIds(List<String> ids) {

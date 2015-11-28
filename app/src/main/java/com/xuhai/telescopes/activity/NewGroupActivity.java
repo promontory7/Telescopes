@@ -17,6 +17,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -29,6 +30,12 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 import com.xuhai.easeui.widget.EaseAlertDialog;
 import com.xuhai.telescopes.R;
+import com.xuhai.telescopes.httpclient.HttpUtil;
+import com.xuhai.telescopes.httpclient.httpResponseHandle.CreateAnAllyJsonHttpResponseHandle;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NewGroupActivity extends BaseActivity {
 	private EditText groupNameEditText;
@@ -47,9 +54,7 @@ public class NewGroupActivity extends BaseActivity {
 		checkBox = (CheckBox) findViewById(R.id.cb_public);
 		memberCheckbox = (CheckBox) findViewById(R.id.cb_member_inviter);
 		openInviteContainer = (LinearLayout) findViewById(R.id.ll_open_invite);
-		
 		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked){
@@ -61,19 +66,75 @@ public class NewGroupActivity extends BaseActivity {
 		});
 	}
 
-	/**
-	 * @param v
-	 */
-	public void save(View v) {
-		String name = groupNameEditText.getText().toString();
-		if (TextUtils.isEmpty(name)) {
-		    new EaseAlertDialog(this, R.string.Group_name_cannot_be_empty).show();
+
+	public void save(View v){
+		final String groupName = groupNameEditText.getText().toString();
+		String description = introductionEditText.getText().toString();
+		String st1 = getResources().getString(R.string.Is_to_create_a_group_chat);
+		final String st2 = getResources().getString(R.string.Failed_to_create_groups);
+
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setMessage(st1);
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.show();
+
+		if (TextUtils.isEmpty(groupName)) {
+			new EaseAlertDialog(this, R.string.Group_name_cannot_be_empty).show();
 		} else {
-			// 进通讯录选人
-			startActivityForResult(new Intent(this, GroupPickContactsActivity.class).putExtra("groupName", name), 0);
+			HttpUtil.getInstance().createAnAlly(groupName, 5, description, new CreateAnAllyJsonHttpResponseHandle() {
+
+				@Override
+				public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+					super.onSuccess(statusCode, headers, response);
+					String huanxin_group_id = null;
+					String groupid = null;
+					if (statusCode == 200) {
+						try {
+							JSONObject allyjson = response.getJSONObject("ally");
+							huanxin_group_id = allyjson.optString("huanxin_group_id");
+							groupid = allyjson.optString("id");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						runOnUiThread(new Runnable() {
+							public void run() {
+								progressDialog.dismiss();
+								Toast.makeText(NewGroupActivity.this, "创建群成功", Toast.LENGTH_LONG).show();
+							}
+						});
+						startActivityForResult(new Intent(NewGroupActivity.this, GroupPickContactsActivity.class)
+								.putExtra("groupName", groupName).putExtra("groupid",groupid).putExtra("huanxin_group_id",huanxin_group_id), 0);
+					}
+				}
+
+				@Override
+				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+					Log.e("createAnAlly", "创建群失败");
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							Toast.makeText(NewGroupActivity.this, st2, Toast.LENGTH_LONG).show();
+						}
+					});
+				}
+			});
 		}
 	}
-	
+
+//	/**
+//	 * @param v
+//	 */
+//	public void save(View v) {
+//		String name = groupNameEditText.getText().toString();
+//		if (TextUtils.isEmpty(name)) {
+//		    new EaseAlertDialog(this, R.string.Group_name_cannot_be_empty).show();
+//		} else {
+//			// 进通讯录选人
+//			startActivityForResult(new Intent(this, GroupPickContactsActivity.class).putExtra("groupName", name), 0);
+//		}
+//	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -101,6 +162,7 @@ public class NewGroupActivity extends BaseActivity {
 						}else{
 							//创建不公开群
 						    EMGroupManager.getInstance().createPrivateGroup(groupName, desc, members, memberCheckbox.isChecked(),200);
+
 						}
 						runOnUiThread(new Runnable() {
 							public void run() {
@@ -113,11 +175,11 @@ public class NewGroupActivity extends BaseActivity {
 						runOnUiThread(new Runnable() {
 							public void run() {
 								progressDialog.dismiss();
-								Toast.makeText(NewGroupActivity.this, st2 + e.getLocalizedMessage(), 1).show();
+								Toast.makeText(NewGroupActivity.this, st2 + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 							}
 						});
 					}
-					
+
 				}
 			}).start();
 		}

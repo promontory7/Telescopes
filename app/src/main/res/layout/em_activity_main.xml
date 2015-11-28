@@ -24,15 +24,15 @@
                 android:id="@+id/btn_conversation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_chat_bg"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/my_tab_conversation_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
-                android:paddingTop="7dip"
+                android:paddingTop="3dip"
                 android:scaleType="matrix"
                 android:text="@string/session"
-                android:textColor="@color/em_main_botton_text_color"
-                android:textSize="12sp" />
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/unread_msg_number"
@@ -50,27 +50,27 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/btn_container_address_list"
+            android:id="@+id/btn_container_friends_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <Button
-                android:id="@+id/btn_address_list"
+                android:id="@+id/btn_friends_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_contact_list_bg"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/my_tab_friends_list_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
-                android:paddingTop="7dip"
+                android:paddingTop="3dip"
                 android:scaleType="matrix"
-                android:text="@string/address_book"
-                android:textColor="@color/em_main_botton_text_color"
-                android:textSize="12sp" />
+                android:text="@string/friends_list"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
 
             <TextView
-                android:id="@+id/unread_address_number"
+                android:id="@+id/unread_friends_list_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -80,25 +80,88 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/btn_container_setting"
+            android:id="@+id/btn_container_cast_net"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <Button
-                android:id="@+id/btn_setting"
+                android:id="@+id/btn_cast_net"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_setting_bg"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/my_tab_cast_net_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
-                android:paddingTop="7dip"
+                android:paddingTop="2dip"
                 android:scaleType="matrix"
-                android:text="@string/setting"
-                android:textColor="@color/em_main_botton_text_color"
-                android:textSize="12sp" />
+                android:text="@string/cast_net"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/unread_cast_net_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/em_unread_dot"
+                android:visibility="visible" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_container_sea"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/btn_sea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/my_tab_sea_bg"
+                android:onClick="onTabClicked"
+                android:paddingBottom="2dip"
+                android:paddingTop="2dip"
+                android:scaleType="matrix"
+                android:text="@string/sea"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/unread_sea_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/em_unread_dot"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+
+
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/btn_container_setting"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1" >-->
+
+            <!--<Button-->
+                <!--android:id="@+id/btn_setting"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@drawable/em_main_bottom_item_bg"-->
+                <!--android:drawableTop="@drawable/em_tab_setting_bg"-->
+                <!--android:onClick="onTabClicked"-->
+                <!--android:paddingBottom="2dip"-->
+                <!--android:paddingTop="7dip"-->
+                <!--android:scaleType="matrix"-->
+                <!--android:text="@string/setting"-->
+                <!--android:textColor="@color/em_main_botton_text_color"-->
+                <!--android:textSize="12sp" />-->
+        <!--</RelativeLayout>-->
     </LinearLayout>
 
     <RelativeLayout

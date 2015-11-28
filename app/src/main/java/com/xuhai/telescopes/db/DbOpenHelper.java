@@ -79,8 +79,18 @@ public class DbOpenHelper extends SQLiteOpenHelper {
             + UserDao.PREF_TABLE_NAME + " ("
             + UserDao.COLUMN_NAME_DISABLED_GROUPS + " TEXT, "
             + UserDao.COLUMN_NAME_DISABLED_IDS + " TEXT,"
+			+ UserDao.COLUMN_NAME_BLACKLIST+ " TEXT, "
 			+ UserDao.COLUMN_NAME_TEAM+ " TEXT, "
 			+ UserDao.COLUMN_NAME_TEAM_USERS + " TEXT);";
+
+	private static final String ALLY_TABLE_CREATE = "CREATE TABLE "
+			+ AllyDao.ALLY_TABLE_NAME + " ("
+			+ AllyDao.COLUMN_NAME_ID + " TEXT, "
+			+ AllyDao.COLUMN_NAME_NAME + " TEXT, "
+			+ AllyDao.COLUMN_NAME_SIZE +" TEXT, "
+			+ AllyDao.COLUMN_NAME_USERS_ID + " TEXT, "
+			+ AllyDao.COLUMN_NAME_HUANXIN_GROUP_ID + " TEXT, "
+			+ AllyDao.COLUMN_NAME_DESCRIPTION + " TEXT);";
 	
 	private DbOpenHelper(Context context) {
 		super(context, getUserDatabaseName(), null, DATABASE_VERSION);
@@ -94,7 +104,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	private static String getUserDatabaseName() {
-        return  MyHelper.getInstance().getCurrentUsernName() + "_demo.db";
+        return  MyHelper.getInstance().getCurrentUsernName() + "_telescopes.db";
     }
 	
 	@Override
@@ -103,7 +113,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(INIVTE_MESSAGE_TABLE_CREATE);
 		db.execSQL(CREATE_PREF_TABLE);
 		db.execSQL(ROBOT_TABLE_CREATE);
-		
+		db.execSQL(ALLY_TABLE_CREATE);
 	}
 
 	@Override

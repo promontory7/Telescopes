@@ -3,7 +3,9 @@ package com.xuhai.telescopes;
 import android.content.Context;
 
 import com.xuhai.easeui.domain.EaseUser;
+import com.xuhai.telescopes.db.AllyDao;
 import com.xuhai.telescopes.db.UserDao;
+import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.utils.PreferenceManager;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 
 public class MyModel {
     UserDao dao = null;
+    AllyDao allyDao = null;
     protected Context context = null;
     protected Map<Key, Object> valueCache = new HashMap<Key, Object>();
 
@@ -72,20 +75,43 @@ public class MyModel {
         }
 
         dao.setTeam(team);
-        valueCache.put(Key.Team, team);
     }
 
     public List<String> getTeam() {
-        Object val = valueCache.get(Key.Team);
 
         if (dao == null) {
             dao = new UserDao(context);
         }
-        if (val == null) {
-            val = dao.getTeam();
-            valueCache.put(Key.Team, val);
+        return dao.getTeam();
+    }
+
+    public void setBlacklist(List<String> blacklist) {
+        if (dao == null) {
+            dao = new UserDao(context);
         }
-        return (List<String>) val;
+
+        dao.setBlacklist(blacklist);
+    }
+
+    public List<String> getBlacklist() {
+        if (dao == null) {
+            dao = new UserDao(context);
+        }
+        return dao.getBlacklist();
+    }
+
+    public void setAllies(List<Ally> allies) {
+        if (allyDao == null) {
+            allyDao = new AllyDao(context);
+        }
+        allyDao.saveAllies(allies);
+    }
+
+    public List<Ally> getAllies() {
+        if (allyDao == null) {
+            allyDao = new AllyDao(context);
+        }
+        return allyDao.getAllies();
     }
 
     public Map<String, RobotUser> getRobotList() {
@@ -252,6 +278,5 @@ public class MyModel {
         SpakerOn,
         DisabledGroups,
         DisabledIds,
-        Team
     }
 }

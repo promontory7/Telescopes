@@ -33,6 +33,7 @@ import com.xuhai.telescopes.db.InviteMessgeDao;
 import com.xuhai.telescopes.domain.InviteMessage;
 import com.xuhai.telescopes.httpclient.HttpUtil;
 import com.xuhai.telescopes.httpclient.httpResponseHandle.AcceptFriendshipJsonHttpResposseHandle;
+import com.xuhai.telescopes.httpclient.httpResponseHandle.ConfirmToAllyHttpResponseHandle;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -188,6 +189,42 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                         }
                     });
         } else {//同意加群申请
+            HttpUtil.getInstance().confirmToAnAlly(msg.getGroupId(),new ConfirmToAllyHttpResponseHandle(){
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    msg.setStatus(InviteMessage.InviteMesageStatus.AGREED);
+                    // 更新db
+                    ContentValues values = new ContentValues();
+                    values.put(InviteMessgeDao.COLUMN_NAME_STATUS, msg.getStatus().ordinal());
+                    messgeDao.updateMessage(msg.getId(), values);
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pd.dismiss();
+                            button.setText(str2);
+                            button.setBackgroundDrawable(null);
+                            button.setEnabled(false);
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pd.dismiss();
+                            Toast.makeText(context, "同意失败", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            });
 
         }
 

@@ -55,7 +55,7 @@ public class MyApplication extends Application {
                         Log.e("msg.custom", msg.custom);
                         Log.e("msg.text", msg.text);
 
-                        if (msg.title == "好友申请") {
+                        if (msg.title.trim().equals("好友申请")) {
                             JSONObject jsonject = null;
                             String user_id = null;
                             String friendship = null;
@@ -69,18 +69,39 @@ public class MyApplication extends Application {
                                 e.printStackTrace();
                             }
                             MyHelper.getInstance().onContactInvited(user_id, friendship, reason);
-                        } else if (msg.title == "好友申请回馈") {
+                        } else if (msg.title.trim().equals("好友申请回馈")) {
                             JSONObject jsonject = null;
                             String user_id = null;
-                            String reason = "加个好友吧";
                             try {
                                 jsonject = new JSONObject(msg.custom.toString());
                                 user_id = jsonject.optString("user_id");
-                                Log.e("好友添加邀请", "user_id" + user_id);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                             MyHelper.getInstance().onContactAgree(user_id);
+                        } else if (msg.title.trim().equals("群消息提醒")) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(msg.custom.toString());
+                                String groupid = jsonObject.optString("ally_id");
+
+                                String text = msg.text.trim();
+                                int spilt = text.indexOf("邀请您加入");
+                                Log.e("spilt",spilt+"");
+                                String inviter = text.substring(0,spilt);
+                                String groupname = text.substring(spilt+6);
+                                Log.e("groupid",groupid);
+                                Log.e("inviter",inviter);
+                                Log.e("groupname",groupname);
+
+                                MyHelper.getInstance().onInvitationReceived(groupid,groupname,inviter);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (Exception ei){
+                                ei.printStackTrace();
+                            }
+
+                        } else {
+                           Log.e("umeng","WHAT !!!");
                         }
                     }
                 });

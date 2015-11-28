@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slidingmenu_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_top_bar_blue"
-    android:id="@+id/slidingmenu_layout">
+    android:background="@color/common_top_bar_blue">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="你好，这是左划菜单" />
+
+    <Button
+        android:id="@+id/btn_slidingmenu_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/em_tab_setting_bg"
+        android:paddingBottom="2dip"
+        android:paddingTop="7dip"
+        android:onClick="onSlidingmenuButtonClicked"
+        android:scaleType="matrix"
+        android:text="@string/setting"
+        android:textColor="@color/em_main_botton_text_color"
+        android:textSize="12sp" />
 
 </FrameLayout>

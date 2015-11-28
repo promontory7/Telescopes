@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xuhai.telescopes"
     android:versionCode="24"
-    android:versionName="2.2.4" >
+    android:versionName="2.2.4">
 
-  />
+    />
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,7 +31,8 @@
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE"
+    <permission
+        android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE" />
 
@@ -50,20 +51,19 @@
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/em_logo_uidemo"
-        android:label="@string/app_name" >
+        android:label="@string/app_name">
         <activity
             android:name="com.xuhai.telescopes.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <!-- 开屏页 -->
         <activity
             android:name="com.xuhai.telescopes.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
+            android:theme="@style/horizontal_slide">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,228 +76,201 @@
             android:name="com.xuhai.telescopes.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateVisible">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
 
         <!-- 注册 -->
         <activity
             android:name="com.xuhai.telescopes.activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateVisible">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
         <!-- 聊天页面 -->
         <activity
             android:name="com.xuhai.telescopes.activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+        <!-- 设置界面 -->
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
 
         <!-- 添加好友 -->
         <activity
             android:name="com.xuhai.telescopes.activity.AddContactActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible"></activity>
         <!-- 群组详情 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 群组列表 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <activity
             android:name="com.xuhai.telescopes.activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <!-- 聊天室详情 -->
         <activity
             android:name="com.xuhai.telescopes.activity.ChatRoomDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
 
         <!-- 新建群组 -->
         <activity
             android:name="com.xuhai.telescopes.activity.NewGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <!-- 退出群组提示框 -->
         <activity
             android:name="com.xuhai.telescopes.activity.ExitGroupDialog"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyleBottom" >
-        </activity>
+            android:theme="@style/MyDialogStyleBottom"></activity>
         <!-- 群组选人 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupPickContactsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <!-- 地图 -->
         <activity
             android:name="com.xuhai.easeui.ui.EaseBaiduMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
             android:name="com.xuhai.telescopes.activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 转发消息用户列表页面 -->
         <activity
             android:name="com.xuhai.telescopes.activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <!-- 自定义的contextmenu -->
         <activity
             android:name="com.xuhai.telescopes.activity.ContextMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle" >
-        </activity>
+            android:theme="@style/MyDialogStyle"></activity>
         <!-- 显示下载大图页面 -->
         <activity
             android:name="com.xuhai.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 下载文件 -->
         <activity
             android:name="com.xuhai.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 黑名单 -->
         <activity
             android:name="com.xuhai.telescopes.activity.BlacklistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
 
         <!-- 公开的群聊列表 -->
         <activity
             android:name="com.xuhai.telescopes.activity.PublicGroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <activity
             android:name="com.xuhai.telescopes.activity.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <!-- 语音通话 -->
         <activity
             android:name="com.xuhai.telescopes.activity.VoiceCallActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@style/nornal_style" >
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/nornal_style"></activity>
         <!-- 视频通话 -->
         <activity
             android:name="com.xuhai.telescopes.activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 群聊简单信息 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupSimpleDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <!-- 群组黑名单用户列表 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupBlacklistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <activity
             android:name="com.xuhai.telescopes.activity.PublicGroupsSeachActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" >
-        </activity>
+            android:theme="@style/horizontal_slide"></activity>
         <activity
             android:name="com.xuhai.telescopes.activity.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateVisible" >
-        </activity>
+            android:windowSoftInputMode="stateVisible"></activity>
         <activity
             android:name="com.xuhai.easeui.ui.EaseShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <!-- choose video -->
         <activity
             android:name="com.xuhai.telescopes.activity.ImageGridActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name="com.xuhai.telescopes.activity.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <!-- upload error log -->
         <activity
             android:name="com.xuhai.telescopes.activity.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <!-- iOS offline push nick -->
         <activity
             android:name="com.xuhai.telescopes.activity.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <!-- robots list -->
         <activity
             android:name="com.xuhai.telescopes.activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <!-- user profile -->
         <activity
             android:name="com.xuhai.telescopes.activity.UserProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            ></activity>
+            android:theme="@style/horizontal_slide"></activity>
 
         <!-- 开机自启动服务 -->
-        <receiver android:name="com.easemob.chat.StartServiceReceiver" >
-            <intent-filter android:priority="1000" >
+        <receiver android:name="com.easemob.chat.StartServiceReceiver">
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
 
@@ -309,52 +282,50 @@
         <receiver
             android:name="com.easemob.chat.EMGCMBroadcastReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.easemob.chatuidemo" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.easemob.chat.EMGCMListenerService"
-            android:exported="false" >
-        </service>
+        <service
+            android:name="com.easemob.chat.EMGCMListenerService"
+            android:exported="false"></service>
 
         <receiver
             android:name="com.xuhai.telescopes.receiver.GCMPushBroadCast"
             android:exported="false">
-            <intent-filter >
-                <action android:name="com.easemob.sdk.push"/>
-                <category android:name="com.easemob.chatuidemo"/>
+            <intent-filter>
+                <action android:name="com.easemob.sdk.push" />
+                <category android:name="com.easemob.chatuidemo" />
             </intent-filter>
         </receiver>
         <!-- gcm end -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
+            android:process=":DownloadingService"></service>
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="yeluojun#znlf" />
         <!-- 声明sdk所需的service -->
-        <service android:name="com.easemob.chat.EMChatService"
-            android:exported="true"
-            />
+        <service
+            android:name="com.easemob.chat.EMChatService"
+            android:exported="true" />
         <!-- 声明sdk所需的receiver -->
         <receiver android:name="com.easemob.chat.EMMonitorReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
@@ -366,20 +337,17 @@
             android:process=":remote" />
 
 
-
-
-
         <!-- umeng appkey， -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="561b463767e58e621a001d54" >
-        </meta-data>
+            android:value="561b463767e58e621a001d54"></meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="d7ea7a7a6a9bd8fcc8709b825e01bda9" >
-        </meta-data>
+            android:value="d7ea7a7a6a9bd8fcc8709b825e01bda9"></meta-data>
 
-        <meta-data android:value="easemob" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="easemob" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -388,13 +356,12 @@
         <!-- umeng监听通知点击或者忽略处理的广播 -->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false" >
-        </receiver>
+            android:exported="false"></receiver>
 
         <!-- umeng监听开机运行、网络连接变化、卸载的广播 -->
         <receiver
             android:name="com.umeng.message.SystemReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -411,7 +378,7 @@
         <receiver
             android:name="com.umeng.message.MessageReceiver"
             android:exported="false"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
@@ -420,7 +387,7 @@
         <!-- umeng监听宿主选举的广播 -->
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
                 <category android:name="umeng" />
@@ -430,25 +397,24 @@
         <!-- umeng监听注册的广播 -->
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.xuhai.telescopes.intent.action.COMMAND" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.umeng.message.UmengMessageBootReceiver" >
+        <receiver android:name="com.umeng.message.UmengMessageBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
 
-
         <!-- Umeng的长连服务，用来建立推送的长连接的 -->
         <service
             android:name="com.umeng.message.UmengService"
-            android:label="PushService"
             android:exported="true"
-            android:process=":push" >
+            android:label="PushService"
+            android:process=":push">
             <intent-filter>
                 <action android:name="com.xuhai.telescopes.intent.action.START" />
             </intent-filter>
@@ -462,14 +428,15 @@
         </service>
 
         <!-- Umeng的消息接收服务 -->
-        <service android:name="com.umeng.message.UmengIntentService"
+        <service
+            android:name="com.umeng.message.UmengIntentService"
             android:process=":push" />
 
         <!-- Umeng的消息路由服务 -->
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
-            android:process=":push"
-            android:exported="true" >
+            android:exported="true"
+            android:process=":push">
             <intent-filter>
                 <action android:name="org.android.agoo.client.MessageReceiverService" />
             </intent-filter>
@@ -479,19 +446,20 @@
         </service>
 
         <!-- umengv2.4.1添加的Service，Umeng的消息接收后的处理服务 -->
-        <service android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.umeng.messge.registercallback.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.unregistercallback.action"/>
+                <action android:name="com.umeng.message.unregistercallback.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.message.handler.action"/>
+                <action android:name="com.umeng.message.message.handler.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.autoupdate.handler.action"/>
+                <action android:name="com.umeng.message.autoupdate.handler.action" />
             </intent-filter>
         </service>
 
@@ -500,7 +468,8 @@
 
         <!-- umengV2.5.0添加的Service，用于本地通知 -->
         <!-- 如果不使用本地通知，可以注释掉本地通知服务的配置 -->
-        <service android:name="com.umeng.message.local.UmengLocalNotificationService"
+        <service
+            android:name="com.umeng.message.local.UmengLocalNotificationService"
             android:exported="false" />
 
 

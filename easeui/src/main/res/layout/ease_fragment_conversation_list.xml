@@ -12,7 +12,7 @@
 	    easemob:titleBarTitle="@string/session"
 	    />
     
-    <include layout="@layout/ease_search_bar" />
+    <!--<include layout="@layout/ease_search_bar" />-->
     
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,9 +26,12 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="3dp"
+        android:layout_margin="3dp"
         android:background="@android:color/transparent"
         android:cacheColorHint="#00000000"
         android:divider="@null"
+        android:dividerHeight="3dp"
         easemob:cvsListPrimaryTextSize="16sp"
          />
 

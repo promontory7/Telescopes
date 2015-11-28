@@ -3,12 +3,15 @@ package com.xuhai.telescopes.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.renderscript.AllocationAdapter;
+import android.renderscript.Sampler;
 import android.text.TextUtils;
 
 import com.easemob.util.HanziToPinyin;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.Constant;
 import com.xuhai.telescopes.MyApplication;
+import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.InviteMessage;
 import com.xuhai.telescopes.domain.RobotUser;
 
@@ -145,6 +148,10 @@ public class DemoDBManager {
         setList(UserDao.COLUMN_NAME_TEAM, team);
     }
 
+    synchronized public void setBlacklist(List<String> blacklist){
+        setList(UserDao.COLUMN_NAME_BLACKLIST,blacklist);
+    }
+
     /**
      * 获得分组列表
      *
@@ -152,6 +159,10 @@ public class DemoDBManager {
      */
     synchronized public List<String> getTeam() {
         return getList(UserDao.COLUMN_NAME_TEAM);
+    }
+
+    synchronized public List<String> getBlacklist(){
+        return getList(UserDao.COLUMN_NAME_BLACKLIST);
     }
 
 
@@ -240,10 +251,43 @@ public class DemoDBManager {
             if (cursor.moveToFirst()) {
                 id = cursor.getInt(0);
             }
-
             cursor.close();
         }
         return id;
+    }
+
+
+    /**
+     * 把所有群信息存入数据库
+     * @param allies
+     * @return
+     */
+    public synchronized void saveAllies(List<Ally> allies){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(AllyDao.ALLY_TABLE_NAME, null, null);
+            for (Ally user : allies) {
+                saveAllyToDB(user, db);
+            }
+        }
+    }
+
+    /**
+     * 从数据库中获得所有群
+     * @return
+     */
+    public synchronized List<Ally> getAllies(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Ally> allies = new ArrayList<>();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select * from " + AllyDao.ALLY_TABLE_NAME /* + " desc" */, null);
+            while (cursor.moveToNext()) {
+                Ally ally = getAllyFromDB(cursor);
+                allies.add(ally);
+            }
+            cursor.close();
+        }
+        return allies;
     }
 
     /**
@@ -412,6 +456,41 @@ public class DemoDBManager {
         return users;
     }
 
+    public void saveAllyToDB(Ally ally, SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(AllyDao.COLUMN_NAME_ID,ally.getId());
+        values.put(AllyDao.COLUMN_NAME_NAME,ally.getName());
+        values.put(AllyDao.COLUMN_NAME_SIZE, ally.getSize());
+        values.put(AllyDao.COLUMN_NAME_USERS_ID,ally.getUser_id());
+        values.put(AllyDao.COLUMN_NAME_HUANXIN_GROUP_ID,ally.getHuanxin_group_id());
+        if (ally.getDescription()!=null&&ally.getDescription()!=""){
+            values.put(AllyDao.COLUMN_NAME_DESCRIPTION,ally.getDescription());
+        }
+        if (db.isOpen()) {
+            db.replace(AllyDao.ALLY_TABLE_NAME, null, values);
+        }
+
+    }
+
+    public Ally getAllyFromDB(Cursor cursor){
+        String id = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_ID));
+        String name = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_NAME));
+        int size = cursor.getInt(cursor.getColumnIndex(AllyDao.COLUMN_NAME_SIZE));
+
+        String user_id = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_USERS_ID));
+        String huanxin_group_id = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_HUANXIN_GROUP_ID));
+        String descrition = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_DESCRIPTION));
+
+        Ally ally = new Ally();
+        ally.setId(id);
+        ally.setName(name);
+        ally.setSize(size);
+        ally.setUser_id(user_id);
+        ally.setHuanxin_group_id(huanxin_group_id);
+        ally.setDescription(descrition);
+        return ally;
+    }
 
     public void saveContactToDB(EaseUser user, SQLiteDatabase db) {
         ContentValues values = new ContentValues();

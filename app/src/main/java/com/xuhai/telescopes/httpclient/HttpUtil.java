@@ -13,10 +13,13 @@ import com.xuhai.telescopes.MyHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chudong on 2015/11/18.
@@ -106,6 +109,14 @@ public class HttpUtil {
     }
 
 
+    //===============================分组与好友-----------------------------------------//
+
+
+    /**
+     * 获得某个用户信息
+     * @param username
+     * @param jsonHttpResponseHandler
+     */
     public void getOneUserInformation(String username, JsonHttpResponseHandler jsonHttpResponseHandler) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -142,7 +153,7 @@ public class HttpUtil {
      *
      * @param jsonHttpResponseHandler
      */
-    public void getGroudsAndUsers(JsonHttpResponseHandler jsonHttpResponseHandler) {
+    public void getGroupsAndUsers(JsonHttpResponseHandler jsonHttpResponseHandler) {
         syncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         Log.e("httpGetGroupAndUser请求", MyHelper.getInstance().getCurrentUserToken());
 
@@ -157,9 +168,35 @@ public class HttpUtil {
      * @param umeng
      * @param jsonHttpResponseHandler
      */
-    public void getGroudsInfomations(String umeng, int id, JsonHttpResponseHandler jsonHttpResponseHandler) {
+    public void getGroupsInfomations(String umeng, int id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.get(addTokenTOUrl(Constant.getGroupsInfomations_url, umeng) + id, jsonHttpResponseHandler);
 
+    }
+
+
+    /**
+     * 创建分组
+     * @param group_name
+     * @param jsonHttpResponseHandler
+     */
+    public void createAnGroup(String group_name,JsonHttpResponseHandler jsonHttpResponseHandler){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", group_name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("createAnGroup", group_name);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, Constant.createAnGroup_url,
+                httpEntity, "application/json", jsonHttpResponseHandler);
     }
 
 
@@ -170,7 +207,7 @@ public class HttpUtil {
      * @param name
      * @param jsonHttpResponseHandler
      */
-    public void setGroudsInfomations(String umeng, int id, String name, JsonHttpResponseHandler jsonHttpResponseHandler) {
+    public void modifyGroudsInfomations(String umeng, int id, String name, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
         params.put("name", name);
         asyncHttpClient.put(addTokenTOUrl(Constant.setGroupsInfomations_url, umeng) + id, params, jsonHttpResponseHandler);
@@ -187,6 +224,27 @@ public class HttpUtil {
      */
     public void delectGroud(String umeng, int id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.delete(addTokenTOUrl(Constant.deleteGroups_url, umeng) + id, jsonHttpResponseHandler);
+    }
+
+
+    public void addUsersToGroup(String[] userID, String groupID,JsonHttpResponseHandler jsonHttpResponseHandler){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("users", userID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String url = Constant.addUserToGroup+groupID+"users";
+        Log.e("addUserToGroup", userID.toString());
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, url,
+                httpEntity, "application/json", jsonHttpResponseHandler);
     }
 
 
@@ -222,7 +280,7 @@ public class HttpUtil {
         }
         String url = Constant.addFriends_url + "/" + friendship + "/confirmed";
 
-        Log.e("同意/拒绝好友申请",url);
+        Log.e("同意/拒绝好友申请", url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.post(MyApplication.applicationContext, url,
                 httpEntity, "application/json", jsonHttpResponseHandler);
@@ -241,8 +299,211 @@ public class HttpUtil {
     }
 
 
-    public void accessFriendApplicaton() {
+    /**
+     * 加入黑名单
+     * @param friendID
+     * @param jsonHttpResponseHandler
+     */
+    public void moveInBlacklist(String[] friendID,JsonHttpResponseHandler jsonHttpResponseHandler) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_ids", friendID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Log.e("moveToBlacklist", friendID.toString());
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, Constant.moveToBlacklist_url,
+                httpEntity, "application/json", jsonHttpResponseHandler);
+    }
 
+
+    /**
+     * 移除黑名单
+     * @param friendID
+     * @param jsonHttpResponseHandler
+     */
+    public void moveOutFromBlacklist(String[] friendID,JsonHttpResponseHandler jsonHttpResponseHandler){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_ids", friendID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Log.e("movOutFromBlacklist", friendID.toString());
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.delete(MyApplication.applicationContext, Constant.moveToBlacklist_url,
+                httpEntity, "application/json", jsonHttpResponseHandler);    }
+
+
+    /**
+     * 获得很名单列表
+     * @param jsonHttpResponseHandler
+     */
+    public void getBlacklist(JsonHttpResponseHandler jsonHttpResponseHandler){
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(Constant.blacklist_url,jsonHttpResponseHandler);
+    }
+
+
+    //------------------------------群组---------------------------------------------//
+
+    /**
+     * 获得所有群组
+     *
+     * @param jsonHttpResponseHandler
+     */
+    public void getAllAlliesFromServe(JsonHttpResponseHandler jsonHttpResponseHandler) {
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(Constant.getAllAlliesFromServe_url, jsonHttpResponseHandler);
+
+    }
+
+    /**
+     * 创建群组
+     *
+     * @param allyName
+     * @param number
+     * @param description
+     * @param jsonHttpResponseHandler
+     */
+    public void createAnAlly(String allyName, int number, String description, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        JSONObject ally = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+        HttpEntity httpEntity = null;
+        try {
+            ally.put("name", allyName);
+            ally.put("size", number);
+            ally.put("description", description);
+            jsonObject.put("ally", ally);
+        } catch (JSONException e) {
+            Log.d("createAnAlly", "创建群参数出错");
+            e.printStackTrace();
+        }
+
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, Constant.createAnAlly_url, httpEntity, "application/json", jsonHttpResponseHandler);
+    }
+
+    /**
+     * 获得群组详细信息
+     *
+     * @param allyID
+     * @param jsonHttpResponseHandler
+     */
+    public void getAnAllyInfomations(String allyID, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.getAnAllyInfomations_url + "/" + allyID;
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(url, jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 修改群组信息
+     *
+     * @param allyID
+     * @param allyName
+     * @param number
+     * @param description
+     * @param jsonHttpResponseHandler
+     */
+    public void modifyAnAllyInfomations(String allyID, String allyName, String number, String description, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        JSONObject ally = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+        HttpEntity httpEntity = null;
+        try {
+            ally.put("name", allyName);
+            ally.put("size", number);
+            ally.put("description", description);
+            jsonObject.put("ally", ally);
+        } catch (JSONException e) {
+            Log.d("createAnAlly", "创建群参数出错");
+            e.printStackTrace();
+        }
+
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Log.e("login", jsonObject.toString());
+        String url = Constant.modifyAnAllyInfomations_url + "/" + allyID;
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.put(MyApplication.applicationContext, url, httpEntity, "application/json", jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 邀请加群
+     *
+     * @param allyID
+     * @param invited
+     * @param jsonHttpResponseHandler
+     */
+    public void inviteToAlly(String allyID, List<String> invited, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray(invited);
+        try {
+            jsonObject.put("user_ids", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String url = Constant.inviteToAnAlly_url + "/" + allyID + "/users/inv_join_ally";
+        Log.e("邀请好友进群", "  好友id=" + jsonArray+url);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(MyApplication.applicationContext, url, httpEntity, "application/json", jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 确认加群
+     *
+     * @param allyID
+     * @param jsonHttpResponseHandler
+     */
+    public void confirmToAnAlly(String allyID, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.conFirmToAnAlly_url + "/" + allyID + "/users/current_user/confirmed";
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        Log.e("comfiemToAlly_url",url);
+        asyncHttpClient.post(url, jsonHttpResponseHandler);
+
+    }
+
+
+    /**
+     * 退出群组
+     *
+     * @param allyID
+     * @param jsonHttpResponseHandler
+     */
+    public void quitFromAnAlly(String allyID, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.quitFromAnAlly_url + "/" + allyID + "/users/current_user/out";
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.delete(url, jsonHttpResponseHandler);
 
     }
 
@@ -250,6 +511,5 @@ public class HttpUtil {
     public String addTokenTOUrl(String url, String umeng) {
         return url + "?access_token=" + umeng;
     }
-
 
 }

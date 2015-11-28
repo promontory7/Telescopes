@@ -43,6 +43,7 @@ import com.xuhai.telescopes.activity.VoiceCallActivity;
 import com.xuhai.telescopes.db.DemoDBManager;
 import com.xuhai.telescopes.db.InviteMessgeDao;
 import com.xuhai.telescopes.db.UserDao;
+import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.EmojiconExampleGroupData;
 import com.xuhai.telescopes.domain.InviteMessage;
 import com.xuhai.telescopes.domain.RobotUser;
@@ -87,6 +88,7 @@ public class MyHelper {
 
     private Map<String, RobotUser> robotList;
 
+
     private UserProfileManager userProManager;
 
     private static MyHelper instance = null;
@@ -123,6 +125,8 @@ public class MyHelper {
     private String token;
     private List<String> team;//分组
     private Map<String, List<String>> teamUsers;//分组里的用户
+    private List<String> blacklist;
+    private List<Ally> allies;
 
     private Context appContext;
 
@@ -413,6 +417,35 @@ public class MyHelper {
     }
 
     /**
+     * 收到群邀请
+     *
+     * @param groupId
+     * @param inviter
+     */
+    public void onInvitationReceived(String groupId, String groupname, String inviter) {
+        String st3 = appContext.getString(com.xuhai.easeui.R.string.Invite_you_to_join_a_group_chat);
+        List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+        for (InviteMessage inviteMessage : msgs) {
+            if (inviteMessage.getGroupId().equals(groupId) && inviteMessage.getFrom().equals(inviter)) {
+                inviteMessgeDao.deleteMessage(username);
+            }
+        }
+        InviteMessage msg = new InviteMessage();
+        msg.setFrom(inviter);
+        msg.setGroupId(groupId);
+        msg.setGroupName(groupname);
+        msg.setTime(System.currentTimeMillis());
+        msg.setReason(inviter + " " + st3 + "  " + groupname);
+        Log.d(TAG, inviter + "邀请您假如群聊： " + groupname);
+        Log.e("msg", msg.toString());
+        // 设置相应status
+        msg.setStatus(InviteMessage.InviteMesageStatus.BEINVITEED);
+        notifyNewIviteMessage(msg);
+        broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+
+    }
+
+    /**
      * 群组变动监听
      */
     class MyGroupChangeListener implements EMGroupChangeListener {
@@ -510,10 +543,11 @@ public class MyHelper {
 
     /**
      * 收到好友邀请
+     *
      * @param
      * @param
      */
-    public void onContactInvited(String username,String friendship,String reason){
+    public void onContactInvited(String username, String friendship, String reason) {
         List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
 
         for (InviteMessage inviteMessage : msgs) {
@@ -528,14 +562,14 @@ public class MyHelper {
         msg.setTime(System.currentTimeMillis());
         msg.setReason(reason);
         Log.d(TAG, username + "请求加你为好友,reason: " + reason);
-        Log.e("msg",msg.toString());
+        Log.e("msg", msg.toString());
         // 设置相应status
         msg.setStatus(InviteMessage.InviteMesageStatus.BEINVITEED);
         notifyNewIviteMessage(msg);
         broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
     }
 
-    public void onContactAgree(String username){
+    public void onContactAgree(String username) {
         List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
         for (InviteMessage inviteMessage : msgs) {
             if (inviteMessage.getFrom().equals(username)) {
@@ -944,6 +978,30 @@ public class MyHelper {
         return robotList;
     }
 
+    public void setBlacklist(List<String> blacklist) {
+        this.blacklist = blacklist;
+    }
+
+    public List<String> getBlacklist() {
+        if (blacklist == null) {
+            blacklist = myModel.getBlacklist();
+        }
+        return blacklist;
+    }
+
+
+    public void saveAllies(List<Ally> allies) {
+        this.allies = allies;
+        myModel.setAllies(allies);
+    }
+
+    public List<Ally> getAllies() {
+        if (allies == null) {
+            allies = myModel.getAllies();
+        }
+        return allies;
+    }
+
     /**
      * update user list to cach And db
      *
@@ -1041,6 +1099,7 @@ public class MyHelper {
 
         isSyncingGroupsWithServer = true;
 
+
         new Thread() {
             @Override
             public void run() {
@@ -1096,7 +1155,7 @@ public class MyHelper {
             return;
         }
 
-        HttpUtil.getInstance().getGroudsAndUsers(new AsyncFetchContactsFromServer() {
+        HttpUtil.getInstance().getGroupsAndUsers(new AsyncFetchContactsFromServer() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

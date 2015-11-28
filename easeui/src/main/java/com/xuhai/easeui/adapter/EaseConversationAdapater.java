@@ -92,7 +92,7 @@ public class EaseConversationAdapater extends ArrayAdapter<EMConversation> {
             holder.list_itease_layout = (RelativeLayout) convertView.findViewById(R.id.list_itease_layout);
             convertView.setTag(holder);
         }
-        holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
+        holder.list_itease_layout.setBackgroundResource(R.drawable.ease_row_chat_history_bg);
 
         // 获取与此用户/群组的会话
         EMConversation conversation = getItem(position);

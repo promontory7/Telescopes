@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xuhai.easeui.domain.EaseUser;
+import com.xuhai.telescopes.domain.Ally;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -76,5 +77,20 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
             Log.e("http", "获取user json数据出错");
         }
         return user;
+    }
+
+    public Ally setAllyFromJson(JSONObject allyjson){
+        Ally ally = new Ally();
+        try {
+            ally.setId(allyjson.optString("id"));
+            ally.setName(allyjson.optString("name"));
+            ally.setSize(allyjson.optInt("size"));
+            ally.setUser_id(allyjson.optString("user_id"));
+            ally.setHuanxin_group_id(allyjson.optString("huanxin_group_id"));
+            ally.setDescription(allyjson.optString("description"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ally;
     }
 }
