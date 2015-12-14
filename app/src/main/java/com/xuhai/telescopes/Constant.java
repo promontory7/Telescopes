@@ -27,7 +27,7 @@ public class Constant extends EaseConstant {
 	public static final String ACTION_CONTACT_CHANAGED = "action_contact_changed";
 
 	//服务器地址
-	public static final String serve_host_url ="http://112.74.115.90:8082/";
+	public static final String serve_host_url ="http://192.168.0.108:3000/";//"http://112.74.115.90:8082/";
 
 	//登录地址
 	public static final String login_url= serve_host_url +"api/v1/sessions";
@@ -95,5 +95,31 @@ public class Constant extends EaseConstant {
 	public static final String conFirmToAnAlly_url = ally;
 	//退出群
 	public static final String quitFromAnAlly_url = ally;
+
+	/**大海接口**/
+	//获取大海所有评论的用户名单
+	public static final String getOceanEffectList = serve_host_url+"/api/v1/questions/:id/persons";//get
+	//评出最有影响力的评论用户
+	public static final String selectOceanEffectUser = serve_host_url+"/api/v1/questions/:id/users/:user_id/best_answer";//post
+	//发布大海主题
+	public static final String publishOceanTopic = serve_host_url+"/api/v1/questions"; //post
+	//获取大海主题列表
+	public static final String getOceanTopicList = serve_host_url+"/api/v1/questions"; //get
+	//获取大海主题详情
+	public static final String getOceanTopicDetail = serve_host_url+"api/v1/questions/";
+	//删除大海主题
+	public static final String deleteOceanTopicDetail = serve_host_url;
+	//结题
+	public static final String completeOceanTopicDetail = serve_host_url;
+	//获取大海主题的评论列表
+	public static final String getOceanTopicComment = serve_host_url+"/api/v1/questions/:id/comments";//get
+	//获取某用户对某主题的所有评论
+	public static final String getOceanUserComment = serve_host_url+"api/v1/questions/:id/users/:user_id/comments";//get
+	//获取某用户对某主题的信息链
+	public static final String getOceanLink = serve_host_url+"api/v1/questions/:id/users/:user_id/inv_relative";//get
+	//对大海主题发表评论
+	public static final String addOceanTopicComment = serve_host_url+"/api/v1//questions/:id/comments";//post
+	//获取用户名片
+	public static final String getUserCard = serve_host_url;
 
 }

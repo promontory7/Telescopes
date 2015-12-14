@@ -268,6 +268,35 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"></activity>
 
+        <!-- 大海发表主题 -->
+        <activity
+            android:name=".activity.OceanPublishActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+        <!-- 评价影响力 -->
+        <activity
+            android:name=".activity.MostEffectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+        <!-- 大海详情界面 -->
+        <activity
+            android:name=".activity.OceanDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+        <!-- 大海评论界面 -->
+        <activity
+            android:name=".activity.OceanCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
+        <activity
+            android:name=".activity.UserCardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver">
             <intent-filter android:priority="1000">

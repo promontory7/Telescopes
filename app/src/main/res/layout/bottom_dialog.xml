@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/dialog_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:orientation="vertical">
+        <Button 
+            android:id="@+id/btn_01"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_top_click"/>
+       <Button 
+            android:id="@+id/btn_02"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_no_corner_click"/>
+       <Button 
+            android:id="@+id/btn_03"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_no_corner_click"/>
+       <Button 
+            android:id="@+id/btn_04"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_no_corner_click"/>
+       <Button 
+            android:id="@+id/btn_05"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_no_corner_click"/>
+       <Button 
+            android:id="@+id/btn_06"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_bottom_click"/>
+       <Button 
+            android:id="@+id/btn_07"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:text="取消"
+            android:layout_marginTop="10dip"
+            style="@style/btn_dialog"
+            android:background="@drawable/btn_corner_click"/>
+ 
+    </LinearLayout>
+    
+
+</LinearLayout>

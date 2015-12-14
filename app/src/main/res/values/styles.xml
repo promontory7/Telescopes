@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- dialog 按钮样式 -->
+    <style name="btn_dialog">
+        <item name="android:textColor">@color/navy</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--dialog弹出动画-->
+    <style name="style_animation" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/anim_in</item>
+        <item name="@android:windowExitAnimation">@anim/anim_out</item>
+    </style>
+</resources>

@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
     private Button[] mTabs;
     private ContactListFragment contactListFragment;
     private CastNetFragment castNetFragment;
-    private SeaFragment seaFragment;
+    private OceanFramgent seaFragment;
     // private conversationListFragment conversationListFragment;
 //	private ChatAllHistoryFragment conversationListFragment;
     private SettingsFragment settingFragment;
@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
         conversationListFragment = new ConversationListFragment();
         contactListFragment = new ContactListFragment();
         castNetFragment = new CastNetFragment();
-        seaFragment = new SeaFragment();
+        seaFragment = new OceanFramgent();
 
         settingFragment = new SettingsFragment();
         fragments = new Fragment[]{conversationListFragment, contactListFragment, castNetFragment, seaFragment};

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="edittext_background_dimen">5dp</dimen>
+    <dimen name="ocean_publish_margin">12dp</dimen>
+
+
+    <dimen name="no_corner">0dip</dimen>
+    <dimen name="corner">6dip</dimen>
+    <dimen name="btn_height">40dip</dimen>
+    <dimen name="btn_height2">50dip</dimen>
+    <dimen name="tab_radius">10dip</dimen>
+
+    <dimen name="reply_padding_vertical">2dip</dimen>
+    <dimen name="reply_padding_horizonl">10dip</dimen>
+    <dimen name="reply_text">10dip</dimen>
+</resources>

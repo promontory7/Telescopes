@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 亮灰色 -->
+    <color name="lightgray">#D3D3D3</color>
+    <!-- 白色 -->
+    <color name="white">#FFFFFF</color>
+    <!-- 海军色 -->
+    <color name="navy">#000080</color>
+</resources>

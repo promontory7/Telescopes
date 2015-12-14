@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:state_pressed="false">
+        <layer-list>
+            <item>
+                <shape >
+                    <solid android:color="@color/white"/>
+                    <corners
+                        android:topLeftRadius="@dimen/corner"
+                        android:topRightRadius="@dimen/corner"
+                        android:bottomLeftRadius="@dimen/corner"
+                        android:bottomRightRadius="@dimen/corner"/>
+                    <stroke android:width="1dp" android:color="@color/white" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item
+        android:state_pressed="true" >
+        <layer-list>
+            <item>
+                <shape >
+                    <solid android:color="@color/lightgray"/>
+                    <corners
+                        android:topLeftRadius="@dimen/corner"
+                        android:topRightRadius="@dimen/corner"
+                        android:bottomLeftRadius="@dimen/corner"
+                        android:bottomRightRadius="@dimen/corner"/>
+                    <stroke android:width="1dp" android:color="@color/lightgray" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape >
+                    <solid android:color="@color/white"/>
+                    <corners
+                        android:topLeftRadius="@dimen/corner"
+                        android:topRightRadius="@dimen/corner"
+                        android:bottomLeftRadius="@dimen/corner"
+                        android:bottomRightRadius="@dimen/corner"/>
+                    <stroke android:width="1dp" android:color="@color/white" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>
