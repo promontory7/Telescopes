@@ -6,7 +6,7 @@
     android:background="#ccc">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="140dp"
         android:background="@drawable/icon_bg">
         <ImageView
             android:id="@+id/iv_mao"

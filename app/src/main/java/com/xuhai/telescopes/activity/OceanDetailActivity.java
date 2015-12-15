@@ -24,6 +24,7 @@ import com.xuhai.telescopes.model.OceanCommentModel;
 import com.xuhai.telescopes.model.OceanDetailModel;
 import com.xuhai.telescopes.model.OceanModel;
 import com.xuhai.telescopes.utils.ImageUtils;
+import com.xuhai.telescopes.utils.TimeUtil;
 import com.xuhai.telescopes.utils.ToastUtils;
 import com.xuhai.telescopes.widget.CircleImageView;
 import com.xuhai.telescopes.widget.TextWithImage;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
+ * 大海详情
  * @author LHB
  * @date 2015/11/12 0012.
  */
@@ -57,6 +59,8 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
     public Button chatSend;
 
     public int selectedPosition = 0;
+
+    public boolean isAccount = false;
 
     public ArrayList<OceanCommentModel> commentList;
     private int oceanId;
@@ -99,7 +103,7 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
     }
 
     public void setOceanDetail( OceanDetailModel  model){
-        timeText.setText(model.created_at);
+        timeText.setText(TimeUtil.getStringFromStr(model.created_at));
         nameText.setText(model.user.nickname);
         Drawable drawable = this.getResources().getDrawable(R.drawable.bg_test);
         headImage.setImageBitmap(ImageUtils.getRoundedCornerBitmap(drawable, 80));

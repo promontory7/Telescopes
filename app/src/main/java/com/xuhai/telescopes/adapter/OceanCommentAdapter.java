@@ -18,6 +18,7 @@ import com.xuhai.telescopes.activity.OceanCommentActivity;
 import com.xuhai.telescopes.activity.UserCardActivity;
 import com.xuhai.telescopes.model.OceanCommentModel;
 import com.xuhai.telescopes.model.OceanSecondCommentModel;
+import com.xuhai.telescopes.utils.TimeUtil;
 import com.xuhai.telescopes.widget.listview.ExpandListView;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class OceanCommentAdapter extends BaseAdapter{
 
         public void setContext(int position){
             model = list.get(position);
-            timeText.setText(model.created_at);
+            timeText.setText(TimeUtil.getStringFromStr(model.created_at));
             nameText.setText(model.user.nickname);
             contentText.setText(model.content);
             adapter = new ReplyAdapter(model.secondList);

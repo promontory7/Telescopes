@@ -87,7 +87,7 @@ public class OceanUserCommentAdapter extends BaseAdapter{
             SpannableString spannableString = new SpannableString(content);
 //            spannableString.setSpan(new ForegroundColorSpan(Color.BLUE),reply.length(),reply.length()+nick.length()-1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             contentText.setText(spannableString);
-            timeText.setText((TimeUtil.getTimeFromString(model.created_at,"yyyy-MM-dd HH:MM")).toString());
+            timeText.setText(TimeUtil.getStringFromStr(model.created_at));
         }
 
         public void setListener(){

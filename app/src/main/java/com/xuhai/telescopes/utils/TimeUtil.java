@@ -153,5 +153,14 @@ public class TimeUtil {
         }
         return sdf.format(time);
     }
+
+    /**
+     * 将string的日期格式化
+     * @param time
+     * @return
+     */
+    public static String getStringFromStr(String time){
+        return getStringFromTime(getTimeFromString(time,null),null);
+    }
 }
 

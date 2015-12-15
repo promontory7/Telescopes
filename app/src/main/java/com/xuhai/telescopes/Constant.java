@@ -106,9 +106,9 @@ public class Constant extends EaseConstant {
 	//获取大海主题列表
 	public static final String getOceanTopicList = serve_host_url+"/api/v1/questions"; //get
 	//获取大海主题详情
-	public static final String getOceanTopicDetail = serve_host_url+"api/v1/questions/";
+	public static final String getOceanTopicDetail = serve_host_url+"api/v1/questions/";//get
 	//删除大海主题
-	public static final String deleteOceanTopicDetail = serve_host_url;
+	public static final String deleteOceanTopicDetail = serve_host_url+"api/v1/questions/";//delete
 	//结题
 	public static final String completeOceanTopicDetail = serve_host_url;
 	//获取大海主题的评论列表

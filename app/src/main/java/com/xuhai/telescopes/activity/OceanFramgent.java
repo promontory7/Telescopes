@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * 大海模块
+ * 大海列表
  */
 public class OceanFramgent extends EaseBaseFragment implements View.OnClickListener{
 
@@ -148,6 +148,7 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
         public void findViews(View view){
             list = (XListView)view.findViewById(R.id.list_ocean);
         }
+
         public void setContent(int position){
             this.position = position;
             listAdapter = new OceanListAdapter(context);
