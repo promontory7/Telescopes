@@ -80,6 +80,7 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
 
     public void setUserInfo(OceanUserModel userModel){
         nameText.setText(userModel.nickname);
+        levelText.setText(" ");
     }
     public void setListener(){
         leftImage.setOnClickListener(this);
@@ -123,11 +124,7 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
             super.onSuccess(statusCode, headers, response);
             if (statusCode == 200) {
                 Log.i("getlist", response.toString());
-                try {
-                    OceanModel model = new OceanModel(response.getString("data"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //填充用户信息和消息链
             }
         }
 

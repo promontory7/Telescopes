@@ -160,7 +160,7 @@ public class TimeUtil {
      * @return
      */
     public static String getStringFromStr(String time){
-        return getStringFromTime(getTimeFromString(time,null),null);
+        return getStringFromTime(getTimeFromString(time,null),"MM-dd HH:MM");
     }
 }
 

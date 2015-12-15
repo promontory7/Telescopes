@@ -17,8 +17,9 @@
             android:background="@drawable/icon_ocean_time"/>
         <TextView
             android:id="@+id/tv_ocean_time"
-            android:layout_width="65dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="80dp"
             android:text=""
             android:textSize="14sp"
             android:textColor="#333333"/>

@@ -121,5 +121,7 @@ public class Constant extends EaseConstant {
 	public static final String addOceanTopicComment = serve_host_url+"/api/v1//questions/:id/comments";//post
 	//获取用户名片
 	public static final String getUserCard = serve_host_url;
+	//邀请进入大海评论
+	public static final String inviteOceanUser = serve_host_url+"/api/v1/questions/:id/inv_comment";//post
 
 }

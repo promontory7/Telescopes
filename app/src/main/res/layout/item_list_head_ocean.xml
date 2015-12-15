@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#ffffea">
+    android:background="#ffffff">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
 
@@ -42,7 +42,7 @@
         android:layout_below="@+id/iv_head"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:text="今天我，寒夜里看雪飘过，怀着冷却了的心窝票远方，风雨里，嘴干。"
+        android:text=""
         android:textSize="17sp"
         android:textColor="#333333"/>
 
@@ -58,19 +58,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_no_corner_click">
+
             <TextView
-                android:id="@+id/tv_private"
+                android:id="@+id/tv_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/icon_add_friend"/>
+                android:text="删除"
+                android:textColor="@color/gray_normal"
+                android:textSize="14sp"
+                android:drawableTop="@drawable/icon_delete"/>
             <View
                 android:id="@+id/view_private_bottom"
                 android:layout_width="wrap_content"
@@ -96,29 +93,25 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/btn_no_corner_click">
+
             <TextView
+                android:id="@+id/tv_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon_invite_friend" />
+                android:text="邀请"
+                android:textColor="@color/gray_normal"
+                android:textSize="14sp"
+                android:drawableTop="@drawable/icon_invite_friend"/>
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="#bbb"
-                android:layout_marginRight="6dp"
                 android:layout_alignParentBottom="true" />
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="#bbb"
-                android:layout_marginRight="6dp"
                 android:layout_alignParentTop="true"/>
         </RelativeLayout>
         <View
@@ -134,18 +127,14 @@
             android:layout_weight="1"
             android:background="@drawable/btn_no_corner_click">
             <TextView
-                android:id="@+id/tv_public"
+                android:id="@+id/tv_three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon_invite_friend" />
+                android:text="评论"
+                android:textColor="@color/gray_normal"
+                android:textSize="14sp"
+                android:drawableTop="@drawable/icon_comment"/>
             <View
                 android:id="@+id/view_public_bottom"
                 android:layout_width="wrap_content"

@@ -597,11 +597,8 @@ public class HttpUtil {
      * @param jsonHttpResponseHandler
      */
     public void deleteOceanTopicDetail(Context context,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        RequestParams params = new RequestParams();
-        params.put("oceanId",oceanId);
-        asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.delete(Constant.deleteOceanTopicDetail, params, jsonHttpResponseHandler);
+        asyncHttpClient.delete(context, Constant.getOceanTopicDetail + oceanId, jsonHttpResponseHandler);
     }
 
     public void completeOceanTopicDetail(Context context,String userId,String oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
@@ -611,6 +608,22 @@ public class HttpUtil {
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, Constant.completeOceanTopicDetail, params, jsonHttpResponseHandler);
+    }
+
+    /**
+     * 邀请用户进入主题评论
+     * @param context
+     * @param usersId
+     * @param oceanId
+     * @param jsonHttpResponseHandler
+     */
+    public void inviteOceanUser(Context context,int []usersId,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
+        String url = Constant.selectOceanEffectUser.replace(":id",oceanId+"");
+        RequestParams params = new RequestParams();
+        params.put("users",usersId);
+        asyncHttpClient.removeAllHeaders();
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(context,url, params, jsonHttpResponseHandler);
     }
 
     /**

@@ -18,6 +18,7 @@ import com.xuhai.telescopes.activity.OceanDetailActivity;
 import com.xuhai.telescopes.httpclient.HttpUtil;
 import com.xuhai.telescopes.model.OceanModel;
 import com.xuhai.telescopes.utils.DialogUtil;
+import com.xuhai.telescopes.utils.TimeUtil;
 import com.xuhai.telescopes.utils.ToastUtils;
 
 import org.apache.http.Header;
@@ -111,7 +112,13 @@ public class OceanListAdapter extends BaseAdapter{
             gridAdapter = new OceanGridAdapter(context,model.imageList);
             gridView.setAdapter(gridAdapter);
             oceanContent.setText(model.summary);
+            oceanTimeText.setText(TimeUtil.getStringFromStr(model.created_at));
             oceanCommentCount.setText(model.comment_size+"");
+            if(model.status == 1){
+                oceanStateImage.setImageResource(R.drawable.icon_jinxingzhong);
+            }else if(model.status == 2){
+                oceanStateImage.setImageResource(R.drawable.icon_yijieti);
+            }
 
         }
 
