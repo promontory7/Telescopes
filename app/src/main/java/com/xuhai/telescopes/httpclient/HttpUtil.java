@@ -116,6 +116,7 @@ public class HttpUtil {
 
     /**
      * 获得某个用户信息
+     *
      * @param username
      * @param jsonHttpResponseHandler
      */
@@ -178,10 +179,11 @@ public class HttpUtil {
 
     /**
      * 创建分组
+     *
      * @param group_name
      * @param jsonHttpResponseHandler
      */
-    public void createAnGroup(String group_name,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void createAnGroup(String group_name, JsonHttpResponseHandler jsonHttpResponseHandler) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", group_name);
@@ -229,7 +231,7 @@ public class HttpUtil {
     }
 
 
-    public void addUsersToGroup(String[] userID, String groupID,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void addUsersToGroup(String[] userID, String groupID, JsonHttpResponseHandler jsonHttpResponseHandler) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("users", userID);
@@ -242,7 +244,7 @@ public class HttpUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String url = Constant.addUserToGroup+groupID+"users";
+        String url = Constant.addUserToGroup + groupID + "users";
         Log.e("addUserToGroup", userID.toString());
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.post(MyApplication.applicationContext, url,
@@ -303,10 +305,11 @@ public class HttpUtil {
 
     /**
      * 加入黑名单
+     *
      * @param friendID
      * @param jsonHttpResponseHandler
      */
-    public void moveInBlacklist(String[] friendID,JsonHttpResponseHandler jsonHttpResponseHandler) {
+    public void moveInBlacklist(String[] friendID, JsonHttpResponseHandler jsonHttpResponseHandler) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_ids", friendID);
@@ -328,10 +331,11 @@ public class HttpUtil {
 
     /**
      * 移除黑名单
+     *
      * @param friendID
      * @param jsonHttpResponseHandler
      */
-    public void moveOutFromBlacklist(String[] friendID,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void moveOutFromBlacklist(String[] friendID, JsonHttpResponseHandler jsonHttpResponseHandler) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_ids", friendID);
@@ -347,16 +351,18 @@ public class HttpUtil {
         Log.e("movOutFromBlacklist", friendID.toString());
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.delete(MyApplication.applicationContext, Constant.moveToBlacklist_url,
-                httpEntity, "application/json", jsonHttpResponseHandler);    }
+                httpEntity, "application/json", jsonHttpResponseHandler);
+    }
 
 
     /**
      * 获得很名单列表
+     *
      * @param jsonHttpResponseHandler
      */
-    public void getBlacklist(JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getBlacklist(JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(Constant.blacklist_url,jsonHttpResponseHandler);
+        asyncHttpClient.get(Constant.blacklist_url, jsonHttpResponseHandler);
     }
 
 
@@ -475,7 +481,7 @@ public class HttpUtil {
         }
 
         String url = Constant.inviteToAnAlly_url + "/" + allyID + "/users/inv_join_ally";
-        Log.e("邀请好友进群", "  好友id=" + jsonArray+url);
+        Log.e("邀请好友进群", "  好友id=" + jsonArray + url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.post(MyApplication.applicationContext, url, httpEntity, "application/json", jsonHttpResponseHandler);
     }
@@ -510,33 +516,38 @@ public class HttpUtil {
     }
 
 
+    //-----------------------------------大海---------------------------------
+
+
     public String addTokenTOUrl(String url, String umeng) {
         return url + "?access_token=" + umeng;
     }
 
     /**
-     *获取大海某主题所有评论的用户名单
-     * @param context 上下文
-     * @param oceanId 大海主题id
+     * 获取大海某主题所有评论的用户名单
+     *
+     * @param context                 上下文
+     * @param oceanId                 大海主题id
      * @param jsonHttpResponseHandler
      */
-    public void getOceanEffectList(Context context,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.getOceanEffectList.replace(":id",oceanId+"");
+    public void getOceanEffectList(Context context, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.getOceanEffectList.replace(":id", oceanId + "");
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,url, jsonHttpResponseHandler);
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
     }
 
     /**
      * 评选最有影响力的用户
-     * @param context 上下文
-     * @param userId 用户id
-     * @param oceanId 大海id
+     *
+     * @param context                 上下文
+     * @param userId                  用户id
+     * @param oceanId                 大海id
      * @param jsonHttpResponseHandler
      */
-    public void selectMostEffectUser(Context context,int userId,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.selectOceanEffectUser.replace(":id",oceanId+"");
-        url = url.replace(":user_id",userId+"");
+    public void selectMostEffectUser(Context context, int userId, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.selectOceanEffectUser.replace(":id", oceanId + "");
+        url = url.replace(":user_id", userId + "");
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.post(url, jsonHttpResponseHandler);
@@ -544,22 +555,26 @@ public class HttpUtil {
 
     /**
      * 发布大海主题
+     *
      * @param context
-     * @param content 发布内容
+     * @param content                 发布内容
      * @param jsonHttpResponseHandler
      */
-    public void publishOceanTopic(Context context,String content,ArrayList<String> imageList,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void publishOceanTopic(Context context, String content, ArrayList<String> imageList, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
-        params.put("content",content);
-        File[] files = new File[imageList.size()];
-        for (int i = 0;i < imageList.size();i++){
-            files[i] = new File(imageList.get(i));
+        params.put("content", content);
+        if (imageList != null) {
+            File[] files = new File[imageList.size()];
+            for (int i = 0; i < imageList.size(); i++) {
+                files[i] = new File(imageList.get(i));
+            }
+            try {
+                params.put("imgs", files);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            params.put("imgs",files);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.post(context, Constant.publishOceanTopic, params, jsonHttpResponseHandler);
@@ -567,13 +582,14 @@ public class HttpUtil {
 
     /**
      * 获取大海主题列表
+     *
      * @param context
      * @param type
      * @param jsonHttpResponseHandler
      */
-    public void getOceanTopicList(Context context,int type,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getOceanTopicList(Context context, int type, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
-        params.put("type",type);
+        params.put("type", type);
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, Constant.getOceanTopicList, params, jsonHttpResponseHandler);
@@ -581,30 +597,32 @@ public class HttpUtil {
 
     /**
      * 获取大海话题详情
+     *
      * @param context
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void getOceanTopicDetail(Context context,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getOceanTopicDetail(Context context, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,Constant.getOceanTopicDetail+oceanId,jsonHttpResponseHandler);
+        asyncHttpClient.get(context, Constant.getOceanTopicDetail + oceanId, jsonHttpResponseHandler);
     }
 
     /**
      * 删除大海主题详情
+     *
      * @param context
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void deleteOceanTopicDetail(Context context,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void deleteOceanTopicDetail(Context context, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.delete(context, Constant.getOceanTopicDetail + oceanId, jsonHttpResponseHandler);
     }
 
-    public void completeOceanTopicDetail(Context context,String userId,String oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void completeOceanTopicDetail(Context context, String userId, String oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
-        params.put("oceanId",oceanId);
-        params.put("userId",userId);
+        params.put("oceanId", oceanId);
+        params.put("userId", userId);
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, Constant.completeOceanTopicDetail, params, jsonHttpResponseHandler);
@@ -612,91 +630,231 @@ public class HttpUtil {
 
     /**
      * 邀请用户进入主题评论
+     *
      * @param context
      * @param usersId
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void inviteOceanUser(Context context,int []usersId,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.selectOceanEffectUser.replace(":id",oceanId+"");
-        RequestParams params = new RequestParams();
-        params.put("users",usersId);
-        asyncHttpClient.removeAllHeaders();
+    public void inviteOceanUser(Context context, int[] usersId, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+
+        ArrayList arrayList = new ArrayList();
+        for (int i = 0; i < usersId.length; i++) {
+            arrayList.add(usersId[i]);
+        }
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray(arrayList);
+        try {
+            jsonObject.put("users", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(jsonObject.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String url = Constant.inviteOceanUser.replace(":id", oceanId + "");
+        Log.e("inviteOceanUser", url);
+
+        Log.e("inviteOceanUser", jsonArray.toString());
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.post(context,url, params, jsonHttpResponseHandler);
+        asyncHttpClient.post(context, url,
+                httpEntity, "application/json", jsonHttpResponseHandler);
     }
 
     /**
      * 获取大海话题评论
+     *
      * @param context
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void getOceanTopicComment(Context context,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.getOceanTopicComment.replace(":id",oceanId+"");
+    public void getOceanTopicComment(Context context, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.getOceanTopicComment.replace(":id", oceanId + "");
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,url,jsonHttpResponseHandler);
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
     }
 
     /**
      * 获取大海用户评论
+     *
      * @param context
      * @param userId
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void getOceanUserComment(Context context,int userId,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.getOceanUserComment.replace(":id",oceanId+"");
-        url = url.replace(":user_id",userId+"");
+    public void getOceanUserComment(Context context, int userId, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.getOceanUserComment.replace(":id", oceanId + "");
+        url = url.replace(":user_id", userId + "");
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,url,jsonHttpResponseHandler);
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
     }
 
     /**
      * 获取某用户对某主题的信息链
+     *
      * @param context
      * @param userId
      * @param oceanId
      * @param jsonHttpResponseHandler
      */
-    public void getOceanLink(Context context,int userId,int oceanId,JsonHttpResponseHandler jsonHttpResponseHandler){
-        String url = Constant.getOceanLink.replace(":id",oceanId+"");
-        url = url.replace(":user_id",userId+"");
+    public void getOceanLink(Context context, int userId, int oceanId, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = Constant.getOceanLink.replace(":id", oceanId + "");
+        url = url.replace(":user_id", userId + "");
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,url,jsonHttpResponseHandler);
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
     }
 
     /**
      * 发表大海话题评论
+     *
      * @param context
      * @param parentId
      * @param oceanId
      * @param content
      * @param jsonHttpResponseHandler
      */
-    public void addOceanTopicComment(Context context,int parentId,int oceanId,String content,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void addOceanTopicComment(Context context, int parentId, int oceanId, String content, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
-        if(parentId > 0)
-            params.put("comment_id",parentId);
-        params.put("content",content);
-        String url = Constant.getOceanTopicComment.replace(":id",oceanId+"");
+        if (parentId > 0)
+            params.put("comment_id", parentId);
+        params.put("content", content);
+        String url = Constant.getOceanTopicComment.replace(":id", oceanId + "");
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.post(context,url,params,jsonHttpResponseHandler);
+        asyncHttpClient.post(context, url, params, jsonHttpResponseHandler);
     }
 
     /**
      * 获取用户名片
+     *
      * @param context
      * @param userId
      * @param jsonHttpResponseHandler
      */
-    public void getUserCard(Context context,String userId,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getUserCard(Context context, String userId, JsonHttpResponseHandler jsonHttpResponseHandler) {
         RequestParams params = new RequestParams();
-        params.put("userId",userId);
+        params.put("userId", userId);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.get(context,Constant.getUserCard,params,jsonHttpResponseHandler);
+        asyncHttpClient.get(context, Constant.getUserCard, params, jsonHttpResponseHandler);
+    }
+
+
+    //---------------------------------撒网-----------------------------------------
+
+    /**
+     * 同步获得网列表
+     *
+     * @param context
+     * @param jsonHttpResponseHandler
+     */
+    public void getNetsList(Context context, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        syncHttpClient.removeAllHeaders();
+        syncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        syncHttpClient.get(context, Constant.getNetList, jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 异步获得网列表
+     *
+     * @param context
+     * @param jsonHttpResponseHandler
+     */
+    public void asyncgetNetsList(Context context, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        asyncHttpClient.removeAllHeaders();
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(context, Constant.getNetList, jsonHttpResponseHandler);
+    }
+
+    /**
+     * 获得某张网详情
+     * @param context
+     * @param id
+     * @param jsonHttpResponseHandler
+     */
+    public void getOneNet(Context context, String id, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        asyncHttpClient.removeAllHeaders();
+        String url = Constant.getOneNet.replace(":id",id);
+        Log.e("getOneNet", url);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 获得某张网的匹配网信息
+     * @param context
+     * @param id
+     * @param jsonHttpResponseHandler
+     */
+    public void getOneNetReceiver(Context context,String id,JsonHttpResponseHandler jsonHttpResponseHandler){
+        asyncHttpClient.removeAllHeaders();
+        String url = Constant.getOneNetReceiver.replace(":id",id);
+        Log.e("getOneNetReceiver", url);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(context, url, jsonHttpResponseHandler);
+    }
+
+    /**
+     * 撒网
+     * @param context
+     * @param sea_net
+     * @param seamen
+     * @param location
+     * @param jsonHttpResponseHandler
+     */
+    public void castNet(Context context,String sea_net,String seamen,String location,JsonHttpResponseHandler jsonHttpResponseHandler){
+        RequestParams params = new RequestParams();
+        params.put("sea_net",sea_net);
+        params.put("seamen",seamen);
+        params.put("location", location);
+        asyncHttpClient.removeAllHeaders();
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.post(Constant.castNet, params, jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 删除某张网
+     * @param context
+     * @param id
+     * @param jsonHttpResponseHandler
+     */
+    public void delectNet(Context context,String id,JsonHttpResponseHandler jsonHttpResponseHandler){
+        asyncHttpClient.removeAllHeaders();
+        String url = Constant.deleteNet.replace(":id",id);
+        Log.e("delectNet", url);
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.delete(context, url, jsonHttpResponseHandler);
+    }
+
+
+    /**
+     * 获得学校列表
+     * @param context
+     * @param jsonHttpResponseHandler
+     */
+    public void getSchoolList(Context context,JsonHttpResponseHandler jsonHttpResponseHandler){
+        asyncHttpClient.removeAllHeaders();
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(context, Constant.getSchoolList, jsonHttpResponseHandler);
+    }
+
+    /**
+     * 获得角色列表
+     * @param context
+     * .
+     * @param jsonHttpResponseHandler
+     */
+    public void getRoleList(Context context,JsonHttpResponseHandler jsonHttpResponseHandler){
+        asyncHttpClient.removeAllHeaders();
+        asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
+        asyncHttpClient.get(context, Constant.getRoleList, jsonHttpResponseHandler);
     }
 
 }

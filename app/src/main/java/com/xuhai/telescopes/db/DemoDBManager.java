@@ -3,30 +3,33 @@ package com.xuhai.telescopes.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.renderscript.AllocationAdapter;
-import android.renderscript.Sampler;
 import android.text.TextUtils;
 
 import com.easemob.util.HanziToPinyin;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.Constant;
 import com.xuhai.telescopes.MyApplication;
 import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.InviteMessage;
+import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.RobotUser;
+import com.xuhai.telescopes.domain.Seaman;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public class DemoDBManager {
     static private DemoDBManager dbMgr = new DemoDBManager();
     private DbOpenHelper dbHelper;
+    private Gson gson = new Gson();
 
     private DemoDBManager() {
         dbHelper = DbOpenHelper.getInstance(MyApplication.getInstance().getApplicationContext());
@@ -54,6 +57,16 @@ public class DemoDBManager {
         }
     }
 
+    synchronized public void saveNets(List<Net> nets) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(NetDao.TABLE_NAME, null, null);
+            for (Net net : nets) {
+                saveNetToDB(net, db);
+            }
+        }
+    }
+
     /**
      * 获取好友list
      *
@@ -65,9 +78,7 @@ public class DemoDBManager {
         if (db.isOpen()) {
             Cursor cursor = db.rawQuery("select * from " + UserDao.TABLE_NAME /* + " desc" */, null);
             while (cursor.moveToNext()) {
-
                 EaseUser user = getContactFromDB(cursor);
-
 
                 String headerName = null;
                 if (!TextUtils.isEmpty(user.getNick())) {
@@ -75,7 +86,6 @@ public class DemoDBManager {
                 } else {
                     headerName = user.getUsername();
                 }
-
                 if (user.getUsername().equals(Constant.NEW_FRIENDS_USERNAME) || user.getUsername().equals(Constant.GROUP_USERNAME)
                         || user.getUsername().equals(Constant.CHAT_ROOM) || user.getUsername().equals(Constant.CHAT_ROBOT)) {
                     user.setInitialLetter("");
@@ -96,6 +106,20 @@ public class DemoDBManager {
         return users;
     }
 
+    synchronized public List<Net> getNets() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Net> nets = new ArrayList<Net>();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select * from " + NetDao.TABLE_NAME /* + " desc" */, null);
+            while(cursor.moveToNext()){
+                Net net = getNetFromDB(cursor);
+                nets.add(net);
+            }
+            cursor.close();
+        }
+        return  nets;
+    }
+
     /**
      * 删除一个联系人
      *
@@ -105,6 +129,12 @@ public class DemoDBManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.delete(UserDao.TABLE_NAME, UserDao.COLUMN_NAME_USERNAME + " = ?", new String[]{username});
+        }
+    }
+    synchronized public void deleteNet (String id){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(NetDao.TABLE_NAME, NetDao.COLUMN_NAME_ID + " = ?",new String[] {id});
         }
     }
 
@@ -148,8 +178,8 @@ public class DemoDBManager {
         setList(UserDao.COLUMN_NAME_TEAM, team);
     }
 
-    synchronized public void setBlacklist(List<String> blacklist){
-        setList(UserDao.COLUMN_NAME_BLACKLIST,blacklist);
+    synchronized public void setBlacklist(List<String> blacklist) {
+        setList(UserDao.COLUMN_NAME_BLACKLIST, blacklist);
     }
 
     /**
@@ -161,7 +191,7 @@ public class DemoDBManager {
         return getList(UserDao.COLUMN_NAME_TEAM);
     }
 
-    synchronized public List<String> getBlacklist(){
+    synchronized public List<String> getBlacklist() {
         return getList(UserDao.COLUMN_NAME_BLACKLIST);
     }
 
@@ -239,7 +269,7 @@ public class DemoDBManager {
         if (db.isOpen()) {
             ContentValues values = new ContentValues();
             values.put(InviteMessgeDao.COLUMN_NAME_FROM, message.getFrom());
-            values.put(InviteMessgeDao.COLUMN_NAME_FRIENDSHIP,message.getFriendship());
+            values.put(InviteMessgeDao.COLUMN_NAME_FRIENDSHIP, message.getFriendship());
             values.put(InviteMessgeDao.COLUMN_NAME_GROUP_ID, message.getGroupId());
             values.put(InviteMessgeDao.COLUMN_NAME_GROUP_Name, message.getGroupName());
             values.put(InviteMessgeDao.COLUMN_NAME_REASON, message.getReason());
@@ -259,10 +289,11 @@ public class DemoDBManager {
 
     /**
      * 把所有群信息存入数据库
+     *
      * @param allies
      * @return
      */
-    public synchronized void saveAllies(List<Ally> allies){
+    public synchronized void saveAllies(List<Ally> allies) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.delete(AllyDao.ALLY_TABLE_NAME, null, null);
@@ -274,9 +305,10 @@ public class DemoDBManager {
 
     /**
      * 从数据库中获得所有群
+     *
      * @return
      */
-    public synchronized List<Ally> getAllies(){
+    public synchronized List<Ally> getAllies() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Ally> allies = new ArrayList<>();
         if (db.isOpen()) {
@@ -459,13 +491,13 @@ public class DemoDBManager {
     public void saveAllyToDB(Ally ally, SQLiteDatabase db) {
         ContentValues values = new ContentValues();
 
-        values.put(AllyDao.COLUMN_NAME_ID,ally.getId());
-        values.put(AllyDao.COLUMN_NAME_NAME,ally.getName());
+        values.put(AllyDao.COLUMN_NAME_ID, ally.getId());
+        values.put(AllyDao.COLUMN_NAME_NAME, ally.getName());
         values.put(AllyDao.COLUMN_NAME_SIZE, ally.getSize());
-        values.put(AllyDao.COLUMN_NAME_USERS_ID,ally.getUser_id());
-        values.put(AllyDao.COLUMN_NAME_HUANXIN_GROUP_ID,ally.getHuanxin_group_id());
-        if (ally.getDescription()!=null&&ally.getDescription()!=""){
-            values.put(AllyDao.COLUMN_NAME_DESCRIPTION,ally.getDescription());
+        values.put(AllyDao.COLUMN_NAME_USERS_ID, ally.getUser_id());
+        values.put(AllyDao.COLUMN_NAME_HUANXIN_GROUP_ID, ally.getHuanxin_group_id());
+        if (ally.getDescription() != null && ally.getDescription() != "") {
+            values.put(AllyDao.COLUMN_NAME_DESCRIPTION, ally.getDescription());
         }
         if (db.isOpen()) {
             db.replace(AllyDao.ALLY_TABLE_NAME, null, values);
@@ -473,7 +505,29 @@ public class DemoDBManager {
 
     }
 
-    public Ally getAllyFromDB(Cursor cursor){
+    public void saveNetToDB(Net net, SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(NetDao.COLUMN_NAME_ID, net.getId());
+        values.put(NetDao.COLUMN_NAME_TASK, net.getTask());
+        values.put(NetDao.COLUMN_NAME_STATUS, net.getStatus());
+        values.put(NetDao.COLUMN_NAME_TIME, net.getTime());
+        values.put(NetDao.COLUMN_NAME_TOTAL_COUNT, net.getTotal_count());
+        values.put(NetDao.COLUMN_NAME_USERNAME, net.getUsername());
+        values.put(NetDao.COLUMN_NAME_SEAMAN_ROLE, net.getSeaman_role());
+        values.put(NetDao.COLUMN_NAME_SUMMARY, net.getSummary());
+        if (net.getSeamen() != null) {
+            List<Seaman> seamnen = net.getSeamen();
+            String seamenJson =gson.toJson(seamnen);
+            values.put(NetDao.COLUMN_NAME_SEAMEN, seamenJson);
+        }
+        if (db.isOpen()) {
+            db.replace(NetDao.TABLE_NAME, null, values);
+        }
+
+    }
+
+    public Ally getAllyFromDB(Cursor cursor) {
         String id = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_ID));
         String name = cursor.getString(cursor.getColumnIndex(AllyDao.COLUMN_NAME_NAME));
         int size = cursor.getInt(cursor.getColumnIndex(AllyDao.COLUMN_NAME_SIZE));
@@ -555,6 +609,34 @@ public class DemoDBManager {
         if (db.isOpen()) {
             db.replace(UserDao.TABLE_NAME, null, values);
         }
+    }
+
+    public Net getNetFromDB(Cursor cursor){
+        String id =cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_ID));
+        String task = cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_TASK));
+        String status = cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_STATUS));
+        String total_count= cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_TOTAL_COUNT));
+        String time = cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_TIME));
+        String usernmae =cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_USERNAME));
+        String seaman_role = cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_SEAMAN_ROLE));
+        String summary = cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_SUMMARY));
+
+        String seamenArray= cursor.getString(cursor.getColumnIndex(NetDao.COLUMN_NAME_SEAMEN));
+        Type listType=new TypeToken<ArrayList<Seaman>>(){}.getType();
+        ArrayList<Seaman> seamen = gson.fromJson(seamenArray, listType);
+
+        Net net=new Net();
+        net.setId(id);
+        net.setTask(task);
+        net.setStatus(status);
+        net.setTotal_count(total_count);
+        net.setTime(time);
+        net.setUsername(usernmae);
+        net.setSeaman_role(seaman_role);
+        net.setSummary(summary);
+        net.setSeamen(seamen);
+
+        return net;
     }
 
     public EaseUser getContactFromDB(Cursor cursor) {

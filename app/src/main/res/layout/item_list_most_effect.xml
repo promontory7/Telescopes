@@ -63,7 +63,7 @@
         android:layout_height="27dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:src="@drawable/icon_cursor"/>
 
 </RelativeLayout>

@@ -5,7 +5,7 @@
         <layer-list>
             <item>
                 <shape >
-                    <solid android:color="@color/white"/>
+                    <solid android:color="@color/top_bar_normal_bg"/>
                     <corners
                         android:topLeftRadius="@dimen/corner"
                         android:topRightRadius="@dimen/corner"

@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.db.AllyDao;
+import com.xuhai.telescopes.db.NetDao;
 import com.xuhai.telescopes.db.UserDao;
 import com.xuhai.telescopes.domain.Ally;
+import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.utils.PreferenceManager;
 
@@ -16,6 +18,7 @@ import java.util.Map;
 public class MyModel {
     UserDao dao = null;
     AllyDao allyDao = null;
+    NetDao netDao =null;
     protected Context context = null;
     protected Map<Key, Object> valueCache = new HashMap<Key, Object>();
 
@@ -98,6 +101,26 @@ public class MyModel {
             dao = new UserDao(context);
         }
         return dao.getBlacklist();
+    }
+
+    public void saveNetsList(List<Net> nets){
+        if(netDao==null){
+            netDao = new NetDao(context);
+        }
+        netDao.saveNets(nets);
+    }
+
+    public List<Net> getNetsList(){
+        if(netDao ==null){
+            netDao = new NetDao(context);
+        }
+        return  netDao.getNets();
+    }
+    public void deleteNet(String id){
+        if(netDao==null){
+            netDao = new NetDao(context);
+        }
+        netDao.delectNet(id);
     }
 
     public void setAllies(List<Ally> allies) {

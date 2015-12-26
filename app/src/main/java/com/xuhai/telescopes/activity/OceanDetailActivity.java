@@ -12,23 +12,18 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.xuhai.telescopes.MyApplication;
-import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.adapter.OceanCommentAdapter;
 import com.xuhai.telescopes.httpclient.HttpUtil;
+import com.xuhai.telescopes.httpclient.httpResponseHandle.BaseJsonHttpResponseHandle;
 import com.xuhai.telescopes.model.OceanCommentModel;
 import com.xuhai.telescopes.model.OceanDetailModel;
-import com.xuhai.telescopes.model.OceanModel;
 import com.xuhai.telescopes.utils.ImageUtils;
 import com.xuhai.telescopes.utils.TimeUtil;
 import com.xuhai.telescopes.utils.ToastUtils;
-import com.xuhai.telescopes.widget.CircleImageView;
 import com.xuhai.telescopes.widget.TextWithImage;
 import com.xuhai.telescopes.widget.listview.XListView;
 
@@ -40,10 +35,13 @@ import java.util.ArrayList;
 
 /**
  * 大海详情
+ *
  * @author LHB
  * @date 2015/11/12 0012.
  */
-public class OceanDetailActivity extends BaseActivity implements OnClickListener{
+public class OceanDetailActivity extends BaseActivity implements OnClickListener {
+
+    public static int REQUEST_INVITE_COMMENT = 1;
 
     private ImageView leftImage;
     private TextView titleText;
@@ -71,7 +69,19 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
     public ArrayList<OceanCommentModel> commentList;
     private OceanDetailModel oceanDetailModel;
     private int oceanId;
-    public void onCreate(Bundle onsavedInstanceState){
+    private String username;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_INVITE_COMMENT && resultCode == RESULT_OK) {
+            int[] newmembers = data.getIntArrayExtra("userid");
+
+            inviteUsers(newmembers);
+        }
+    }
+
+    public void onCreate(Bundle onsavedInstanceState) {
         super.onCreate(onsavedInstanceState);
         setContentView(R.layout.activity_ocean_detail);
         findView();
@@ -80,57 +90,57 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
         setListener();
     }
 
-    public void findView(){
+    public void findView() {
 
-        leftImage = (ImageView)findViewById(R.id.iv_left);
-        titleText = (TextView)findViewById(R.id.tv_title);
-        rightImage = (ImageView)findViewById(R.id.iv_right);
-        listView = (XListView)findViewById(R.id.lv_ocean);
+        leftImage = (ImageView) findViewById(R.id.iv_left);
+        titleText = (TextView) findViewById(R.id.tv_title);
+        rightImage = (ImageView) findViewById(R.id.iv_right);
+        listView = (XListView) findViewById(R.id.lv_ocean);
 
 
-        chatEdit = (EditText)findViewById(R.id.chat_content);
-        chatSend = (Button)findViewById(R.id.chat_send);
+        chatEdit = (EditText) findViewById(R.id.chat_content);
+        chatSend = (Button) findViewById(R.id.chat_send);
     }
 
-    public void findHeadView(){
-        View view = LayoutInflater.from(this).inflate(R.layout.item_list_head_ocean,null);
-        headImage =(ImageView)view.findViewById(R.id.iv_head);
-        timeText = (TextView)view.findViewById(R.id.tv_time);
-        nameText = (TextView)view.findViewById(R.id.tv_name);
-        contentText = (TextWithImage)view.findViewById(R.id.tv_content);
-        tvOne = (TextView)view.findViewById(R.id.tv_one);
-        tvTwo = (TextView)view.findViewById(R.id.tv_two);
-        tvThree = (TextView)view.findViewById(R.id.tv_three);
+    public void findHeadView() {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_list_head_ocean, null);
+        headImage = (ImageView) view.findViewById(R.id.iv_head);
+        timeText = (TextView) view.findViewById(R.id.tv_time);
+        nameText = (TextView) view.findViewById(R.id.tv_name);
+        contentText = (TextWithImage) view.findViewById(R.id.tv_content);
+        tvOne = (TextView) view.findViewById(R.id.tv_one);
+        tvTwo = (TextView) view.findViewById(R.id.tv_two);
+        tvThree = (TextView) view.findViewById(R.id.tv_three);
         listView.addHeaderView(view);
         adapter = new OceanCommentAdapter(this);
         listView.setAdapter(adapter);
     }
 
-    public void setContent(){
+    public void setContent() {
         titleText.setText("大海详情");
-        oceanId = getIntent().getIntExtra("oceanId",-1);
+        oceanId = getIntent().getIntExtra("oceanId", -1);
         HttpUtil.getInstance().getOceanTopicDetail(this, oceanId, getDetailListener);
 
     }
 
-    public void setOceanDetail( OceanDetailModel  model){
+    public void setOceanDetail(OceanDetailModel model) {
         oceanDetailModel = model;
 //        if(MyHelper.getInstance()!= null&&MyHelper.getInstance().getCurrentUser()!= null&&MyHelper.getInstance().getCurrentUser().getUserId().equals(model.user.userid)){
-        if(true){//此处比较详情用户是否是当前操作用户，之前的获取当前用户信息会报错，需要重写获取当前用户的方法
+        if (true) {//此处比较详情用户是否是当前操作用户，之前的获取当前用户信息会报错，需要重写获取当前用户的方法
             isAccount = true;
-        }else{
+        } else {
             isAccount = false;
         }
         setOceanIdentify(isAccount);
         timeText.setText(TimeUtil.getStringFromStr(model.created_at));
-        nameText.setText(model.user.nickname);
+        nameText.setText(model.user.name);
         Drawable drawable = this.getResources().getDrawable(R.drawable.bg_test);
         headImage.setImageBitmap(ImageUtils.getRoundedCornerBitmap(drawable, 80));
         contentText.setTextContent(model.content, new ArrayList<String>());
     }
 
-    public void setOceanIdentify( boolean isAccount){
-        if (isAccount){
+    public void setOceanIdentify(boolean isAccount) {
+        if (isAccount) {
             tvOne.setText("删除话题");
             tvTwo.setText("邀请好友");
             tvThree.setText("评论");
@@ -141,9 +151,9 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
             Drawable drawableThree = this.getResources().getDrawable(R.drawable.icon_comment);
             drawableThree.setBounds(0, 0, drawableThree.getMinimumWidth(), drawableThree.getMinimumHeight());//必须设置图片大小，否则不显示
             tvOne.setCompoundDrawables(null, drawableOne, null, null);
-            tvTwo.setCompoundDrawables(null,drawableTwo,null,null);
-            tvThree.setCompoundDrawables(null,drawableThree,null,null);
-        }else{
+            tvTwo.setCompoundDrawables(null, drawableTwo, null, null);
+            tvThree.setCompoundDrawables(null, drawableThree, null, null);
+        } else {
             tvOne.setText("加为贝壳");
             tvTwo.setText("邀请好友");
             tvThree.setText("评论");
@@ -153,13 +163,13 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
             drawableTwo.setBounds(0, 0, drawableTwo.getMinimumWidth(), drawableTwo.getMinimumHeight());//必须设置图片大小，否则不显示
             Drawable drawableThree = this.getResources().getDrawable(R.drawable.icon_comment);
             drawableThree.setBounds(0, 0, drawableThree.getMinimumWidth(), drawableThree.getMinimumHeight());//必须设置图片大小，否则不显示
-            tvOne.setCompoundDrawables(null,drawableOne, null, null);
-            tvTwo.setCompoundDrawables(null,drawableTwo,null,null);
-            tvThree.setCompoundDrawables(null,drawableThree,null,null);
+            tvOne.setCompoundDrawables(null, drawableOne, null, null);
+            tvTwo.setCompoundDrawables(null, drawableTwo, null, null);
+            tvThree.setCompoundDrawables(null, drawableThree, null, null);
         }
     }
 
-    public  void setListener(){
+    public void setListener() {
         headImage.setOnClickListener(this);
         leftImage.setOnClickListener(this);
         chatSend.setOnClickListener(this);
@@ -182,8 +192,8 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedPosition = position;
-                if(selectedPosition > 1)
-                    chatEdit.setHint("回复 ："+commentList.get(selectedPosition-2).user.nickname);
+                if (selectedPosition > 1)
+                    chatEdit.setHint("回复 ：" + commentList.get(selectedPosition - 2).user.name);
                 else
                     chatEdit.setHint("评论");
             }
@@ -192,39 +202,41 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_left:
                 finish();
                 break;
             case R.id.iv_head:
-                Intent intent = new Intent(this,UserCardActivity.class);
+                Intent intent = new Intent(this, UserCardActivity.class);
+                intent.putExtra("username",username);
                 startActivity(intent);
                 break;
             case R.id.chat_send:
                 String temp = chatEdit.getText().toString();
-                if(TextUtils.isEmpty(temp)){
-                    ToastUtils.show(this,"评论内容不能为空");
+                if (TextUtils.isEmpty(temp)) {
+                    ToastUtils.show(this, "评论内容不能为空");
                     return;
                 }
                 int commentId = -1;
-                if (selectedPosition>1){
-                    commentId = commentList.get(selectedPosition-2).comment_id;
-                }else{
+                if (selectedPosition > 1) {
+                    commentId = commentList.get(selectedPosition - 2).comment_id;
+                } else {
                     commentId = -1;
                 }
                 Log.i("commentId", "commentId = " + commentId);
-                HttpUtil.getInstance().addOceanTopicComment(this, commentId, oceanId, temp,new JsonHttpResponseHandler() {
+                HttpUtil.getInstance().addOceanTopicComment(this, commentId, oceanId, temp, new JsonHttpResponseHandler() {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         if (statusCode == 200) {
-                            ToastUtils.show(OceanDetailActivity.this,"评论成功");
+                            ToastUtils.show(OceanDetailActivity.this, "评论成功");
                             chatEdit.setText("");
                             Log.i("getlist", response.toString());
                             listView.stopRefresh();
                         }
                     }
+
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -233,24 +245,28 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
                 });
                 break;
             case R.id.tv_one:
-                if(isAccount){
+                if (isAccount) {
                     HttpUtil.getInstance().deleteOceanTopicDetail(this, oceanDetailModel.id, deleteOceanListener);
-                }else {
+                } else {
                     //加为贝壳
                 }
                 break;
             case R.id.tv_two:
-                if(isAccount){
+                if (isAccount) {
+
+                    startActivityForResult(
+                            (new Intent(OceanDetailActivity.this, PickContactsActivity.class)),
+                            REQUEST_INVITE_COMMENT);
                     //进入好友列表，调用inviteUsers（）；
-                }else{
+                } else {
                     //进入好友列表
                 }
                 break;
             case R.id.tv_three:
-                if(isAccount){
+                if (isAccount) {
                     selectedPosition = 0;
                     chatEdit.setHint("评论");
-                }else{
+                } else {
                     selectedPosition = 0;
                     chatEdit.setHint("评论");
                 }
@@ -258,11 +274,13 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
         }
     }
 
+
     /**
      * 邀请用户评论
+     *
      * @param usersId
      */
-    public void inviteUsers(int [] usersId){
+    public void inviteUsers(int[] usersId) {
         HttpUtil.getInstance().inviteOceanUser(this, usersId, oceanDetailModel.id, inviteUserListener);
     }
 
@@ -275,6 +293,8 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
                 Log.i("getlist", response.toString());
                 try {
                     OceanDetailModel model = new OceanDetailModel(response.getString("data"));
+                    Log.e("话题详情", model.toString());
+                    username=model.user.name;
                     HttpUtil.getInstance().getOceanTopicComment(OceanDetailActivity.this, oceanId, getCommentListener);
                     setOceanDetail(model);
                     listView.stopRefresh();
@@ -300,6 +320,7 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
                 Log.i("getlist", response.toString());
                 try {
                     commentList = OceanCommentModel.getList(response.getString("data"));
+                    Log.e("话题评论", commentList.toString());
                     adapter.setList(commentList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -324,15 +345,14 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
 
             }
         }
+
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, throwable, errorResponse);
         }
     };
 
-    private JsonHttpResponseHandler inviteUserListener = new JsonHttpResponseHandler() {
-
-        @Override
+    private JsonHttpResponseHandler inviteUserListener = new BaseJsonHttpResponseHandle(){        @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
             if (statusCode == 200) {
@@ -341,6 +361,7 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
 
             }
         }
+
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, throwable, errorResponse);

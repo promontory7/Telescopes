@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ebebeb">
-    <include
-        layout="@layout/view_title_right_image"/>
-<TextView
     android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:text=""
-    android:gravity="center"
+    android:layout_height="match_parent"
     android:background="#ebebeb"
-    android:textSize="10sp"/>
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_right_image" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#ebebeb"
+        android:gravity="center"
+        android:text=""
+        android:textSize="10sp" />
+
     <com.xuhai.telescopes.widget.PullSeparateListView
         android:id="@+id/effect_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#ebebeb"
-        android:dividerHeight="2dp"/>
+        android:dividerHeight="2dp" />
 </LinearLayout>

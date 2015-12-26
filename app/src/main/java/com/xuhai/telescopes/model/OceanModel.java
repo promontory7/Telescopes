@@ -1,5 +1,7 @@
 package com.xuhai.telescopes.model;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +37,7 @@ public class OceanModel extends BaseModel{
         status = jSon.optInt("status");
         created_at = jSon.optString("created_at");
         imageList = new ArrayList<String>();
+        Log.e("status",status+"");
         if (jSon.has("imgs")){
             JSONArray imgJson = jSon.getJSONArray("imgs");
             for (int i = 0;i<imgJson.length();i++){
@@ -52,6 +55,7 @@ public class OceanModel extends BaseModel{
                 OceanModel model = new OceanModel();
                 model.init(jSonArray.getJSONObject(i));
                 modelList.add(model);
+                Log.e("大海话题列表",modelList.toArray().toString());
 
             }
         } catch (JSONException e) {

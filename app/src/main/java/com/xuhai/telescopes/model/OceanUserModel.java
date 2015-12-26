@@ -29,6 +29,7 @@ public class OceanUserModel extends BaseModel{
     public void init(JSONObject jSon) throws JSONException {
         userid = jSon.optInt("id");
         nickname = jSon.optString("nickname");
+        name = jSon.optString("name");
         head = jSon.optString("head");
     }
 

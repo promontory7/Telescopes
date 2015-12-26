@@ -1,5 +1,6 @@
 package com.xuhai.telescopes.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +48,7 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
     private ArrayList<OceanCommentModel> list = new ArrayList<OceanCommentModel>();
     private int userId;
     private int oceanId;
+    private String username;
     public void onCreate(Bundle onsavedInstanceState){
         super.onCreate(onsavedInstanceState);
         setContentView(R.layout.activity_ocean_comment);
@@ -74,6 +76,7 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
         titleText.setText("个人评论");
         userId = getIntent().getIntExtra("userId",-1);
         oceanId = getIntent().getIntExtra("oceanId",-1);
+        username = getIntent().getStringExtra("username");
         HttpUtil.getInstance().getOceanUserComment(this, userId, oceanId, getuserCommentListener);
         HttpUtil.getInstance().getOceanLink(this, userId, oceanId, getOceanLinkListener);
     }
@@ -84,6 +87,7 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
     }
     public void setListener(){
         leftImage.setOnClickListener(this);
+        headImage.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +96,10 @@ public class OceanCommentActivity extends BaseActivity implements OnClickListene
            case R.id.iv_left:
             finish();
             break;
+            case R.id.iv_head:
+                Intent intent = new Intent(this, UserCardActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
         }
     }
 

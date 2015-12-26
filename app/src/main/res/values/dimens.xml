@@ -13,4 +13,13 @@
     <dimen name="reply_padding_vertical">2dip</dimen>
     <dimen name="reply_padding_horizonl">10dip</dimen>
     <dimen name="reply_text">10dip</dimen>
+
+    <dimen name="item_picker_height">45dp</dimen>
+    <dimen name="item_picker_parent_margin_left">20dp</dimen>
+    <dimen name="item_picker_child_margin_left">40dp</dimen>
+    <dimen name="item_picker_baby_margin_left">60dp</dimen>
+
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_new_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

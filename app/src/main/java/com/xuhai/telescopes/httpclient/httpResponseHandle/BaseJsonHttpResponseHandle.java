@@ -5,10 +5,16 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.domain.Ally;
+import com.xuhai.telescopes.domain.Net;
+import com.xuhai.telescopes.domain.Seaman;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chudong on 2015/11/19.
@@ -79,7 +85,7 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
         return user;
     }
 
-    public Ally setAllyFromJson(JSONObject allyjson){
+    public Ally setAllyFromJson(JSONObject allyjson) {
         Ally ally = new Ally();
         try {
             ally.setId(allyjson.optString("id"));
@@ -88,9 +94,42 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
             ally.setUser_id(allyjson.optString("user_id"));
             ally.setHuanxin_group_id(allyjson.optString("huanxin_group_id"));
             ally.setDescription(allyjson.optString("description"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return ally;
+    }
+
+    public Net setNetFromJson(JSONObject netjson) {
+        Net net = new Net();
+        try {
+            net.setId(netjson.optString("id"));
+            net.setTask(netjson.optString("task"));
+            net.setStatus(netjson.optString("status"));
+            net.setTotal_count(netjson.optString("total_count"));
+            net.setTime(netjson.optString("time"));
+            net.setUsername(netjson.optString("username"));
+            net.setSeaman_role(netjson.optString("seaman_role"));
+            net.setSummary(netjson.optString("summary"));
+
+            JSONArray seamenlist = netjson.getJSONArray("seamen");
+            List<Seaman> seamen= new ArrayList<Seaman>();
+
+            Seaman seaman = new Seaman();
+            JSONObject seamenjson = new JSONObject();
+            for(int i =0;i<seamenlist.length();i++){
+                seamenjson = seamenlist.getJSONObject(i);
+                seaman.setId(seamenjson.optString("id"));
+                seaman.setSeaman_role_id(seamenjson.optString("seaman_role_id"));
+                seaman.setSeaman_role_name(seamenjson.optString("seaman_role_name"));
+                seamen.add(seaman);
+            }
+
+            net.setSeamen(seamen);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return net;
     }
 }

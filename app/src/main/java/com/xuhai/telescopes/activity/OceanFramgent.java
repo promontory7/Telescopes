@@ -17,7 +17,6 @@ import com.xuhai.telescopes.adapter.OceanListAdapter;
 import com.xuhai.telescopes.adapter.OceanPagerAdapter;
 import com.xuhai.telescopes.httpclient.HttpUtil;
 import com.xuhai.telescopes.model.OceanModel;
-import com.xuhai.telescopes.widget.TabView;
 import com.xuhai.telescopes.widget.listview.XListView;
 
 import org.apache.http.Header;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 /**
  * 大海列表
  */
-public class OceanFramgent extends EaseBaseFragment implements View.OnClickListener{
+public class OceanFramgent extends EaseBaseFragment implements View.OnClickListener {
 
     private ViewPager viewpager;
     private OceanPagerAdapter pagerAdapter;
@@ -62,20 +61,20 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
         publicLayout = layout.findViewById(R.id.ll_public_ocean);
         privateBottom = layout.findViewById(R.id.view_private_bottom);
         publicBottom = layout.findViewById(R.id.view_public_bottom);
-        rightImage = (ImageView)layout.findViewById(R.id.iv_add);
+        rightImage = (ImageView) layout.findViewById(R.id.iv_add);
 
-        viewpager = (ViewPager)layout.findViewById(R.id.vp_ocean);
+        viewpager = (ViewPager) layout.findViewById(R.id.vp_ocean);
     }
 
-    public void setCurrentTab(int position){
-        if(position == 0){
+    public void setCurrentTab(int position) {
+        if (position == 0) {
             privateBottom.setVisibility(View.VISIBLE);
             publicBottom.setVisibility(View.GONE);
             this.position = 0;
-        }else{
+        } else {
             privateBottom.setVisibility(View.GONE);
             publicBottom.setVisibility(View.VISIBLE);
-            this.position =1;
+            this.position = 1;
         }
 
     }
@@ -83,11 +82,11 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
     @Override
     protected void setUpView() {
         {
-            for (int i = 0; i < 2 ; i++){
+            for (int i = 0; i < 2; i++) {
                 View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_viewpager_ocean, null);
                 pageViews.add(view);
             }
-            pagerAdapter = new OceanPagerAdapter(this.getActivity(),pageViews);
+            pagerAdapter = new OceanPagerAdapter(this.getActivity(), pageViews);
             viewpager.setAdapter(pagerAdapter);
             rightImage.setOnClickListener(this);
             privateLayout.setOnClickListener(this);
@@ -100,15 +99,18 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            Log.i("Tab", "pageScrolled=" + position);
+//            Log.i("Tab", "pageScrolled=" + position);
         }
+
         @Override
         public void onPageSelected(int position) {
-            Log.i("Tab", "onPageSelected=" + position);
+//            Log.i("Tab", "onPageSelected=" + position);
             setCurrentTab(position);
+            Log.i("Tab", "onPageScrollStateChanged=" + position);
+
             OceanManage oceanManage;
             View view = pageViews.get(position);
-            if(view.getTag() == null){
+            if (view.getTag() == null) {
                 oceanManage = new OceanManage();
                 oceanManage.findViews(view);
                 oceanManage.setContent(position);
@@ -116,46 +118,49 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
                 view.setTag(oceanManage);
             }
         }
+
         @Override
         public void onPageScrollStateChanged(int state) {
-            Log.i("Tab", "onPageScrollStateChanged="+state);
+//            Log.i("Tab", "onPageScrollStateChanged=" + state);
 
         }
     };
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_add:
-                Intent intent2 =  new Intent(getActivity(),OceanPublishActivity.class);
+                Intent intent2 = new Intent(getActivity(), OceanPublishActivityNew.class);
                 getActivity().startActivity(intent2);
                 break;
             case R.id.ll_private_ocean:
-                if(position != 0)
+                if (position != 0)
                     viewpager.setCurrentItem(0);
                 break;
             case R.id.ll_public_ocean:
-                if(position != 1)
+                if (position != 1)
                     viewpager.setCurrentItem(1);
                 break;
         }
     }
 
-    public class OceanManage{
+    public class OceanManage {
         XListView list;
         OceanListAdapter listAdapter;
         private int position;
-        public void findViews(View view){
-            list = (XListView)view.findViewById(R.id.list_ocean);
+
+        public void findViews(View view) {
+            list = (XListView) view.findViewById(R.id.list_ocean);
         }
 
-        public void setContent(int position){
+        public void setContent(int position) {
             this.position = position;
             listAdapter = new OceanListAdapter(context);
             list.setAdapter(listAdapter);
-                    HttpUtil.getInstance().getOceanTopicList(context, position, getListListener);
+            HttpUtil.getInstance().getOceanTopicList(context, position, getListListener);
         }
-        public void setListener(){
+
+        public void setListener() {
             list.setEnabled(true);
             list.setXListViewListener(new XListView.IXListViewListener() {
                 @Override
@@ -176,7 +181,7 @@ public class OceanFramgent extends EaseBaseFragment implements View.OnClickListe
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 if (statusCode == 200) {
-                    Log.i("getlist",response.toString());
+                    Log.i("getlist", response.toString());
                     try {
                         ArrayList<OceanModel> tempList = OceanModel.getList(response.getString("data"));
                         listAdapter.setList(tempList);

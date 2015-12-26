@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include
-        layout="@layout/view_title_right_image"/>
-<com.xuhai.telescopes.widget.listview.XListView
-    android:id="@+id/lv_ocean"
     android:layout_width="match_parent"
-    android:layout_weight="1"
-    android:layout_height="match_parent"/>
-<include
-    layout="@layout/chat_bottom_view"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_right_image" />
+
+    <com.xuhai.telescopes.widget.listview.XListView
+        android:id="@+id/lv_ocean"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <include layout="@layout/chat_bottom_view" />
 </LinearLayout>

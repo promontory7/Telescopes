@@ -46,9 +46,11 @@ import com.xuhai.telescopes.db.UserDao;
 import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.EmojiconExampleGroupData;
 import com.xuhai.telescopes.domain.InviteMessage;
+import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.httpclient.HttpUtil;
 import com.xuhai.telescopes.httpclient.httpResponseHandle.AsyncFetchContactsFromServer;
+import com.xuhai.telescopes.httpclient.httpResponseHandle.AsyncNetsListFromServer;
 import com.xuhai.telescopes.parse.UserProfileManager;
 import com.xuhai.telescopes.receiver.CallReceiver;
 import com.xuhai.telescopes.utils.PreferenceManager;
@@ -127,6 +129,8 @@ public class MyHelper {
     private Map<String, List<String>> teamUsers;//分组里的用户
     private List<String> blacklist;
     private List<Ally> allies;
+
+    private List<Net> netslist;
 
     private Context appContext;
 
@@ -376,6 +380,9 @@ public class MyHelper {
                     if (!isBlackListSyncedWithServer) {
                         asyncFetchBlackListFromServer(null);
                     }
+
+                    asyncNetsListFromServer();
+
                 }
             }
         };
@@ -936,6 +943,23 @@ public class MyHelper {
         return token;
     }
 
+    public void saveNetsList(List<Net> nets) {
+        this.netslist = nets;
+        myModel.saveNetsList(nets);
+    }
+
+    public List<Net> getNetslist() {
+        if (netslist == null) {
+            netslist = myModel.getNetsList();
+        }
+        return netslist;
+    }
+
+    public void deleteNet(String id) {
+        myModel.deleteNet(id);
+        netslist.clear();
+    }
+
     /**
      * 存储分组列表
      *
@@ -1096,9 +1120,7 @@ public class MyHelper {
         if (isSyncingGroupsWithServer) {
             return;
         }
-
         isSyncingGroupsWithServer = true;
-
 
         new Thread() {
             @Override
@@ -1136,6 +1158,21 @@ public class MyHelper {
 
             }
         }.start();
+    }
+
+    public synchronized void asyncNetsListFromServer() {
+        Log.e("asyncNetsListFromServer", "开始获得撒网数据");
+        HttpUtil.getInstance().getNetsList(appContext, new AsyncNetsListFromServer() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (statusCode == 200) {
+                    Log.e("asyncNetsListFromServer", "成功啦");
+
+                }
+            }
+        });
     }
 
     public void noitifyGroupSyncListeners(boolean success) {

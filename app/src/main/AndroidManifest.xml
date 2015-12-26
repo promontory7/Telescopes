@@ -50,7 +50,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/em_logo_uidemo"
+        android:icon="@drawable/em_logo"
         android:label="@string/app_name">
         <activity
             android:name="com.xuhai.telescopes.activity.MainActivity"
@@ -141,6 +141,12 @@
         <!-- 群组选人 -->
         <activity
             android:name="com.xuhai.telescopes.activity.GroupPickContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"></activity>
+
+        <activity
+            android:name="com.xuhai.telescopes.activity.PickContactsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan"></activity>
@@ -274,6 +280,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"></activity>
 
+        <!-- 大海发表主题xin -->
+        <activity
+            android:name=".activity.OceanPublishActivityNew"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"></activity>
+
         <!-- 评价影响力 -->
         <activity
             android:name=".activity.MostEffectActivity"
@@ -296,6 +308,15 @@
             android:name=".activity.UserCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"></activity>
+
+        <activity android:name=".activity.CreateNestActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.CityPickerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.SchoolPickerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.AddLocationActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver">

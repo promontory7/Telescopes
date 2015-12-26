@@ -118,7 +118,7 @@ public class GroupPickContactsActivity extends BaseActivity {
      *
      * @param v
      */
-    public void save(View v) {
+    public void complete(View v) {
 //        progressDialog = new ProgressDialog(this);
 //        progressDialog.setMessage("正在发送邀请");
 //        progressDialog.setCanceledOnTouchOutside(false);
