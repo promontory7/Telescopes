@@ -78,6 +78,8 @@
     <string name="friends_list">贝壳</string>
     <string name="cast_net">撒网</string>
     <string name="setting">设置</string>
+    <string name="pick_location">选择位置</string>
+    <string name="confirm">确定</string>
     <string name="now_refresh_list">正在加载数据</string>
     <string name="Application_and_notify">申请与通知</string>
     <string name="save_new_nickname">保存</string>

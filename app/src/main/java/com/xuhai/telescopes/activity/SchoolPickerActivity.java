@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.adapter.PinnedHeaderExpandableAdapter;
 import com.xuhai.telescopes.adapter.ProvinceExpandableListAdapter;
+import com.xuhai.telescopes.domain.Location;
 import com.xuhai.telescopes.entity.CityEntity;
 import com.xuhai.telescopes.entity.ProvinceEntity;
 import com.xuhai.telescopes.widget.PinnedHeaderExpandableListView;
@@ -24,6 +25,7 @@ public class SchoolPickerActivity extends AppCompatActivity implements
     public final static String KEY_REQUEST_SCHOOL = "school";
     private Context context = this;
     private ArrayList<ProvinceEntity> provinces;
+    private Location location = new Location();
     private PinnedHeaderExpandableListView headerExpandableListView;
     private PinnedHeaderExpandableAdapter HeaderExpandableListViewAdapter;
 
@@ -76,11 +78,15 @@ public class SchoolPickerActivity extends AppCompatActivity implements
     public void onClickPosition(int parentPosition, int groupPosition,
                                 int childPosition) {
         // do something
-        String childName = provinces.get(parentPosition).getCitys()
-                .get(groupPosition).getSchool().get(childPosition)
-                .toString();
+        String province =provinces.get(parentPosition).getProvince_name();
+        String city = provinces.get(parentPosition).getCitys().get(groupPosition).getCity_name();
+        String school = provinces.get(parentPosition).getCitys().get(groupPosition).getSchool().get(childPosition).toString();
+
+        location.setProvince(province);
+        location.setCity(city);
+        location.setSchool_id(school);
         Intent intent = new Intent();
-        intent.putExtra(KEY_REQUEST_SCHOOL, childName);
+        intent.putExtra(KEY_REQUEST_SCHOOL, location);
         setResult(RESULT_OK, intent);
         finish();
     }

@@ -1,11 +1,17 @@
 package com.xuhai.telescopes.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by chudong on 2015/12/24.
  */
-public class Net {
+public class Net implements Parcelable{
     private String id;
     private String task;
     private String status;
@@ -15,7 +21,36 @@ public class Net {
     private String username;
     private String seaman_role;
     private String summary;
-    private List<Seaman> seamen;
+    private ArrayList<Seaman> seamen;
+
+
+    protected Net(Parcel in) {
+        id = in.readString();
+        task = in.readString();
+        status = in.readString();
+        total_count = in.readString();
+        unread_count = in.readString();
+        time = in.readString();
+        username = in.readString();
+        seaman_role = in.readString();
+        summary = in.readString();
+        seamen = in.createTypedArrayList(Seaman.CREATOR);
+    }
+
+    public static final Creator<Net> CREATOR = new Creator<Net>() {
+        @Override
+        public Net createFromParcel(Parcel in) {
+            return new Net(in);
+        }
+
+        @Override
+        public Net[] newArray(int size) {
+            return new Net[size];
+        }
+    };
+
+    public Net() {
+    }
 
     public String getId() {
         return id;
@@ -89,11 +124,31 @@ public class Net {
         this.summary = summary;
     }
 
-    public List<Seaman> getSeamen() {
+    public ArrayList<Seaman> getSeamen() {
         return seamen;
     }
 
-    public void setSeamen(List<Seaman> seamen) {
+    public void setSeamen(ArrayList<Seaman> seamen) {
         this.seamen = seamen;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(task);
+        dest.writeString(status);
+        dest.writeString(total_count);
+        dest.writeString(unread_count);
+        dest.writeString(time);
+        dest.writeString(username);
+        dest.writeString(seaman_role);
+        dest.writeString(summary);
+        dest.writeTypedList(seamen);
     }
 }

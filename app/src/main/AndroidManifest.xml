@@ -311,6 +311,8 @@
 
         <activity android:name=".activity.CreateNestActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.NetDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.CityPickerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.SchoolPickerActivity"

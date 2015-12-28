@@ -208,7 +208,7 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
                 break;
             case R.id.iv_head:
                 Intent intent = new Intent(this, UserCardActivity.class);
-                intent.putExtra("username",username);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 break;
             case R.id.chat_send:
@@ -294,7 +294,7 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
                 try {
                     OceanDetailModel model = new OceanDetailModel(response.getString("data"));
                     Log.e("话题详情", model.toString());
-                    username=model.user.name;
+                    username = model.user.name;
                     HttpUtil.getInstance().getOceanTopicComment(OceanDetailActivity.this, oceanId, getCommentListener);
                     setOceanDetail(model);
                     listView.stopRefresh();
@@ -352,7 +352,8 @@ public class OceanDetailActivity extends BaseActivity implements OnClickListener
         }
     };
 
-    private JsonHttpResponseHandler inviteUserListener = new BaseJsonHttpResponseHandle(){        @Override
+    private JsonHttpResponseHandler inviteUserListener = new BaseJsonHttpResponseHandle() {
+        @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
             if (statusCode == 200) {

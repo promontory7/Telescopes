@@ -5,6 +5,9 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xuhai.easeui.domain.EaseUser;
 import com.xuhai.telescopes.domain.Ally;
+import com.xuhai.telescopes.domain.MatchingData;
+import com.xuhai.telescopes.domain.MatchingNet;
+import com.xuhai.telescopes.domain.MatchingRole;
 import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.Seaman;
 
@@ -113,23 +116,95 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
             net.setSummary(netjson.optString("summary"));
 
             JSONArray seamenlist = netjson.getJSONArray("seamen");
-            List<Seaman> seamen= new ArrayList<Seaman>();
+            ArrayList<Seaman> seamens = new ArrayList<Seaman>();
 
             Seaman seaman = new Seaman();
             JSONObject seamenjson = new JSONObject();
-            for(int i =0;i<seamenlist.length();i++){
+            for (int i = 0; i < seamenlist.length(); i++) {
                 seamenjson = seamenlist.getJSONObject(i);
                 seaman.setId(seamenjson.optString("id"));
                 seaman.setSeaman_role_id(seamenjson.optString("seaman_role_id"));
                 seaman.setSeaman_role_name(seamenjson.optString("seaman_role_name"));
-                seamen.add(seaman);
+                seamens.add(seaman);
             }
 
-            net.setSeamen(seamen);
+            net.setSeamen(seamens);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return net;
+    }
+
+    public MatchingData setMatchingNetFromJson(JSONObject data) {
+        MatchingData matchingData = new MatchingData();
+        ArrayList<MatchingRole> matchingRoles = new ArrayList<MatchingRole>();
+        ArrayList<MatchingNet> matchingNeedMeNets = new ArrayList<MatchingNet>();
+
+        try {
+            JSONArray matchingRole_JA = data.getJSONArray("seaman_nets");
+            JSONArray matchingNeedMeNet_JA = data.getJSONArray("need_me_nets");
+
+//-------------------------匹配到的角色网-------------------------------------
+
+            MatchingRole matchingRole = new MatchingRole();
+            JSONObject matchingRole_JO = null;
+            for (int i = 0; i < matchingRole_JA.length(); i++) {
+                matchingRole_JO = matchingRole_JA.getJSONObject(i);
+                Log.e("matchingRole_JO",matchingRole_JO.toString());
+
+                matchingRole.setSeaman_role_id(matchingRole_JO.optString("seaman_role_id"));
+                matchingRole.setSeaman_role_name(matchingRole_JO.optString("sseaman_role_name"));
+                matchingRole.setUnread_count(matchingRole_JO.optString("unread_count"));
+
+                JSONArray matchingNet_JA = matchingRole_JO.getJSONArray("sea_nets");
+
+                ArrayList<MatchingNet> matchingNets = new ArrayList<MatchingNet>();
+                MatchingNet matchingNet = new MatchingNet();
+                JSONObject matchingNet_JO = null;
+                for (int j = 0; j < matchingNet_JA.length(); j++) {
+                    matchingNet_JO = matchingNet_JA.getJSONObject(j);
+
+                    matchingNet.setNet_id(matchingNet_JO.optString("net_id"));
+                    matchingNet.setTask(matchingNet_JO.optString("task"));
+                    matchingNet.setUser_name(matchingNet_JO.optString("user_name"));
+                    matchingNet.setIs_read(matchingNet_JO.optString("is_read"));
+                    matchingNet.setIs_friend(matchingNet_JO.optString("is_friend"));
+
+                    matchingNets.add(matchingNet);
+                }
+                matchingRole.setMatchingNets(matchingNets);
+
+                matchingRoles.add(matchingRole);
+
+
+//-------------------------匹配到的需要我的网=======================================
+
+                MatchingNet matchingNeedMeNet = new MatchingNet();
+                JSONObject matchingNeedMeNet_JO = null;
+                for (int l = 0; l < matchingNeedMeNet_JA.length(); l++) {
+                    matchingNeedMeNet_JO = matchingNeedMeNet_JA.getJSONObject(l);
+                    Log.e("matchingNeedMeNet_JO",matchingNeedMeNet_JO.toString());
+
+                    matchingNeedMeNet.setSeaman_role_id(matchingNeedMeNet_JO.optString("seaman_role_id)"));
+                    matchingNeedMeNet.setNet_id(matchingNeedMeNet_JO.optString("net_id"));
+                    matchingNeedMeNet.setTask(matchingNeedMeNet_JO.optString("task"));
+                    matchingNeedMeNet.setUser_name(matchingNeedMeNet_JO.optString("user_name"));
+                    matchingNeedMeNet.setIs_read(matchingNeedMeNet_JO.optString("is_read"));
+                    matchingNeedMeNet.setIs_friend(matchingNeedMeNet_JO.optString("id_friend"));
+
+                    matchingNeedMeNets.add(matchingNeedMeNet);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("setMatchingNetFromJson", "解析网失败");
+
+        }
+        matchingData.setMatchingRoles(matchingRoles);
+        matchingData.setMatchingNeedMeNets(matchingNeedMeNets);
+        Log.e("setMatchingNetFromJson", "解析网成功");
+
+        return matchingData;
     }
 }

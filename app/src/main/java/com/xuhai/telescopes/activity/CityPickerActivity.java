@@ -14,8 +14,10 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.adapter.PinnedHeaderExpandableAdapter;
 import com.xuhai.telescopes.db.DBManager;
+import com.xuhai.telescopes.domain.Location;
 import com.xuhai.telescopes.widget.PinnedHeaderExpandableListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,8 @@ public class CityPickerActivity extends AppCompatActivity {
     private ArrayList<String> provinceList = new ArrayList();
     private HashMap<String, List<String>> cityList = new HashMap<String, List<String>>();
     private int expandFlag = -1;//控制列表的展开
-    PinnedHeaderExpandableListView explistView;
+    private PinnedHeaderExpandableListView explistView;
+    private Location location =new Location();
     private Context context = this;
 
 
@@ -79,11 +82,13 @@ public class CityPickerActivity extends AppCompatActivity {
         explistView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                String key = provinceList.get(groupPosition);
-                String city = cityList.get(key).get(childPosition);
+                String province = provinceList.get(groupPosition);
+                String city = cityList.get(province).get(childPosition);
+                location.setCity(city);
+                location.setProvince(province);
+                location.setSchool_id("0");
                 Intent intent = new Intent();
-                cityList.get(key).get(childPosition);
-                intent.putExtra(KEY_REQUEST_CITY, city);
+                intent.putExtra(KEY_REQUEST_CITY, location);
                 setResult(RESULT_OK, intent);
                 finish();
                 return false;

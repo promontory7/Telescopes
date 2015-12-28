@@ -58,6 +58,7 @@ public class OceanCommentModel extends BaseModel{
         int position = 0;
         try {
             JSONArray jSonArray = new JSONArray(msg);
+
             for (int i = 0;i<jSonArray.length();i++){
                 JSONObject tempJson = jSonArray.getJSONObject(i);
                 if (tempJson.optInt("parent_id",-1)<=0){

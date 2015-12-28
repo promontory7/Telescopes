@@ -23,24 +23,25 @@
 
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="3"
                 android:src="@drawable/item_location_number" />
 
             <TextView
                 android:id="@+id/location_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@android:color/black"
                 android:layout_weight="1"
-                android:textSize="18sp"
-                android:text="仲恺农业工程学院" />
+                android:text="仲恺" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/delete_role" />
         </LinearLayout>
 

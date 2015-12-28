@@ -10,6 +10,8 @@ import com.loopj.android.http.SyncHttpClient;
 import com.xuhai.telescopes.Constant;
 import com.xuhai.telescopes.MyApplication;
 import com.xuhai.telescopes.MyHelper;
+import com.xuhai.telescopes.domain.Location;
+import com.xuhai.telescopes.domain.Seaman;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -773,13 +776,14 @@ public class HttpUtil {
 
     /**
      * 获得某张网详情
+     *
      * @param context
      * @param id
      * @param jsonHttpResponseHandler
      */
     public void getOneNet(Context context, String id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
-        String url = Constant.getOneNet.replace(":id",id);
+        String url = Constant.getOneNet.replace(":id", id);
         Log.e("getOneNet", url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, url, jsonHttpResponseHandler);
@@ -788,46 +792,98 @@ public class HttpUtil {
 
     /**
      * 获得某张网的匹配网信息
+     *
      * @param context
      * @param id
      * @param jsonHttpResponseHandler
      */
-    public void getOneNetReceiver(Context context,String id,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getOneNetReceiver(Context context, String id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
-        String url = Constant.getOneNetReceiver.replace(":id",id);
+        String url = Constant.getOneNetReceiver.replace(":id", id);
         Log.e("getOneNetReceiver", url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, url, jsonHttpResponseHandler);
     }
 
+
     /**
      * 撒网
+     *
      * @param context
-     * @param sea_net
+     * @param task
+     * @param role_name
+     * @param summary
      * @param seamen
-     * @param location
+     * @param locations
      * @param jsonHttpResponseHandler
      */
-    public void castNet(Context context,String sea_net,String seamen,String location,JsonHttpResponseHandler jsonHttpResponseHandler){
-        RequestParams params = new RequestParams();
-        params.put("sea_net",sea_net);
-        params.put("seamen",seamen);
-        params.put("location", location);
-        asyncHttpClient.removeAllHeaders();
+    public void castNet(Context context, String task, String role_name, String summary,
+                        ArrayList<Seaman> seamen, ArrayList<Location> locations, JsonHttpResponseHandler jsonHttpResponseHandler) {
+
+        JSONObject data = new JSONObject();
+//        RequestParams params = new RequestParams();
+
+        try {
+            JSONObject sea_net_json = new JSONObject();
+            sea_net_json.put("task", task);
+            sea_net_json.put("role_name", role_name);
+            sea_net_json.put("summary", summary);
+            sea_net_json.put("status", "1");
+
+            JSONArray seamen_json = new JSONArray();
+            for (Seaman seaman : seamen) {
+                JSONObject seaman_json = new JSONObject();
+                seaman_json.put("role_name", seaman.getSeaman_role_name());
+                seamen_json.put(seaman_json);
+            }
+
+            JSONArray locations_json = new JSONArray();
+            for (Location location : locations) {
+                JSONObject location_json = new JSONObject();
+                location_json.put("school_id", location.getSchool_id());
+                location_json.put("province", location.getProvince());
+                location_json.put("city", location.getCity());
+                locations_json.put(location_json);
+            }
+
+//            params.put("sea_net", sea_net_json);
+//            params.put("seamen",seamen_json);
+//            params.put("location",locations_json);
+            data.put("sea_net", sea_net_json);
+            data.put("seamen", seamen_json);
+            data.put("location", locations_json);
+
+            Log.e("sea_net_json", sea_net_json.toString());
+            Log.e("seamen_json", seamen_json.toString());
+            Log.e("locations_json", locations_json.toString());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//
+        HttpEntity httpEntity = null;
+        try {
+            httpEntity = new StringEntity(data.toString(),"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
-        asyncHttpClient.post(Constant.castNet, params, jsonHttpResponseHandler);
+//        asyncHttpClient.post(context,Constant.castNet,params,jsonHttpResponseHandler);
+        asyncHttpClient.post(context, Constant.castNet, httpEntity, "application/json", jsonHttpResponseHandler);
     }
 
 
     /**
      * 删除某张网
+     *
      * @param context
      * @param id
      * @param jsonHttpResponseHandler
      */
-    public void delectNet(Context context,String id,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void delectNet(Context context, String id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
-        String url = Constant.deleteNet.replace(":id",id);
+        String url = Constant.deleteNet.replace(":id", id);
         Log.e("delectNet", url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.delete(context, url, jsonHttpResponseHandler);
@@ -836,10 +892,11 @@ public class HttpUtil {
 
     /**
      * 获得学校列表
+     *
      * @param context
      * @param jsonHttpResponseHandler
      */
-    public void getSchoolList(Context context,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getSchoolList(Context context, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, Constant.getSchoolList, jsonHttpResponseHandler);
@@ -847,11 +904,11 @@ public class HttpUtil {
 
     /**
      * 获得角色列表
-     * @param context
-     * .
+     *
+     * @param context                 .
      * @param jsonHttpResponseHandler
      */
-    public void getRoleList(Context context,JsonHttpResponseHandler jsonHttpResponseHandler){
+    public void getRoleList(Context context, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, Constant.getRoleList, jsonHttpResponseHandler);

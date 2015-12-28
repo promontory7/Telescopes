@@ -88,8 +88,9 @@ public class CastNetFragment extends EaseBaseFragment {
                 new NestListRecyclerViewAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Log.e("点击", position + "");
-                        startActivity(new Intent(getContext(), CreateNestActivity.class));
+                        Intent intent = new Intent(getContext(), NetDetailActivity.class);
+                        intent.putExtra("net", nets.get(position));
+                        startActivity(intent);
                     }
 
                     @Override
