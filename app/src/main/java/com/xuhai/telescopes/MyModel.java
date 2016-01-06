@@ -11,6 +11,7 @@ import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.utils.PreferenceManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,14 +104,14 @@ public class MyModel {
         return dao.getBlacklist();
     }
 
-    public void saveNetsList(List<Net> nets){
+    public void saveNetsList(ArrayList<Net> nets){
         if(netDao==null){
             netDao = new NetDao(context);
         }
         netDao.saveNets(nets);
     }
 
-    public List<Net> getNetsList(){
+    public ArrayList<Net> getNetsList(){
         if(netDao ==null){
             netDao = new NetDao(context);
         }

@@ -10,11 +10,13 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         easemob:titleBarTitle="@string/address_book" />
 
-    <include
-        android:id="@+id/search_bar_view"
-        layout="@layout/ease_search_bar_with_padding" />
+    <!--<include-->
+        <!--android:id="@+id/search_bar_view"-->
+        <!--layout="@layout/ease_search_bar_with_padding"-->
+        <!--/>-->
 
     <FrameLayout
         android:id="@+id/content_container"

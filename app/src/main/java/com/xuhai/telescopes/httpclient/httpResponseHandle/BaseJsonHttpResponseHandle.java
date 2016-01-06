@@ -111,23 +111,24 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
             net.setStatus(netjson.optString("status"));
             net.setTotal_count(netjson.optString("total_count"));
             net.setTime(netjson.optString("time"));
-            net.setUsername(netjson.optString("username"));
+            net.setUsername(netjson.optString("user_name"));
             net.setSeaman_role(netjson.optString("seaman_role"));
             net.setSummary(netjson.optString("summary"));
 
             JSONArray seamenlist = netjson.getJSONArray("seamen");
             ArrayList<Seaman> seamens = new ArrayList<Seaman>();
 
-            Seaman seaman = new Seaman();
             JSONObject seamenjson = new JSONObject();
+
             for (int i = 0; i < seamenlist.length(); i++) {
+                Seaman seaman = new Seaman();
                 seamenjson = seamenlist.getJSONObject(i);
                 seaman.setId(seamenjson.optString("id"));
                 seaman.setSeaman_role_id(seamenjson.optString("seaman_role_id"));
                 seaman.setSeaman_role_name(seamenjson.optString("seaman_role_name"));
                 seamens.add(seaman);
-            }
 
+            }
             net.setSeamen(seamens);
 
         } catch (JSONException e) {
@@ -147,22 +148,23 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
 
 //-------------------------匹配到的角色网-------------------------------------
 
-            MatchingRole matchingRole = new MatchingRole();
+
             JSONObject matchingRole_JO = null;
             for (int i = 0; i < matchingRole_JA.length(); i++) {
+                MatchingRole matchingRole = new MatchingRole();
                 matchingRole_JO = matchingRole_JA.getJSONObject(i);
-                Log.e("matchingRole_JO",matchingRole_JO.toString());
 
                 matchingRole.setSeaman_role_id(matchingRole_JO.optString("seaman_role_id"));
-                matchingRole.setSeaman_role_name(matchingRole_JO.optString("sseaman_role_name"));
+                matchingRole.setSeaman_role_name(matchingRole_JO.optString("seaman_role_name"));
                 matchingRole.setUnread_count(matchingRole_JO.optString("unread_count"));
 
                 JSONArray matchingNet_JA = matchingRole_JO.getJSONArray("sea_nets");
 
                 ArrayList<MatchingNet> matchingNets = new ArrayList<MatchingNet>();
-                MatchingNet matchingNet = new MatchingNet();
+
                 JSONObject matchingNet_JO = null;
                 for (int j = 0; j < matchingNet_JA.length(); j++) {
+                    MatchingNet matchingNet = new MatchingNet();
                     matchingNet_JO = matchingNet_JA.getJSONObject(j);
 
                     matchingNet.setNet_id(matchingNet_JO.optString("net_id"));
@@ -180,11 +182,11 @@ public class BaseJsonHttpResponseHandle extends JsonHttpResponseHandler {
 
 //-------------------------匹配到的需要我的网=======================================
 
-                MatchingNet matchingNeedMeNet = new MatchingNet();
+
                 JSONObject matchingNeedMeNet_JO = null;
                 for (int l = 0; l < matchingNeedMeNet_JA.length(); l++) {
+                    MatchingNet matchingNeedMeNet = new MatchingNet();
                     matchingNeedMeNet_JO = matchingNeedMeNet_JA.getJSONObject(l);
-                    Log.e("matchingNeedMeNet_JO",matchingNeedMeNet_JO.toString());
 
                     matchingNeedMeNet.setSeaman_role_id(matchingNeedMeNet_JO.optString("seaman_role_id)"));
                     matchingNeedMeNet.setNet_id(matchingNeedMeNet_JO.optString("net_id"));

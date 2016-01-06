@@ -34,6 +34,6 @@ dependencies {
     compile 'tk.zielony:carbon:0.11'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.google.code.gson:gson:2.2.4'
-
-//    compile 'com.android.support:multidex:1.0.1'
+    //    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

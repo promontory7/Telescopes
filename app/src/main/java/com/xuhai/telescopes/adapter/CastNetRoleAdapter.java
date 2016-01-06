@@ -38,8 +38,6 @@ public class CastNetRoleAdapter extends RecyclerView.Adapter<CastNetRoleAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-
-
         holder.roleName.setText(roles.get(position).getSeaman_role_name());
         holder.roleName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,6 +54,7 @@ public class CastNetRoleAdapter extends RecyclerView.Adapter<CastNetRoleAdapter.
             public void afterTextChanged(Editable s) {
                 if (position < roles.size()) {
                     roles.get(position).setSeaman_role_name(s.toString());
+                    Log.e("afterTextChanged",position+s.toString());
                 }
 
             }

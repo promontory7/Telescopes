@@ -90,7 +90,7 @@
                         android:layout_weight="5"
                         android:inputType="textMultiLine"
                         android:singleLine="true"
-                        android:text="想出海，别问我有什么目的"
+                        android:text=""
                         android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -132,7 +132,7 @@
                         android:layout_weight="5"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:text="一介渔夫"
+                        android:text=""
                         android:textColorHint="#c4c4bf"
                         android:textSize="15sp"
                         android:textStyle="bold" />
@@ -214,7 +214,7 @@
                         android:layout_weight="5"
                         android:inputType="textMultiLine"
                         android:singleLine="false"
-                        android:text="啊哈哈"
+                        android:text=""
                         android:textColorHint="#c4c4bf"
                         android:textSize="15sp" />
                 </LinearLayout>

@@ -13,7 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.xuhai.telescopes.MyHelper;
 import com.xuhai.telescopes.R;
 import com.xuhai.telescopes.adapter.CastNetRoleAdapter;
 import com.xuhai.telescopes.domain.Location;
@@ -21,6 +23,7 @@ import com.xuhai.telescopes.domain.MatchingData;
 import com.xuhai.telescopes.domain.Seaman;
 import com.xuhai.telescopes.httpclient.HttpUtil;
 import com.xuhai.telescopes.httpclient.httpResponseHandle.BaseJsonHttpResponseHandle;
+import com.xuhai.telescopes.utils.ToastUtils;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -126,15 +129,21 @@ public class CreateNestActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        if(statusCode==200){
                             try {
                                 JSONObject data = response.getJSONObject("data");
                                 MatchingData matchingData =setMatchingNetFromJson(data);
+                                Log.e("castNet","撒网成功");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, "撒网成功", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                });
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }
                     }
 
                     @Override

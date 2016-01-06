@@ -82,8 +82,8 @@ public class EaseContactListFragment extends EaseBaseFragment {
         listView = contactListLayout.getListView();
         
         //搜索框
-        query = (EditText) getView().findViewById(R.id.query);
-        clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
+//        query = (EditText) getView().findViewById(R.id.query);
+//        clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
     }
 
     @Override
@@ -110,30 +110,30 @@ public class EaseContactListFragment extends EaseBaseFragment {
             });
         }
         
-        query.addTextChangedListener(new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                contactListLayout.filter(s);
-                if (s.length() > 0) {
-                    clearSearch.setVisibility(View.VISIBLE);
-                } else {
-                    clearSearch.setVisibility(View.INVISIBLE);
-                    
-                }
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void afterTextChanged(Editable s) {
-            }
-        });
-        clearSearch.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                query.getText().clear();
-                hideSoftKeyboard();
-            }
-        });
+//        query.addTextChangedListener(new TextWatcher() {
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                contactListLayout.filter(s);
+//                if (s.length() > 0) {
+//                    clearSearch.setVisibility(View.VISIBLE);
+//                } else {
+//                    clearSearch.setVisibility(View.INVISIBLE);
+//
+//                }
+//            }
+//
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+//        clearSearch.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                query.getText().clear();
+//                hideSoftKeyboard();
+//            }
+//        });
         
         listView.setOnTouchListener(new OnTouchListener() {
 

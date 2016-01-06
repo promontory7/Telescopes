@@ -129,6 +129,34 @@ public class DialogUtil {
         showBottomDialog(activity, dialogView);
     }
 
+    public static void setNetOperateDialog(Activity activity,View.OnClickListener onClickListener){
+        View dialogView = LayoutInflater.from(activity).inflate(R.layout.bottom_dialog, null);
+        //findView
+        Button btn01 = (Button)dialogView.findViewById(R.id.btn_01);
+        Button btn02 = (Button)dialogView.findViewById(R.id.btn_02);
+        Button btn03 = (Button)dialogView.findViewById(R.id.btn_03);
+        Button btn04 = (Button)dialogView.findViewById(R.id.btn_04);
+        Button btn05 = (Button)dialogView.findViewById(R.id.btn_05);
+        Button btn06 = (Button)dialogView.findViewById(R.id.btn_06);
+        Button btn07 = (Button)dialogView.findViewById(R.id.btn_07);
+
+        //setText
+        btn01.setText("收网");
+        btn02.setVisibility(View.GONE);
+        btn03.setVisibility(View.GONE);
+        btn04.setVisibility(View.GONE);
+        btn05.setVisibility(View.GONE);
+        btn06.setText("删除");
+        btn07.setText("取消");
+
+
+        btn01.setOnClickListener(onClickListener);
+        btn06.setOnClickListener(onClickListener);
+        btn07.setOnClickListener(onClickListener);
+
+        showBottomDialog(activity, dialogView);
+    }
+
     //弹出提示
     public static void setTips(Activity activity,String text,String leftText,String rightText,View.OnClickListener onClickListener){
         View dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_tips_two_button, null);

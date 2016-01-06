@@ -36,6 +36,8 @@ public class NestListRecyclerViewAdapter extends RecyclerView.Adapter<NestListRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.nest_title.setText(nets.get(position).getTask());
+        holder.net_role.setText("我的角色："+nets.get(position).getSeaman_role());
+        holder.time.setText(nets.get(position).getTime());
 
 
         if (onItemClickListener != null) {
@@ -64,12 +66,15 @@ public class NestListRecyclerViewAdapter extends RecyclerView.Adapter<NestListRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nest_title;
-        private TextView nest_content;
+        private TextView net_role;
+        private TextView time;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             nest_title = (TextView) itemView.findViewById(R.id.nest_title);
+            net_role = (TextView) itemView.findViewById(R.id.net_role);
+            time = (TextView) itemView.findViewById(R.id.net_time);
         }
     }
 

@@ -75,4 +75,13 @@ public class Seaman implements Parcelable{
         dest.writeString(seaman_role_id);
         dest.writeString(seaman_role_name);
     }
+
+    @Override
+    public String toString() {
+        return "Seaman{" +
+                "id='" + id + '\'' +
+                ", seaman_role_id='" + seaman_role_id + '\'' +
+                ", seaman_role_name='" + seaman_role_name + '\'' +
+                '}';
+    }
 }

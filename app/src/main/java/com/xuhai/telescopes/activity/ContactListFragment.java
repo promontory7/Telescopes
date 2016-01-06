@@ -49,7 +49,7 @@ public class ContactListFragment extends EaseContactListFragment {
         headerView.findViewById(com.xuhai.telescopes.R.id.chat_room_item).setOnClickListener(clickListener);
 //        headerView.findViewById(com.xuhai.telescopes.R.id.robot_item).setOnClickListener(clickListener);
         //添加headerview
-        listView.addHeaderView(headerView);
+//        listView.addHeaderView(headerView);
         //添加正在加载数据提示的loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(com.xuhai.telescopes.R.layout.em_layout_loading_data, null);
         contentContainer.addView(loadingView);
@@ -78,7 +78,7 @@ public class ContactListFragment extends EaseContactListFragment {
             
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddContactActivity.class));
+                startActivity(new Intent(getActivity(), NewAndCreateActivity.class));
             }
         });
         

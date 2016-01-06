@@ -46,7 +46,9 @@ public class MainActivity extends BaseActivity implements EMEventListener {
     private SlidingMenu localSlidingMenu;
 
     private Button[] mTabs;
-    private ContactListFragment contactListFragment;
+    private ConversationListFragment conversationListFragment;
+//    private ContactListFragment contactListFragment;
+    private ContactListFragmentNew contactListFragmentNew;
     private CastNetFragment castNetFragment;
     private OceanFramgent seaFragment;
     // private conversationListFragment conversationListFragment;
@@ -66,7 +68,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
     private boolean isConflictDialogShow;
     private boolean isAccountRemovedDialogShow;
     private BroadcastReceiver internalDebugReceiver;
-    private ConversationListFragment conversationListFragment;
+
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
 
@@ -95,6 +97,13 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             return;
+        }else if(savedInstanceState !=null){
+//            contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag("contactListFragment");
+            contactListFragmentNew = (ContactListFragmentNew) getSupportFragmentManager().findFragmentByTag("contactListFragmentNew");
+            conversationListFragment = (ConversationListFragment) getSupportFragmentManager().findFragmentByTag("conversationListFragment");
+            castNetFragment = (CastNetFragment) getSupportFragmentManager().findFragmentByTag("castNetFragment");
+            seaFragment = (OceanFramgent) getSupportFragmentManager().findFragmentByTag("seaFragment");
+
         }
         setContentView(R.layout.em_activity_main);
         initSlidingMenu(this);
@@ -114,15 +123,16 @@ public class MainActivity extends BaseActivity implements EMEventListener {
         inviteMessgeDao = new InviteMessgeDao(this);
         userDao = new UserDao(this);
         conversationListFragment = new ConversationListFragment();
-        contactListFragment = new ContactListFragment();
+//        contactListFragment = new ContactListFragment();
+        contactListFragmentNew= new ContactListFragmentNew();
         castNetFragment = new CastNetFragment();
         seaFragment = new OceanFramgent();
 
         settingFragment = new SettingsFragment();
-        fragments = new Fragment[]{conversationListFragment, contactListFragment, castNetFragment, seaFragment};
+        fragments = new Fragment[]{conversationListFragment, contactListFragmentNew, castNetFragment, seaFragment};
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
-                .add(R.id.fragment_container, contactListFragment).hide(contactListFragment)
+                .add(R.id.fragment_container, contactListFragmentNew).hide(contactListFragmentNew)
                 .add(R.id.fragment_container, castNetFragment).hide(castNetFragment)
                 .add(R.id.fragment_container, seaFragment).hide(seaFragment)
                 .show(conversationListFragment)
@@ -165,6 +175,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
         localSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 
         localSlidingMenu.setMenu(R.layout.slidingmenu_fragment_layout);
+
         return localSlidingMenu;
     }
 
@@ -278,9 +289,9 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                         conversationListFragment.refresh();
                     }
                 } else if (currentTabIndex == 1) {
-                    if (contactListFragment != null) {
-                        contactListFragment.refresh();
-                    }
+//                    if (contactListFragment != null) {
+//                        contactListFragment.refresh();
+//                    }
                 }
                 String action = intent.getAction();
                 if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
@@ -388,8 +399,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
         // 刷新bottom bar消息未读数
         updateUnreadAddressLable();
         // 刷新好友页面ui
-        if (currentTabIndex == 1)
-            contactListFragment.refresh();
+//        if (currentTabIndex == 1)
+//            contactListFragment.refresh();
     }
 
     /**
@@ -432,6 +443,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
         super.onStop();
     }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -23,7 +23,7 @@ public class AsyncNetsListFromServer extends BaseJsonHttpResponseHandle {
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         super.onSuccess(statusCode, headers, response);
-        List<Net> nets = new ArrayList<Net>();
+        ArrayList<Net> nets = new ArrayList<Net>();
 
         if (statusCode == 200) {
             try {
@@ -33,9 +33,9 @@ public class AsyncNetsListFromServer extends BaseJsonHttpResponseHandle {
                 for (int i = 0; i < netsjson.length(); i++) {
                    JSONObject netjson = netsjson.getJSONObject(i);
                     net = setNetFromJson(netjson);
-                    Log.e("AsyncNetsListFromServer",net.getTask());
                     nets.add(net);
                 }
+                MyHelper.getInstance().saveNetsList(nets);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -44,6 +44,6 @@ public class AsyncNetsListFromServer extends BaseJsonHttpResponseHandle {
             }
         }
 
-        MyHelper.getInstance().saveNetsList(nets);
+
     }
 }

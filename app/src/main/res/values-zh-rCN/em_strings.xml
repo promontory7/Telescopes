@@ -78,6 +78,15 @@
     <string name="friends_list">贝壳</string>
     <string name="cast_net">撒网</string>
     <string name="setting">设置</string>
+    <string name="influence">影响力</string>
+    <string name="grade">等级</string>
+    <string name="pearl">珍珠</string>
+    <string name="slide_signature">个性签名</string>
+    <string name="slide_birthday">生日</string>
+    <string name="slide_email">邮箱</string>
+    <string name="slide_location">地区</string>
+    <string name="slide_school">学校</string>
+    <string name="slide_2code">我的二维码</string>
     <string name="pick_location">选择位置</string>
     <string name="confirm">确定</string>
     <string name="now_refresh_list">正在加载数据</string>

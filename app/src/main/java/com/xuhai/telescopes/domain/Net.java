@@ -151,4 +151,20 @@ public class Net implements Parcelable{
         dest.writeString(summary);
         dest.writeTypedList(seamen);
     }
+
+    @Override
+    public String toString() {
+        return "Net{" +
+                "id='" + id + '\'' +
+                ", task='" + task + '\'' +
+                ", status='" + status + '\'' +
+                ", total_count='" + total_count + '\'' +
+                ", unread_count='" + unread_count + '\'' +
+                ", time='" + time + '\'' +
+                ", username='" + username + '\'' +
+                ", seaman_role='" + seaman_role + '\'' +
+                ", summary='" + summary + '\'' +
+                ", seamen=" + seamen.toString() +
+                '}'+'\n';
+    }
 }

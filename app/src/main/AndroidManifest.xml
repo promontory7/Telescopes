@@ -117,6 +117,12 @@
             android:windowSoftInputMode="adjustPan"></activity>
 
         <activity
+            android:name="com.xuhai.telescopes.activity.NewAndCreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"></activity>
+
+        <activity
             android:name="com.xuhai.telescopes.activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
@@ -312,6 +318,8 @@
         <activity android:name=".activity.CreateNestActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.NetDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.NetMarketActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.CityPickerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

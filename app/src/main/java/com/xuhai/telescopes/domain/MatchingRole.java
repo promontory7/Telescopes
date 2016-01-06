@@ -46,5 +46,15 @@ public class MatchingRole {
     public void setMatchingNets(ArrayList<MatchingNet> matchingNets) {
         this.matchingNets = matchingNets;
     }
+
+    @Override
+    public String toString() {
+        return "MatchingRole{" +
+                "seaman_role_name='" + seaman_role_name + '\'' +
+                ", seaman_role_id='" + seaman_role_id + '\'' +
+                ", unread_count='" + unread_count + '\'' +
+                ", matchingNets=" + matchingNets.toString() +
+                '}';
+    }
 }
 

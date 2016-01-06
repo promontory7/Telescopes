@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/iv_ocean_state"
-                android:text="钟声响起归家的讯号,在他生命里,黑色肌肤给他的意义,是一生奉献,肤色斗争中.年月把拥有变做失去,疲倦的双眼带著期望!"
+                android:text="钟声响起归家的讯号,的双眼带著期望!"
                 android:textColor="@color/gray_normal"
                 android:textSize="16sp" />
 
@@ -45,11 +45,11 @@
                 android:id="@+id/gv_ocean"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_ocean_word"
-                android:horizontalSpacing="5dp"
-                android:numColumns="2"
-                android:verticalSpacing="5dp"
-                android:visibility="gone" />
+                android:layout_below="@+id/iv_ocean_state"
+                android:layout_margin="10dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="3"
+                android:verticalSpacing="3dp" />
 
             <include
                 android:id="@+id/ly_bottom"

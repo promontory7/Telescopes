@@ -46,6 +46,7 @@ import com.xuhai.telescopes.db.UserDao;
 import com.xuhai.telescopes.domain.Ally;
 import com.xuhai.telescopes.domain.EmojiconExampleGroupData;
 import com.xuhai.telescopes.domain.InviteMessage;
+import com.xuhai.telescopes.domain.MatchingData;
 import com.xuhai.telescopes.domain.Net;
 import com.xuhai.telescopes.domain.RobotUser;
 import com.xuhai.telescopes.httpclient.HttpUtil;
@@ -130,7 +131,9 @@ public class MyHelper {
     private List<String> blacklist;
     private List<Ally> allies;
 
-    private List<Net> netslist;
+    private ArrayList<Net> netslist;
+
+    private static HashMap<String,MatchingData> matchingMap =new HashMap<String,MatchingData>();
 
     private Context appContext;
 
@@ -878,6 +881,19 @@ public class MyHelper {
         this.contactList = contactList;
     }
 
+    public void saveNetMarket(String net_id,MatchingData matchingMap){
+        this.matchingMap.put(net_id,matchingMap);
+    }
+
+    public MatchingData getNetMarket(String net_id){
+        if(matchingMap!=null){
+            if(matchingMap.get(net_id)!=null){
+                return matchingMap.get(net_id);
+            }
+        }
+        return null;
+    }
+
     /**
      * 保存单个user
      */
@@ -943,12 +959,12 @@ public class MyHelper {
         return token;
     }
 
-    public void saveNetsList(List<Net> nets) {
+    public void saveNetsList(ArrayList<Net> nets) {
         this.netslist = nets;
         myModel.saveNetsList(nets);
     }
 
-    public List<Net> getNetslist() {
+    public ArrayList<Net> getNetslist() {
         if (netslist == null) {
             netslist = myModel.getNetsList();
         }

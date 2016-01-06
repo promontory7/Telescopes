@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.xuhai.telescopes.R;
 
 import java.util.ArrayList;
@@ -45,7 +46,11 @@ public class OceanGridAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(context);
-        imageView.setImageResource(R.drawable.bg_test);
+        Glide.with(context)
+                .load(urlList.get(position))
+                .placeholder(R.drawable.bg_test)
+                .into(imageView);
+
         imageView.setAdjustViewBounds(true);
 
         return imageView;

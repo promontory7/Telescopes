@@ -783,7 +783,7 @@ public class HttpUtil {
      */
     public void getOneNet(Context context, String id, JsonHttpResponseHandler jsonHttpResponseHandler) {
         asyncHttpClient.removeAllHeaders();
-        String url = Constant.getOneNet.replace(":id", id);
+        String url = Constant.getOneNet.replace(":sea_net_id", id);
         Log.e("getOneNet", url);
         asyncHttpClient.addHeader("Authorization", "Token token=" + MyHelper.getInstance().getCurrentUserToken());
         asyncHttpClient.get(context, url, jsonHttpResponseHandler);
@@ -830,11 +830,11 @@ public class HttpUtil {
             sea_net_json.put("summary", summary);
             sea_net_json.put("status", "1");
 
-            JSONArray seamen_json = new JSONArray();
+            JSONArray seamen_JA = new JSONArray();
             for (Seaman seaman : seamen) {
                 JSONObject seaman_json = new JSONObject();
                 seaman_json.put("role_name", seaman.getSeaman_role_name());
-                seamen_json.put(seaman_json);
+                seamen_JA.put(seaman_json);
             }
 
             JSONArray locations_json = new JSONArray();
@@ -850,11 +850,11 @@ public class HttpUtil {
 //            params.put("seamen",seamen_json);
 //            params.put("location",locations_json);
             data.put("sea_net", sea_net_json);
-            data.put("seamen", seamen_json);
+            data.put("seamen", seamen_JA);
             data.put("location", locations_json);
 
             Log.e("sea_net_json", sea_net_json.toString());
-            Log.e("seamen_json", seamen_json.toString());
+            Log.e("seamen_json", seamen_JA.toString());
             Log.e("locations_json", locations_json.toString());
 
 

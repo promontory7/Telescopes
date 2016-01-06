@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xuhai.telescopes.domain.Net;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,11 +26,11 @@ public class NetDao {
     public NetDao(Context context) {
     }
 
-    public void saveNets(List<Net> nets){
+    public void saveNets(ArrayList<Net> nets){
         DemoDBManager.getInstance().saveNets(nets);
     }
 
-    public List<Net> getNets(){
+    public ArrayList<Net> getNets(){
         return DemoDBManager.getInstance().getNets();
     }
 

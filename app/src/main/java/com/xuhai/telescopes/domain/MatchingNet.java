@@ -60,4 +60,16 @@ public class MatchingNet {
     public void setSeaman_role_id(String seaman_role_id) {
         this.seaman_role_id = seaman_role_id;
     }
+
+    @Override
+    public String toString() {
+        return "MatchingNet{" +
+                "net_id='" + net_id + '\'' +
+                ", task='" + task + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", is_read='" + is_read + '\'' +
+                ", is_friend='" + is_friend + '\'' +
+                ", seaman_role_id='" + seaman_role_id + '\'' +
+                '}';
+    }
 }

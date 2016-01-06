@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.easemob.util.HanziToPinyin;
 import com.google.gson.Gson;
@@ -57,7 +58,7 @@ public class DemoDBManager {
         }
     }
 
-    synchronized public void saveNets(List<Net> nets) {
+    synchronized public void saveNets(ArrayList<Net> nets) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
             db.delete(NetDao.TABLE_NAME, null, null);
@@ -106,9 +107,9 @@ public class DemoDBManager {
         return users;
     }
 
-    synchronized public List<Net> getNets() {
+    synchronized public ArrayList<Net> getNets() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<Net> nets = new ArrayList<Net>();
+        ArrayList<Net> nets = new ArrayList<Net>();
         if (db.isOpen()) {
             Cursor cursor = db.rawQuery("select * from " + NetDao.TABLE_NAME /* + " desc" */, null);
             while(cursor.moveToNext()){

@@ -73,10 +73,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="20dp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
@@ -107,10 +107,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -141,12 +141,12 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/seperater" />
 
-                    <ListView
+                    <com.xuhai.telescopes.widget.listview.ExpandListView
                         android:id="@+id/need_role_listview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    </ListView>
+                    </com.xuhai.telescopes.widget.listview.ExpandListView>
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -156,10 +156,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -196,7 +196,7 @@
                 android:gravity="center">
 
                 <carbon.widget.Button
-                    android:id="@+id/new_message_bt"
+                    android:id="@+id/net_market"
                     style="@style/carbon_Button"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
